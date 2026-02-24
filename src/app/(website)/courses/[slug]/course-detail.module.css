@@ -361,3 +361,112 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ════════════════════════════════════════════
+   COURSE DETAIL — DARK MODE
+   ════════════════════════════════════════════ */
+[data-theme="dark"] .courseImageSection {
+  background: #0B3224;
+}
+
+[data-theme="dark"] .statsSection {
+  background: #0F3D2D;
+}
+
+[data-theme="dark"] .statCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .statCard strong {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .statCard span {
+  color: #7E9A8C;
+}
+
+[data-theme="dark"] .highlightsSection {
+  background: #0B3224;
+}
+
+[data-theme="dark"] .highlightCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .highlightCard:hover {
+  border-color: var(--color-primary-400);
+}
+
+[data-theme="dark"] .syllabusSection {
+  background: #0F3D2D;
+}
+
+[data-theme="dark"] .sectionLabel {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .sectionSubtext {
+  color: #7E9A8C;
+}
+
+[data-theme="dark"] .topicList li {
+  color: #A0B8AC;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .sidePanel {
+  background: transparent;
+}
+
+[data-theme="dark"] .sideCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .sideCard h3 {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .sideCard li {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .sideCardAccent {
+  background: linear-gradient(160deg, #0d4a2b, #1B8A50);
+}
+
+[data-theme="dark"] .feeInfo {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .feeInfo strong {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .feeInfo span {
+  color: #7E9A8C;
+}
+
+[data-theme="dark"] .relatedSection {
+  background: #0B3224;
+}
+
+[data-theme="dark"] .relatedCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .relatedCard:hover {
+  border-color: var(--color-primary-400);
+}
+
+[data-theme="dark"] .relatedCard h3 {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .relatedCard p {
+  color: #7E9A8C;
+}

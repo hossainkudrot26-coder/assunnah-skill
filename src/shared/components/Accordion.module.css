@@ -105,3 +105,29 @@
   font-size: 0.92rem;
   color: var(--color-neutral-600, #4b5563);
 }
+
+/* ——— DARK MODE ——— */
+[data-theme="dark"] .accordionItem {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .accordionItem:hover {
+  border-color: var(--color-primary-400);
+}
+
+[data-theme="dark"] .trigger {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .trigger:hover {
+  color: var(--color-secondary-400);
+}
+
+[data-theme="dark"] .content {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .contentInner {
+  background: #0B3224;
+}

@@ -126,3 +126,43 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ——— DARK MODE ——— */
+[data-theme="dark"] .typesSection {
+  background: transparent;
+}
+
+[data-theme="dark"] .typeCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .typeCard:hover {
+  border-color: var(--color-primary-400);
+}
+
+[data-theme="dark"] .typeCard h3 {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .typeCard p {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .eligibilityCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .processStep {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .processStep:hover {
+  border-color: var(--color-primary-400);
+}
+
+[data-theme="dark"] .processStep p {
+  color: #A0B8AC;
+}

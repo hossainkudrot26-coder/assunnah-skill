@@ -250,3 +250,9 @@
 [data-theme="dark"] .postCard:hover {
   border-color: var(--color-primary-500);
 }
+
+.postLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}

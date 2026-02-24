@@ -41,7 +41,7 @@ export const images = {
     admission: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80&fit=crop",
     nsda: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80&fit=crop",
     success: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80&fit=crop",
-    scholarship: "https://images.unsplash.com/photo-1523050854058-8df90110c476?w=800&q=80&fit=crop",
+    scholarship: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&q=80&fit=crop",
     newBranch: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80&fit=crop",
     webdev: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80&fit=crop",
   },

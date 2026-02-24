@@ -595,3 +595,12 @@ export function ExpandIcon({ size = 24, className, color = "currentColor" }: Ico
         </svg>
     );
 }
+
+export function ArrowLeftIcon({ size = 24, className, color = "currentColor" }: IconProps) {
+    return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+            <line x1="19" y1="12" x2="5" y2="12" stroke={color} strokeWidth="2" strokeLinecap="round" />
+            <polyline points="12,19 5,12 12,5" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    );
+}

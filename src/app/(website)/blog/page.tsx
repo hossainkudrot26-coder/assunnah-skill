@@ -102,7 +102,7 @@ export default function BlogPage() {
       <section className={styles.blogSection}>
         <div className="container">
           {/* Featured Post */}
-          <div className={styles.featuredPost}>
+          <Link href={`/blog/${featuredPost.slug}`} className={styles.featuredPost}>
             <div className={styles.featuredImageWrap}>
               <Image
                 src={featuredPost.image}
@@ -133,12 +133,13 @@ export default function BlogPage() {
                 <ArrowRightIcon size={14} color="var(--color-primary-500)" />
               </span>
             </div>
-          </div>
+          </Link>
 
           {/* Post Grid */}
           <AnimatedSection className={styles.postsGrid}>
             {regularPosts.map((post) => (
               <AnimatedItem key={post.id} className={styles.postCard}>
+                <Link href={`/blog/${post.slug}`} className={styles.postLink}>
                 <div className={styles.postImageWrap}>
                   <Image
                     src={post.image}
@@ -163,6 +164,7 @@ export default function BlogPage() {
                     </span>
                   </div>
                 </div>
+                </Link>
               </AnimatedItem>
             ))}
           </AnimatedSection>

@@ -71,3 +71,42 @@
   padding: var(--space-12);
   color: var(--color-neutral-500);
 }
+
+/* ——— DARK MODE ——— */
+[data-theme="dark"] .faqSection {
+  background: transparent;
+}
+
+[data-theme="dark"] .searchWrapper {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .searchInput {
+  background: #0B3224;
+  border-color: #1E6B50;
+  color: #E0E8E4;
+}
+
+[data-theme="dark"] .searchInput:focus {
+  border-color: var(--color-primary-400);
+  background: #14493A;
+}
+
+[data-theme="dark"] .searchInput::placeholder {
+  color: #5E7A6C;
+}
+
+[data-theme="dark"] .categoryTab {
+  background: #14493A;
+  border-color: #1E6B50;
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .categoryTab:hover {
+  background: #1A5C47;
+}
+
+[data-theme="dark"] .noResults {
+  color: #7E9A8C;
+}

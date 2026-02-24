@@ -91,3 +91,22 @@
     width: 80%;
   }
 }
+
+/* ——— DARK MODE ——— */
+[data-theme="dark"] .headerSkeleton {
+  background: linear-gradient(135deg, #0B3224, #14493A);
+}
+
+[data-theme="dark"] .contentSkeleton {
+  background: #0B3224;
+}
+
+[data-theme="dark"] .skeleton {
+  background: linear-gradient(
+    90deg,
+    #14493A 25%,
+    #1E6B50 50%,
+    #14493A 75%
+  );
+  background-size: 800px 100%;
+}

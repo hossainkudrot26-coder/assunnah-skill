@@ -1,0 +1,393 @@
+/* ════════════════════════════════════════════
+   APPLICATION FORM — Multi-step
+   ════════════════════════════════════════════ */
+
+.formSection {
+  padding: 60px 0 80px;
+}
+
+.formWrapper {
+  max-width: 700px;
+  margin: 0 auto;
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 24px;
+  padding: 40px 36px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+}
+
+/* ——— STEP INDICATOR ——— */
+.stepIndicator {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin-bottom: 36px;
+  padding: 0 10px;
+}
+
+.stepDot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+}
+
+.stepNum {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-400);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition: all 0.3s;
+}
+
+.stepActive .stepNum {
+  background: var(--color-primary-500);
+  color: white;
+}
+
+.stepLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-neutral-400);
+  white-space: nowrap;
+}
+
+.stepActive .stepLabel {
+  color: var(--color-primary-600);
+}
+
+.stepLine {
+  position: absolute;
+  top: 18px;
+  left: 40px;
+  right: 40px;
+  height: 3px;
+  background: var(--color-neutral-100);
+  border-radius: 2px;
+  z-index: 1;
+}
+
+.stepProgress {
+  height: 100%;
+  background: var(--color-primary-500);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+/* ——— ERROR ——— */
+.errorMsg {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: 10px;
+  color: #DC2626;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+/* ——— STEP CONTENT ——— */
+.stepContent h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--color-neutral-800);
+}
+
+/* ——— COURSE GRID ——— */
+.courseGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.courseOption {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--color-neutral-50);
+  border: 1.5px solid var(--color-neutral-200);
+  border-radius: 14px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: all 0.15s;
+  width: 100%;
+}
+
+.courseOption:hover {
+  border-color: var(--color-primary-300);
+}
+
+.courseSelected {
+  border-color: var(--color-primary-500);
+  background: rgba(27, 138, 80, 0.04);
+}
+
+.courseDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.courseOption strong {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--color-neutral-800);
+}
+
+.courseOption span {
+  font-size: 0.75rem;
+  color: var(--color-neutral-500);
+}
+
+/* ——— FORM GRID ——— */
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formGroupFull {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formGroup label,
+.formGroupFull label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-neutral-600);
+}
+
+.formGroup input,
+.formGroup select,
+.formGroupFull input,
+.formGroupFull select,
+.formGroupFull textarea {
+  padding: 11px 14px;
+  border: 1.5px solid var(--color-neutral-200);
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  transition: border-color 0.2s;
+  background: white;
+  width: 100%;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroupFull input:focus,
+.formGroupFull select:focus,
+.formGroupFull textarea:focus {
+  outline: none;
+  border-color: var(--color-primary-400);
+  box-shadow: 0 0 0 3px rgba(27, 138, 80, 0.08);
+}
+
+/* ——— REVIEW CARD ——— */
+.reviewCard {
+  background: var(--color-neutral-50);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.reviewRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--color-neutral-100);
+}
+
+.reviewRow:last-child { border-bottom: none; }
+
+.reviewRow span {
+  font-size: 0.82rem;
+  color: var(--color-neutral-500);
+}
+
+.reviewRow strong {
+  font-size: 0.88rem;
+  color: var(--color-neutral-800);
+}
+
+/* ——— NAV BUTTONS ——— */
+.formNav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-neutral-100);
+}
+
+.prevBtn {
+  padding: 10px 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-neutral-600);
+  background: var(--color-neutral-50);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.nextBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 24px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: white;
+  background: var(--color-primary-500);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.nextBtn:hover { background: var(--color-primary-600); }
+
+.submitBtn {
+  padding: 12px 28px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(135deg, var(--color-primary-500), #14693d);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.submitBtn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(27, 138, 80, 0.3); }
+.submitBtn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* ——— SUCCESS ——— */
+.successSection {
+  padding: 60px 0 80px;
+  display: flex;
+  justify-content: center;
+}
+
+.successCard {
+  text-align: center;
+  max-width: 500px;
+  padding: 48px 36px;
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 24px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+}
+
+.successIcon { margin-bottom: 20px; }
+
+.successCard h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--color-primary-600);
+}
+
+.successCard p {
+  font-size: 0.9rem;
+  color: var(--color-neutral-600);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.successActions { display: flex; gap: 12px; justify-content: center; }
+
+.successBtn {
+  padding: 10px 24px;
+  background: var(--color-primary-500);
+  color: white;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.successBtnOutline {
+  padding: 10px 24px;
+  background: white;
+  color: var(--color-primary-600);
+  border: 1.5px solid var(--color-primary-200);
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* ——— RESPONSIVE ——— */
+@media (max-width: 768px) {
+  .formWrapper { padding: 28px 20px; }
+  .formGrid { grid-template-columns: 1fr; }
+  .formGroupFull { grid-column: span 1; }
+  .stepLabel { display: none; }
+}
+
+/* ——— DARK MODE ——— */
+[data-theme="dark"] .formWrapper {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .stepContent h3 { color: #F0F5F2; }
+
+[data-theme="dark"] .courseOption {
+  background: #0B3224;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .courseOption strong { color: #F0F5F2; }
+[data-theme="dark"] .courseSelected { border-color: var(--color-primary-400); }
+
+[data-theme="dark"] .formGroup input,
+[data-theme="dark"] .formGroup select,
+[data-theme="dark"] .formGroupFull input,
+[data-theme="dark"] .formGroupFull select,
+[data-theme="dark"] .formGroupFull textarea {
+  background: #0B3224;
+  border-color: #1E6B50;
+  color: #E0E8E4;
+}
+
+[data-theme="dark"] .formGroup label,
+[data-theme="dark"] .formGroupFull label { color: #A0B8AC; }
+
+[data-theme="dark"] .reviewCard { background: #0B3224; border-color: #1E6B50; }
+[data-theme="dark"] .reviewRow { border-bottom-color: #1E6B50; }
+[data-theme="dark"] .reviewRow strong { color: #F0F5F2; }
+
+[data-theme="dark"] .formNav { border-top-color: #1E6B50; }
+
+[data-theme="dark"] .successCard { background: #14493A; border-color: #1E6B50; }
+[data-theme="dark"] .successCard h2 { color: var(--color-secondary-400); }
+[data-theme="dark"] .successCard p { color: #A0B8AC; }

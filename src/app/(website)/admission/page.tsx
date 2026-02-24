@@ -157,8 +157,8 @@ export default function AdmissionPage() {
             <h2>এখনই আবেদন করুন</h2>
             <p>আমাদের যেকোনো কোর্সে ভর্তির জন্য এখনই যোগাযোগ করুন। আসন সীমিত!</p>
             <div className={styles.ctaActions}>
-              <Link href="/courses" className={styles.ctaPrimary}>
-                কোর্স দেখুন
+              <Link href="/admission/apply" className={styles.ctaPrimary}>
+                অনলাইন আবেদন করুন
                 <ArrowRightIcon size={15} color="white" />
               </Link>
               <a href="tel:+8809610001089" className={styles.ctaPhone}>

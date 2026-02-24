@@ -7,6 +7,8 @@ import {
     MonitorIcon, BuildingIcon, UsersIcon, MapPinIcon, CalendarIcon,
     ShieldCheckIcon, UserIcon, BookIcon, ArrowRightIcon,
 } from "@/shared/components/Icons";
+import { PageHeader } from "@/shared/components/PageHeader";
+import { AnimatedSection, AnimatedItem } from "@/shared/components/AnimatedSection";
 import styles from "./about.module.css";
 
 export const metadata: Metadata = {
@@ -41,22 +43,15 @@ const facilities = [
 export default function AboutPage() {
     return (
         <>
-            {/* Page Header */}
-            <section className={styles.pageHeader}>
-                <div className={styles.pageHeaderBg} />
-                <div className={`container ${styles.pageHeaderContent}`}>
-                    <span className="section-badge section-badge-dark">
-                        <BuildingIcon size={14} color="var(--color-secondary-400)" />
-                        আমাদের সম্পর্কে
-                    </span>
-                    <h1 className="heading-lg" style={{ color: "white" }}>
-                        আস-সুন্নাহ স্কিল <span className="gradient-text">ডেভেলপমেন্ট ইনস্টিটিউট</span>
-                    </h1>
-                    <p style={{ color: "rgba(255,255,255,0.7)", maxWidth: "600px", fontSize: "var(--text-lg)" }}>
-                        আস-সুন্নাহ ফাউন্ডেশনের অধীনে পরিচালিত দক্ষতা বৃদ্ধি ও আত্মোন্নয়নের প্রতিষ্ঠান
-                    </p>
-                </div>
-            </section>
+            <PageHeader
+                title="আস-সুন্নাহ স্কিল ডেভেলপমেন্ট ইনস্টিটিউট"
+                subtitle="আস-সুন্নাহ ফাউন্ডেশনের অধীনে পরিচালিত দক্ষতা বৃদ্ধি ও আত্মোন্নয়নের প্রতিষ্ঠান"
+                breadcrumbs={[
+                    { label: "হোম", href: "/" },
+                    { label: "আমাদের সম্পর্কে" },
+                ]}
+                badge={{ icon: <BuildingIcon size={14} color="var(--color-secondary-300)" />, text: "আমাদের সম্পর্কে" }}
+            />
 
             {/* Founder Section */}
             <section className={`section ${styles.founderSection}`}>
@@ -121,15 +116,15 @@ export default function AboutPage() {
                         </span>
                         <h2 className="heading-md">যে নীতিতে আমরা <span className="gradient-text">চলি</span></h2>
                     </div>
-                    <div className={styles.valuesGrid}>
+                    <AnimatedSection className={styles.valuesGrid}>
                         {values.map((v, i) => (
-                            <div key={i} className={styles.valueCard}>
+                            <AnimatedItem key={i} className={styles.valueCard}>
                                 <div className={styles.valueIconBox}>{v.icon}</div>
                                 <h3>{v.title}</h3>
                                 <p>{v.desc}</p>
-                            </div>
+                            </AnimatedItem>
                         ))}
-                    </div>
+                    </AnimatedSection>
                 </div>
             </section>
 
@@ -168,15 +163,15 @@ export default function AboutPage() {
                         </span>
                         <h2 className="heading-md">আধুনিক <span className="gradient-text">অবকাঠামো</span></h2>
                     </div>
-                    <div className={styles.facilitiesGrid}>
+                    <AnimatedSection className={styles.facilitiesGrid}>
                         {facilities.map((f, i) => (
-                            <div key={i} className={styles.facilityCard}>
+                            <AnimatedItem key={i} className={styles.facilityCard}>
                                 <div className={styles.facilityIconBox}>{f.icon}</div>
                                 <span className={styles.facilityNumber}>{f.number}</span>
                                 <span className={styles.facilityLabel}>{f.label}</span>
-                            </div>
+                            </AnimatedItem>
                         ))}
-                    </div>
+                    </AnimatedSection>
                     <div className={styles.facilityInfo}>
                         <div className={styles.facilityInfoCard}>
                             <div className={styles.facilityInfoIcon}>

@@ -102,12 +102,12 @@ function useCounter(target: number, duration = 2200) {
    ═══════════════════════════════════════════ */
 
 const courses = [
-  { id: 1, title: "স্মল বিজনেস ম্যানেজমেন্ট", desc: "MS Office, প্র্যাকটিক্যাল অ্যাকাউন্টিং, গ্রাফিক ডিজাইন, ক্রিয়েটিভ মার্কেটিং, ভিডিও এডিটিং, জেনারেটিভ AI, প্র্যাকটিক্যাল ইংলিশ ও মৌলিক দীনি জ্ঞান", duration: "৩ মাস", type: "রেসিডেন্সিয়াল", icon: <BriefcaseIcon size={26} color="#1B8A50" />, color: "#1B8A50", featured: true },
-  { id: 2, title: "শেফ ট্রেনিং অ্যান্ড কিচেন ম্যানেজমেন্ট", desc: "দৈনিক ১২-১৪ ঘণ্টা প্র্যাকটিক্যাল ট্রেনিং, ২৪ ঘণ্টা মেন্টর সাপোর্ট, রেসিডেন্সিয়াল — সম্পূর্ণ বিনামূল্যে", duration: "৪ মাস", type: "ফ্রি", icon: <ChefHatIcon size={26} color="#E65100" />, color: "#E65100", featured: false },
-  { id: 3, title: "দি আর্ট অব সেলস অ্যান্ড মার্কেটিং", desc: "সেলস স্ট্র্যাটেজি, কমিউনিকেশন, ব্র্যান্ডিং ও মার্কেটিং — ১০০% পর্যন্ত স্কলারশিপ সুবিধা", duration: "৩ মাস", type: "রেসিডেন্সিয়াল", icon: <ChartIcon size={26} color="#1565C0" />, color: "#1565C0", featured: false },
-  { id: 4, title: "স্মার্ট টেইলারিং এন্ড ফ্যাশন ডিজাইন", desc: "টেইলারিং, টাই-ডাই, ব্লক-বাটিক, এমব্রয়ডারি — প্রশিক্ষণ শেষে ৫০,০০০+ টাকার সেলাই মেশিন ও সরঞ্জাম প্রদান", duration: "৩ মাস", type: "নারীদের জন্য", icon: <ScissorsIcon size={26} color="#AD1457" />, color: "#AD1457", featured: false },
-  { id: 5, title: "জুতা শিল্পে উদ্যোক্তা", desc: "জুতা ডিজাইন, উৎপাদন ও বিপণন — প্রশিক্ষণ শেষে আস-সুন্নাহ ফাউন্ডেশন থেকে আর্থিক সহায়তা", duration: "৩ মাস", type: "ফ্রি", icon: <TargetIcon size={26} color="#795548" />, color: "#795548", featured: false },
-  { id: 6, title: "ড্রাইভিং ট্রেনিং", desc: "দক্ষ ও সৎ ড্রাইভার তৈরির পেশাদার প্রশিক্ষণ", duration: "১ মাস", type: "ফ্রি", icon: <CarIcon size={26} color="#2E7D32" />, color: "#2E7D32", featured: false },
+  { id: 1, slug: "small-business-management", title: "স্মল বিজনেস ম্যানেজমেন্ট", desc: "MS Office, প্র্যাকটিক্যাল অ্যাকাউন্টিং, গ্রাফিক ডিজাইন, ক্রিয়েটিভ মার্কেটিং, ভিডিও এডিটিং, জেনারেটিভ AI, প্র্যাকটিক্যাল ইংলিশ ও মৌলিক দীনি জ্ঞান", duration: "৩ মাস", type: "রেসিডেন্সিয়াল", icon: <BriefcaseIcon size={26} color="#1B8A50" />, color: "#1B8A50", featured: true },
+  { id: 2, slug: "chef-training", title: "শেফ ট্রেনিং অ্যান্ড কিচেন ম্যানেজমেন্ট", desc: "দৈনিক ১২-১৪ ঘণ্টা প্র্যাকটিক্যাল ট্রেনিং, ২৪ ঘণ্টা মেন্টর সাপোর্ট, রেসিডেন্সিয়াল — সম্পূর্ণ বিনামূল্যে", duration: "৪ মাস", type: "ফ্রি", icon: <ChefHatIcon size={26} color="#E65100" />, color: "#E65100", featured: false },
+  { id: 3, slug: "sales-and-marketing", title: "দি আর্ট অব সেলস অ্যান্ড মার্কেটিং", desc: "সেলস স্ট্র্যাটেজি, কমিউনিকেশন, ব্র্যান্ডিং ও মার্কেটিং — ১০০% পর্যন্ত স্কলারশিপ সুবিধা", duration: "৩ মাস", type: "রেসিডেন্সিয়াল", icon: <ChartIcon size={26} color="#1565C0" />, color: "#1565C0", featured: false },
+  { id: 4, slug: "smart-tailoring", title: "স্মার্ট টেইলারিং এন্ড ফ্যাশন ডিজাইন", desc: "টেইলারিং, টাই-ডাই, ব্লক-বাটিক, এমব্রয়ডারি — প্রশিক্ষণ শেষে ৫০,০০০+ টাকার সেলাই মেশিন ও সরঞ্জাম প্রদান", duration: "৩ মাস", type: "নারীদের জন্য", icon: <ScissorsIcon size={26} color="#AD1457" />, color: "#AD1457", featured: false },
+  { id: 5, slug: "shoe-entrepreneurship", title: "জুতা শিল্পে উদ্যোক্তা", desc: "জুতা ডিজাইন, উৎপাদন ও বিপণন — প্রশিক্ষণ শেষে আস-সুন্নাহ ফাউন্ডেশন থেকে আর্থিক সহায়তা", duration: "৩ মাস", type: "ফ্রি", icon: <TargetIcon size={26} color="#795548" />, color: "#795548", featured: false },
+  { id: 6, slug: "driving-training", title: "ড্রাইভিং ট্রেনিং", desc: "দক্ষ ও সৎ ড্রাইভার তৈরির পেশাদার প্রশিক্ষণ", duration: "১ মাস", type: "ফ্রি", icon: <CarIcon size={26} color="#2E7D32" />, color: "#2E7D32", featured: false },
 ];
 
 const testimonials = [
@@ -415,7 +415,7 @@ export default function HomePage() {
                 variants={fadeScale}
                 className={`${styles.bentoCard} ${course.featured ? styles.bentoCardFeatured : ""}`}
               >
-                <Link href="/courses" className={styles.bentoCardLink}>
+                <Link href={`/courses/${course.slug}`} className={styles.bentoCardLink}>
                   <div className={styles.bentoCardGlow} style={{
                     background: `radial-gradient(ellipse at top left, ${course.color}20, transparent 70%)`
                   }} />

@@ -235,6 +235,68 @@
     color: var(--color-neutral-600);
 }
 
+/* ——— NSDA BADGE ——— */
+.nsdaBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(141, 198, 63, 0.08);
+    border: 1px solid rgba(141, 198, 63, 0.2);
+    border-radius: 10px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-secondary-400);
+    width: fit-content;
+}
+
+/* ——— WORKING HOURS ——— */
+.workingHours {
+    display: flex;
+    gap: 10px;
+    padding: 14px 16px;
+    background: rgba(27, 138, 80, 0.08);
+    border: 1px solid rgba(27, 138, 80, 0.15);
+    border-radius: 12px;
+    margin-top: 8px;
+}
+
+.workingHours svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--color-primary-400);
+}
+
+.workingHours div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.workingHours span {
+    font-size: 0.78rem;
+    color: var(--color-neutral-400);
+    line-height: 1.4;
+}
+
+/* ——— BOTTOM BAR ENHANCED ——— */
+.footerBottomRight {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footerDivider {
+    width: 1px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.footerEst {
+    font-size: 0.82rem;
+    color: var(--color-neutral-600);
+}
+
 /* ——— DECORATIVE ——— */
 .footerDecor1 {
     position: absolute;

@@ -1,115 +1,368 @@
+/* ════════════════════════════════════════════
+   ADMISSION — Premium Timeline + Documents
+   ════════════════════════════════════════════ */
+
+/* ——— SECTION HEADER ——— */
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.sectionHeader h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--color-neutral-900);
+  margin-bottom: 8px;
+}
+
+.sectionHeader p {
+  font-size: 0.92rem;
+  color: var(--color-neutral-500);
+}
+
+/* ——— STEPS SECTION ——— */
 .stepsSection {
+  padding: 80px 0;
   background: var(--color-neutral-50);
 }
 
-.stepsTimeline {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: var(--space-4);
+/* ——— TIMELINE ——— */
+.timeline {
   position: relative;
-}
-
-.stepCard {
-  position: relative;
-  padding: var(--space-6);
-  background: white;
-  border: 1px solid var(--color-neutral-200);
-  border-radius: var(--radius-2xl);
-  text-align: center;
-  transition: all var(--transition-base);
-}
-
-.stepCard:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--color-primary-200);
-}
-
-.stepNumber {
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 28px;
-  height: 28px;
-  background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
-  color: white;
-  font-size: var(--text-xs);
-  font-weight: var(--font-bold);
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.stepIconBox {
-  width: 52px;
-  height: 52px;
-  background: var(--color-primary-50);
-  border-radius: var(--radius-xl);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: var(--space-4) auto var(--space-3);
-}
-
-.stepCard h3 {
-  font-size: var(--text-base);
-  font-weight: var(--font-bold);
-  color: var(--color-neutral-900);
-  margin-bottom: var(--space-2);
-}
-
-.stepCard p {
-  font-size: var(--text-sm);
-  color: var(--color-neutral-600);
-  line-height: var(--leading-relaxed);
-}
-
-.stepConnector {
-  display: none;
-}
-
-/* Documents */
-.docsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: var(--space-4);
   max-width: 800px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
-.docCard {
+.timelineLine {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(
+    to bottom,
+    var(--color-primary-200),
+    var(--color-primary-500),
+    var(--color-secondary-500),
+    var(--color-primary-200)
+  );
+  transform: translateX(-50%);
+  border-radius: 3px;
+}
+
+.timelineItem {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.timelineItem:last-child {
+  margin-bottom: 0;
+}
+
+.timelineLeft {
+  justify-content: flex-start;
+  padding-right: calc(50% + 36px);
+  text-align: right;
+}
+
+.timelineRight {
+  justify-content: flex-end;
+  padding-left: calc(50% + 36px);
+  text-align: left;
+}
+
+.timelineDot {
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-4) var(--space-5);
-  background: var(--color-dark-card);
-  border: 1px solid var(--color-dark-border);
-  border-radius: var(--radius-xl);
+  justify-content: center;
+  transform: translateX(-50%);
+  z-index: 2;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  border: 3px solid white;
+}
+
+.timelineDot span {
+  font-size: 0.72rem;
+  font-weight: 800;
   color: white;
-  font-size: var(--text-sm);
 }
 
-/* Scholarship */
-.scholarshipCta {
-  background: linear-gradient(135deg, rgba(212, 168, 67, 0.04), rgba(141, 198, 63, 0.04));
+/* ——— TIMELINE CARD ——— */
+.timelineCard {
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 16px;
+  padding: 28px 24px;
+  width: 100%;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
 }
 
-@media (max-width: 1024px) {
-  .stepsTimeline {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.timelineCard:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  border-color: var(--color-primary-200);
+  transform: translateY(-3px);
 }
 
+.cardIconWrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.timelineLeft .cardIconWrap {
+  margin-left: auto;
+}
+
+.timelineCard h3 {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--color-neutral-900);
+  margin-bottom: 8px;
+}
+
+.timelineCard p {
+  font-size: 0.85rem;
+  color: var(--color-neutral-600);
+  line-height: 1.65;
+}
+
+/* ——— DOCUMENTS ——— */
+.docsSection {
+  padding: 80px 0;
+  background: white;
+}
+
+.docsGrid {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.docItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 24px;
+  background: var(--color-neutral-50);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 14px;
+  font-size: 0.92rem;
+  color: var(--color-neutral-800);
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.docItem:hover {
+  border-color: var(--color-primary-200);
+  background: var(--color-primary-50);
+  transform: translateX(4px);
+}
+
+.docCheck {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 8px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+/* ——— CTA ——— */
+.ctaSection {
+  padding: 0 0 80px;
+  background: white;
+}
+
+.ctaCard {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 52px 40px;
+  background: linear-gradient(160deg, #0d4a2b, #1B8A50);
+  border-radius: 24px;
+  color: white;
+}
+
+.ctaCard h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-top: 16px;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.ctaCard p {
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+.ctaActions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ctaPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: white;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s;
+}
+
+.ctaPrimary:hover {
+  background: rgba(255, 255, 255, 0.22);
+  gap: 12px;
+}
+
+.ctaPhone {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.ctaPhone:hover {
+  color: white;
+}
+
+/* ——— RESPONSIVE ——— */
 @media (max-width: 768px) {
-  .stepsTimeline {
-    grid-template-columns: repeat(2, 1fr);
+  .stepsSection,
+  .docsSection {
+    padding: 48px 0;
+  }
+
+  .timeline {
+    padding: 0 0 0 30px;
+  }
+
+  .timelineLine {
+    left: 15px;
+  }
+
+  .timelineLeft,
+  .timelineRight {
+    padding: 0 0 0 50px;
+    text-align: left;
+    justify-content: flex-start;
+  }
+
+  .timelineDot {
+    left: 15px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .timelineLeft .cardIconWrap {
+    margin-left: 0;
+  }
+
+  .timelineCard {
+    padding: 20px 18px;
+  }
+
+  .ctaCard {
+    padding: 36px 24px;
+  }
+
+  .ctaCard h2 {
+    font-size: 1.25rem;
   }
 }
 
-@media (max-width: 480px) {
-  .stepsTimeline {
-    grid-template-columns: 1fr;
-  }
+/* ——— DARK MODE ——— */
+[data-theme="dark"] .stepsSection {
+  background: transparent;
+}
+
+[data-theme="dark"] .timelineLine {
+  opacity: 0.5;
+}
+
+[data-theme="dark"] .timelineCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .timelineCard:hover {
+  border-color: var(--color-primary-400);
+}
+
+[data-theme="dark"] .timelineCard h3 {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .timelineCard p {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .timelineDot {
+  border-color: #0B3224;
+}
+
+[data-theme="dark"] .docsSection {
+  background: #0B3224;
+}
+
+[data-theme="dark"] .sectionHeader h2 {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .sectionHeader p {
+  color: #7E9A8C;
+}
+
+[data-theme="dark"] .docItem {
+  background: #14493A;
+  border-color: #1E6B50;
+  color: #C0D4C8;
+}
+
+[data-theme="dark"] .docItem:hover {
+  background: #1A5C47;
+  border-color: var(--color-primary-400);
+}
+
+[data-theme="dark"] .docCheck {
+  background: #0B3224;
+}
+
+[data-theme="dark"] .ctaSection {
+  background: #0B3224;
 }

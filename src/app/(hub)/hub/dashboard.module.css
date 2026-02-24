@@ -1,0 +1,221 @@
+/* ════════════════════════════════════════════
+   STUDENT DASHBOARD
+   ════════════════════════════════════════════ */
+
+.dashboard {
+  max-width: 900px;
+}
+
+/* ——— WELCOME ——— */
+.welcomeCard {
+  background: linear-gradient(135deg, #1B8A50, #14693d);
+  border-radius: 20px;
+  padding: 36px 32px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.welcomeContent {
+  position: relative;
+  z-index: 2;
+}
+
+.welcomeCard h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.welcomeCard p {
+  font-size: 0.88rem;
+  opacity: 0.85;
+  line-height: 1.5;
+  max-width: 500px;
+}
+
+.welcomeDecor {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ——— SECTION TITLE ——— */
+.sectionTitle {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-neutral-700);
+  margin-bottom: 14px;
+}
+
+/* ——— QUICK ACTIONS ——— */
+.actionsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.actionCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 22px 14px;
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 16px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.actionCard:hover {
+  border-color: var(--color-primary-300);
+  box-shadow: 0 4px 16px rgba(27, 138, 80, 0.08);
+  transform: translateY(-2px);
+}
+
+.actionCard span {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-neutral-700);
+}
+
+.actionIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ——— STATS ——— */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.statCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px;
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 16px;
+}
+
+.statIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.statValue {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-neutral-800);
+}
+
+.statLabel {
+  font-size: 0.78rem;
+  color: var(--color-neutral-500);
+}
+
+/* ——— NOTICE ——— */
+.noticeCard {
+  display: flex;
+  gap: 14px;
+  padding: 20px 22px;
+  background: rgba(27, 138, 80, 0.06);
+  border: 1px solid rgba(27, 138, 80, 0.15);
+  border-radius: 16px;
+}
+
+.noticeCard svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.noticeCard strong {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-neutral-800);
+  margin-bottom: 4px;
+}
+
+.noticeCard p {
+  font-size: 0.82rem;
+  color: var(--color-neutral-600);
+  line-height: 1.5;
+}
+
+/* ——— RESPONSIVE ——— */
+@media (max-width: 768px) {
+  .actionsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .welcomeDecor {
+    display: none;
+  }
+}
+
+/* ——— DARK MODE ——— */
+[data-theme="dark"] .sectionTitle {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .actionCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .actionCard:hover {
+  border-color: var(--color-primary-400);
+}
+
+[data-theme="dark"] .actionCard span {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .statCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .statValue {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .statLabel {
+  color: #7E9A8C;
+}
+
+[data-theme="dark"] .noticeCard {
+  background: rgba(27, 138, 80, 0.1);
+  border-color: rgba(27, 138, 80, 0.2);
+}
+
+[data-theme="dark"] .noticeCard strong {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .noticeCard p {
+  color: #A0B8AC;
+}

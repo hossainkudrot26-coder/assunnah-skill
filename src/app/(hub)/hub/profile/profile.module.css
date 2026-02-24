@@ -1,0 +1,115 @@
+.profilePage { max-width: 700px; }
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 28px;
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-400));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.profileHeader h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.profileHeader p {
+  font-size: 0.85rem;
+  color: var(--color-neutral-500);
+  margin-bottom: 6px;
+}
+
+.roleBadge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  background: var(--color-primary-50);
+  color: var(--color-primary-600);
+  border-radius: 6px;
+}
+
+.infoSection {
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 20px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+}
+
+.infoSection h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-neutral-100);
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.infoItem label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-neutral-400);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.infoItem span {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-neutral-800);
+}
+
+.changePasswordBtn {
+  padding: 10px 20px;
+  background: var(--color-neutral-50);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-neutral-700);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.changePasswordBtn:hover {
+  border-color: var(--color-primary-300);
+  color: var(--color-primary-600);
+}
+
+[data-theme="dark"] .profileHeader,
+[data-theme="dark"] .infoSection {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .profileHeader h2,
+[data-theme="dark"] .infoSection h3 { color: #F0F5F2; }
+[data-theme="dark"] .infoItem span { color: #A0B8AC; }
+[data-theme="dark"] .infoSection h3 { border-bottom-color: #1E6B50; }

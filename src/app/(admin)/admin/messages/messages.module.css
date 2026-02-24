@@ -1,0 +1,86 @@
+.messagesPage { max-width: 800px; }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.header h2 { font-size: 1.1rem; font-weight: 700; }
+.count { font-size: 0.82rem; color: var(--color-neutral-500); }
+
+.empty {
+  text-align: center;
+  padding: 60px;
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 16px;
+  color: var(--color-neutral-500);
+}
+
+.messagesList { display: flex; flex-direction: column; gap: 12px; }
+
+.messageCard {
+  padding: 20px;
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 14px;
+  transition: border-color 0.15s;
+}
+
+.messageCard:hover { border-color: var(--color-primary-300); }
+
+.unread {
+  border-left: 3px solid var(--color-primary-500);
+  background: rgba(27, 138, 80, 0.03);
+}
+
+.messageTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.messageTop strong { font-size: 0.92rem; }
+.phone { font-size: 0.78rem; color: var(--color-neutral-500); margin-left: 10px; }
+.email { font-size: 0.78rem; color: var(--color-neutral-400); margin-left: 8px; }
+
+.messageActions { display: flex; align-items: center; gap: 10px; }
+.date { font-size: 0.75rem; color: var(--color-neutral-400); }
+
+.markReadBtn {
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--color-primary-50);
+  color: var(--color-primary-600);
+  border: 1px solid var(--color-primary-200);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.subject {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-primary-600);
+  background: var(--color-primary-50);
+  padding: 2px 10px;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+
+.messageBody {
+  font-size: 0.88rem;
+  color: var(--color-neutral-600);
+  line-height: 1.6;
+}
+
+[data-theme="dark"] .header h2 { color: #F0F5F2; }
+[data-theme="dark"] .messageCard { background: #14493A; border-color: #1E6B50; }
+[data-theme="dark"] .messageTop strong { color: #F0F5F2; }
+[data-theme="dark"] .messageBody { color: #A0B8AC; }
+[data-theme="dark"] .empty { background: #14493A; border-color: #1E6B50; }

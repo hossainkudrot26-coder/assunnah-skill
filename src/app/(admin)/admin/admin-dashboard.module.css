@@ -1,0 +1,108 @@
+.adminDashboard { max-width: 900px; }
+
+.welcomeBanner {
+  background: linear-gradient(135deg, #14493A, #1B8A50);
+  border-radius: 20px;
+  padding: 32px;
+  color: white;
+  margin-bottom: 28px;
+}
+
+.welcomeBanner h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 4px; }
+.welcomeBanner p { font-size: 0.88rem; opacity: 0.8; }
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.statCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px;
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 16px;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.statCard:hover {
+  border-color: var(--color-primary-300);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.statDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.statValue {
+  display: block;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-neutral-800);
+}
+
+.statLabel {
+  font-size: 0.78rem;
+  color: var(--color-neutral-500);
+}
+
+.sectionTitle {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-neutral-700);
+  margin-bottom: 14px;
+}
+
+.quickGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.quickCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 14px;
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 14px;
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-neutral-700);
+  transition: all 0.15s;
+}
+
+.quickCard:hover {
+  border-color: var(--color-primary-300);
+  transform: translateY(-2px);
+}
+
+.quickIcon { font-size: 1.5rem; }
+
+@media (max-width: 768px) {
+  .statsGrid { grid-template-columns: repeat(2, 1fr); }
+  .quickGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+[data-theme="dark"] .statCard,
+[data-theme="dark"] .quickCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .statValue { color: #F0F5F2; }
+[data-theme="dark"] .statLabel { color: #7E9A8C; }
+[data-theme="dark"] .quickCard { color: #F0F5F2; }
+[data-theme="dark"] .sectionTitle { color: #A0B8AC; }

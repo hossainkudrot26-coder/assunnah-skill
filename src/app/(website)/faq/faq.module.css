@@ -1,0 +1,73 @@
+.faqSection {
+  background: var(--color-neutral-50);
+}
+
+.searchWrapper {
+  max-width: 600px;
+  margin: 0 auto var(--space-8);
+}
+
+.searchInput {
+  width: 100%;
+  padding: var(--space-4) var(--space-6);
+  background: white;
+  border: 2px solid var(--color-neutral-200);
+  border-radius: var(--radius-2xl);
+  font-size: var(--text-base);
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.searchInput:focus {
+  border-color: var(--color-primary-400);
+  box-shadow: 0 0 0 4px rgba(27, 138, 80, 0.1);
+}
+
+.categoryTabs {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-10);
+}
+
+.categoryTab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-neutral-600);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.categoryTab:hover {
+  border-color: var(--color-primary-300);
+  color: var(--color-primary-600);
+}
+
+.categoryTabActive {
+  background: var(--color-primary-500);
+  border-color: var(--color-primary-500);
+  color: white;
+}
+
+.categoryTabActive svg {
+  color: white;
+}
+
+.faqList {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.noResults {
+  text-align: center;
+  padding: var(--space-12);
+  color: var(--color-neutral-500);
+}

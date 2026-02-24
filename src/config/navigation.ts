@@ -1,0 +1,135 @@
+export interface NavItem {
+  label: string;
+  labelEn: string;
+  href: string;
+  description?: string;
+  iconName?: string;
+  children?: NavItem[];
+}
+
+export const mainNav: NavItem[] = [
+  {
+    label: "হোম",
+    labelEn: "Home",
+    href: "/",
+  },
+  {
+    label: "প্রশিক্ষণ",
+    labelEn: "Training",
+    href: "/courses",
+    children: [
+      {
+        label: "সকল কোর্স",
+        labelEn: "All Courses",
+        href: "/courses",
+        description: "আমাদের সকল প্রশিক্ষণ কোর্স দেখুন",
+        iconName: "book",
+      },
+      {
+        label: "স্মল বিজনেস ম্যানেজমেন্ট",
+        labelEn: "Small Business Management",
+        href: "/courses/small-business-management",
+        description: "MS Office, ডিজাইন, মার্কেটিং, AI",
+        iconName: "briefcase",
+      },
+      {
+        label: "শেফ ট্রেনিং",
+        labelEn: "Chef Training",
+        href: "/courses/chef-training",
+        description: "শেফ ও কিচেন ম্যানেজমেন্ট প্রশিক্ষণ",
+        iconName: "chef",
+      },
+      {
+        label: "সেলস ও মার্কেটিং",
+        labelEn: "Sales & Marketing",
+        href: "/courses/sales-and-marketing",
+        description: "সেলস স্ট্র্যাটেজি ও মার্কেটিং দক্ষতা",
+        iconName: "chart",
+      },
+      {
+        label: "স্মার্ট টেইলারিং",
+        labelEn: "Smart Tailoring",
+        href: "/courses/smart-tailoring",
+        description: "নারীদের জন্য টেইলারিং ও ফ্যাশন ডিজাইন",
+        iconName: "scissors",
+      },
+    ],
+  },
+  {
+    label: "ভর্তি তথ্য",
+    labelEn: "Admission",
+    href: "/admission",
+    children: [
+      {
+        label: "ভর্তি প্রক্রিয়া",
+        labelEn: "Admission Process",
+        href: "/admission",
+        description: "ভর্তির ধাপসমূহ ও প্রয়োজনীয় কাগজপত্র",
+        iconName: "clipboard",
+      },
+      {
+        label: "স্কলারশিপ",
+        labelEn: "Scholarship",
+        href: "/scholarship",
+        description: "স্কলারশিপ সুবিধা ও আবেদন প্রক্রিয়া",
+        iconName: "award",
+      },
+      {
+        label: "সাধারণ জিজ্ঞাসা",
+        labelEn: "FAQ",
+        href: "/faq",
+        description: "প্রায়শই জিজ্ঞাসিত প্রশ্ন ও উত্তর",
+        iconName: "chat",
+      },
+    ],
+  },
+  {
+    label: "সম্পর্কে",
+    labelEn: "About",
+    href: "/about",
+    children: [
+      {
+        label: "আমাদের সম্পর্কে",
+        labelEn: "About Us",
+        href: "/about",
+        description: "প্রতিষ্ঠানের ইতিহাস ও মিশন",
+        iconName: "building",
+      },
+      {
+        label: "গ্যালারি",
+        labelEn: "Gallery",
+        href: "/gallery",
+        description: "প্রশিক্ষণ ও ইভেন্টের ছবি",
+        iconName: "camera",
+      },
+      {
+        label: "সাফল্যের গল্প",
+        labelEn: "Success Stories",
+        href: "/stories",
+        description: "সফল শিক্ষার্থীদের অভিজ্ঞতা",
+        iconName: "message",
+      },
+      {
+        label: "ব্লগ / সংবাদ",
+        labelEn: "Blog / News",
+        href: "/blog",
+        description: "সাম্প্রতিক খবর ও আপডেট",
+        iconName: "megaphone",
+      },
+    ],
+  },
+  {
+    label: "যোগাযোগ",
+    labelEn: "Contact",
+    href: "/contact",
+  },
+];
+
+export const hubNav = [
+  { label: "ড্যাশবোর্ড", labelEn: "Dashboard", href: "/dashboard", icon: "home" },
+  { label: "গ্রুপসমূহ", labelEn: "Groups", href: "/groups", icon: "users" },
+  { label: "ইভেন্ট", labelEn: "Events", href: "/events", icon: "calendar" },
+  { label: "মেসেজ", labelEn: "Messages", href: "/messages", icon: "chat" },
+  { label: "ঘোষণা", labelEn: "Announcements", href: "/announcements", icon: "megaphone" },
+  { label: "ফর্ম", labelEn: "Forms", href: "/forms", icon: "clipboard" },
+];

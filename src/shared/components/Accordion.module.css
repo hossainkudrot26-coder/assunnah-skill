@@ -1,0 +1,107 @@
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item {
+  border: 1px solid var(--color-neutral-200, #e5e7eb);
+  border-radius: 16px;
+  overflow: hidden;
+  background: white;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item:hover {
+  border-color: var(--color-primary-200, #a7d8b8);
+}
+
+.itemOpen {
+  border-color: var(--color-primary-300, #6bc48d);
+  box-shadow: 0 4px 24px rgba(27, 138, 80, 0.08);
+}
+
+.trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: background 0.2s ease;
+}
+
+.trigger:hover {
+  background: var(--color-neutral-50, #f9fafb);
+}
+
+.triggerLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+}
+
+.triggerIcon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--color-primary-50, #f0fdf4);
+  flex-shrink: 0;
+}
+
+.triggerTitle {
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--color-neutral-800, #1f2937);
+  line-height: 1.5;
+}
+
+.chevron {
+  flex-shrink: 0;
+  color: var(--color-neutral-400, #9ca3af);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.itemOpen .chevron {
+  transform: rotate(180deg);
+  color: var(--color-primary-500, #1B8A50);
+}
+
+.content {
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.contentInner {
+  padding: 0 24px 20px 24px;
+  font-size: 0.95rem;
+  color: var(--color-neutral-600, #4b5563);
+  line-height: 1.8;
+}
+
+/* ── Topic list inside accordion ── */
+.topicList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.topicList li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.92rem;
+  color: var(--color-neutral-600, #4b5563);
+}

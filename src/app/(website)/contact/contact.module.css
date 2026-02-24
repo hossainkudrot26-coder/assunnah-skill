@@ -1,0 +1,196 @@
+.pageHeader {
+    position: relative;
+    padding: var(--space-32) 0 var(--space-16);
+    overflow: hidden;
+}
+
+.pageHeaderBg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--color-dark-bg), var(--color-primary-900));
+}
+
+.pageHeaderBg::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(27, 138, 80, 0.15), transparent 70%);
+}
+
+.pageHeaderContent {
+    position: relative;
+    z-index: 2;
+}
+
+.contactSection {
+    background: var(--color-neutral-50);
+}
+
+.contactGrid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: var(--space-12);
+    align-items: flex-start;
+}
+
+/* ——— FORM ——— */
+.formWrapper {
+    background: white;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.formRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.formGroup label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-neutral-700);
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-neutral-300);
+    border-radius: var(--radius-lg);
+    font-size: var(--text-base);
+    transition: all var(--transition-fast);
+    background: white;
+    color: var(--color-neutral-900);
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+    outline: none;
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 3px rgba(27, 138, 80, 0.15);
+}
+
+.formGroup textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.successMessage {
+    text-align: center;
+    padding: var(--space-12) var(--space-8);
+    animation: scaleIn 0.4s ease-out;
+}
+
+.successIconWrap {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-4);
+    background: var(--color-primary-50);
+    border-radius: var(--radius-full);
+}
+
+.successMessage h3 {
+    font-size: var(--text-2xl);
+    color: var(--color-primary-600);
+    margin-bottom: var(--space-2);
+}
+
+.successMessage p {
+    color: var(--color-neutral-500);
+}
+
+/* ——— INFO CARDS ——— */
+.contactInfo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.infoCard {
+    background: white;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5);
+    transition: all var(--transition-base);
+}
+
+.infoCard:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary-200);
+}
+
+.infoIconWrap {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary-50);
+    border: 1px solid var(--color-primary-100);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-3);
+    transition: transform var(--transition-base);
+}
+
+.infoCard:hover .infoIconWrap {
+    transform: scale(1.08);
+}
+
+.formSecurityNote {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    font-size: var(--text-xs);
+    color: var(--color-neutral-400);
+}
+
+.infoCard h3 {
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    margin-bottom: var(--space-1);
+}
+
+.infoCard p {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-600);
+    line-height: var(--leading-relaxed);
+}
+
+.mapWrapper {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    border: 1px solid var(--color-neutral-200);
+}
+
+@media (max-width: 768px) {
+    .contactGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .formRow {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,128 @@
+.typesSection {
+  background: var(--color-neutral-50);
+}
+
+.typesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.typeCard {
+  padding: var(--space-8);
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-2xl);
+  text-align: center;
+  transition: all var(--transition-base);
+}
+
+.typeCard:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--color-primary-200);
+}
+
+.typeIcon {
+  width: 64px;
+  height: 64px;
+  background: var(--color-primary-50);
+  border-radius: var(--radius-2xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-4);
+}
+
+.typeCard h3 {
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  color: var(--color-neutral-900);
+  margin-bottom: var(--space-2);
+}
+
+.typePercentage {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-extrabold);
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--space-3);
+}
+
+.typeCard p {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-600);
+  line-height: var(--leading-relaxed);
+}
+
+/* Eligibility */
+.eligibilityGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-4);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.eligibilityCard {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-dark-card);
+  border: 1px solid var(--color-dark-border);
+  border-radius: var(--radius-xl);
+  color: white;
+  font-size: var(--text-sm);
+}
+
+/* Process */
+.processSteps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.processStep {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-xl);
+  transition: all var(--transition-base);
+}
+
+.processStep:hover {
+  border-color: var(--color-primary-200);
+  box-shadow: var(--shadow-md);
+}
+
+.processStepNum {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+  color: white;
+  font-weight: var(--font-bold);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.processStep p {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-700);
+}
+
+@media (max-width: 768px) {
+  .typesGrid {
+    grid-template-columns: 1fr;
+  }
+}

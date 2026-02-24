@@ -1,0 +1,160 @@
+.pageHeader {
+    position: relative;
+    padding: var(--space-32) 0 var(--space-16);
+    overflow: hidden;
+}
+
+.pageHeaderBg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--color-dark-bg), var(--color-primary-900));
+}
+
+.pageHeaderBg::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(27, 138, 80, 0.15), transparent 70%);
+}
+
+.pageHeaderContent {
+    position: relative;
+    z-index: 2;
+}
+
+.gallerySection {
+    background: var(--color-neutral-50);
+}
+
+/* ——— FILTER TABS ——— */
+.filterTabs {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-8);
+    padding: var(--space-2);
+    background: white;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-neutral-200);
+    width: fit-content;
+}
+
+.filterTab {
+    padding: var(--space-2) var(--space-5);
+    border-radius: var(--radius-lg);
+    font-weight: var(--font-medium);
+    font-size: var(--text-sm);
+    color: var(--color-neutral-600);
+    transition: all var(--transition-fast);
+}
+
+.filterTab:hover {
+    background: var(--color-neutral-100);
+}
+
+.filterTabActive {
+    background: var(--color-primary-500) !important;
+    color: white !important;
+    box-shadow: 0 2px 8px rgba(27, 138, 80, 0.3);
+}
+
+/* ——— MASONRY-ISH GRID ——— */
+.galleryGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+}
+
+.galleryCardLarge {
+    grid-row: span 1;
+}
+
+.galleryCard {
+    background: white;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    transition: all var(--transition-base);
+}
+
+.galleryCard:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-xl);
+}
+
+.galleryImagePlaceholder {
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+    position: relative;
+}
+
+.galleryIconWrap {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: var(--radius-2xl);
+    backdrop-filter: blur(8px);
+    transition: transform var(--transition-base);
+}
+
+.galleryCard:hover .galleryIconWrap {
+    transform: scale(1.1);
+}
+
+.galleryPlaceholderLabel {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: var(--text-xs);
+    opacity: 0.6;
+}
+
+.galleryCardBody {
+    padding: var(--space-5);
+}
+
+.galleryCategory {
+    display: inline-block;
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-2);
+}
+
+.galleryCardBody h3 {
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    margin-bottom: var(--space-1);
+}
+
+.galleryCardBody p {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-500);
+}
+
+@media (max-width: 768px) {
+    .galleryGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .filterTabs {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .galleryGrid {
+        grid-template-columns: 1fr;
+    }
+}

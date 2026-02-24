@@ -1,0 +1,337 @@
+.notFound {
+  text-align: center;
+  padding: var(--space-32) var(--space-6);
+}
+
+.notFound h1 {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  margin-bottom: var(--space-4);
+}
+
+.notFound p {
+  color: var(--color-neutral-600);
+  margin-bottom: var(--space-8);
+}
+
+/* Stats */
+.statsSection {
+  padding: var(--space-12) 0;
+  margin-top: -var(--space-8);
+  position: relative;
+  z-index: 3;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+
+.statCard {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-md);
+}
+
+.statCard div {
+  display: flex;
+  flex-direction: column;
+}
+
+.statCard strong {
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  color: var(--color-neutral-900);
+}
+
+.statCard span {
+  font-size: var(--text-xs);
+  color: var(--color-neutral-500);
+}
+
+/* Highlights */
+.highlightsSection {
+  padding: var(--space-8) 0 var(--space-12);
+}
+
+.highlightsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+
+.highlightCard {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-primary-50);
+  border: 1px solid var(--color-primary-100);
+  border-radius: var(--radius-xl);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-neutral-800);
+}
+
+/* Syllabus */
+.syllabusSection {
+  background: var(--color-neutral-50);
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: var(--space-12);
+  align-items: start;
+}
+
+.sectionLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-primary-50);
+  color: var(--color-primary-600);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--color-primary-100);
+}
+
+.sectionSubtext {
+  color: var(--color-neutral-600);
+  margin-top: var(--space-2);
+  line-height: var(--leading-relaxed);
+}
+
+.topicList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.topicList li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-neutral-700);
+}
+
+/* Side Panel */
+.sidePanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  position: sticky;
+  top: 100px;
+}
+
+.sideCard {
+  padding: var(--space-6);
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-sm);
+}
+
+.sideCard h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  color: var(--color-neutral-900);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-neutral-100);
+}
+
+.sideCard ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sideCard li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-neutral-700);
+  line-height: var(--leading-relaxed);
+}
+
+.sideCard li svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.sideCardAccent {
+  composes: sideCard;
+  background: linear-gradient(135deg, rgba(212, 168, 67, 0.06), rgba(141, 198, 63, 0.04));
+  border-color: rgba(212, 168, 67, 0.2);
+}
+
+.sideCardAccent p {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-700);
+  line-height: var(--leading-relaxed);
+}
+
+/* Fee Info */
+.feeInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.feeInfo > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-neutral-100);
+}
+
+.feeInfo > div:last-child {
+  border-bottom: none;
+}
+
+.feeInfo span {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-500);
+}
+
+.feeInfo strong {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-neutral-900);
+}
+
+/* Batch Info */
+.batchText {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-700);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-3);
+}
+
+.admissionBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  background: rgba(141, 198, 63, 0.1);
+  color: var(--color-secondary-600);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+}
+
+/* CTA */
+.ctaSection {
+  text-align: center;
+}
+
+/* Related */
+.relatedSection {
+  background: var(--color-neutral-50);
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.relatedCard {
+  padding: var(--space-6);
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-2xl);
+  transition: all var(--transition-base);
+  text-decoration: none;
+  color: inherit;
+}
+
+.relatedCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.relatedCardIcon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xl);
+  border: 1px solid;
+  margin-bottom: var(--space-4);
+}
+
+.relatedCard h3 {
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  color: var(--color-neutral-900);
+  margin-bottom: var(--space-2);
+}
+
+.relatedCard p {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-600);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-4);
+}
+
+.relatedCardMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-neutral-500);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .twoCol {
+    grid-template-columns: 1fr;
+  }
+
+  .sidePanel {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .highlightsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .relatedGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .highlightsGrid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { images } from "@/config/images";
@@ -60,6 +60,23 @@ export default function GalleryPage() {
   }, [filtered]);
 
   const currentItem = lightbox !== null ? galleryItems.find((i) => i.id === lightbox) : null;
+
+  // Keyboard navigation for lightbox
+  useEffect(() => {
+    if (lightbox === null) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") navigateLightbox(-1);
+      if (e.key === "ArrowRight") navigateLightbox(1);
+    };
+    document.addEventListener("keydown", handler);
+    // Prevent body scroll when lightbox is open
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handler);
+      document.body.style.overflow = "";
+    };
+  }, [lightbox, closeLightbox, navigateLightbox]);
 
   return (
     <>

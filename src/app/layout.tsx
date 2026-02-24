@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { siteConfig } from "@/config/site";
+import { ThemeProvider } from "@/shared/components/ThemeProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -43,6 +44,11 @@ export default function RootLayout({
   return (
     <html lang="bn" dir="ltr">
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.setAttribute('data-theme','dark')}}catch(e){}})()`,
+          }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -50,7 +56,11 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

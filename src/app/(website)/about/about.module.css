@@ -406,3 +406,85 @@
         right: auto !important;
     }
 }
+
+/* ——— DARK MODE ——— */
+[data-theme="dark"] .founderSection {
+  background: transparent;
+}
+
+[data-theme="dark"] .founderText {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .founderQuote blockquote {
+  color: #C0D4C8;
+}
+
+[data-theme="dark"] .founderCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .founderCard h3 {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .founderCard p {
+  color: #7E9A8C;
+}
+
+[data-theme="dark"] .valueCard {
+  background: rgba(20, 73, 58, 0.6);
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .valueCard h3 {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .valueCard p {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .facilitiesSection {
+  background: transparent;
+}
+
+[data-theme="dark"] .facilityCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .facilityNumber {
+  color: var(--color-secondary-400);
+}
+
+[data-theme="dark"] .facilityLabel {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .facilityInfoCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .facilityInfoCard h3 {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .facilityInfoCard p {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .timelineCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .timelineCard h3 {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .timelineCard p {
+  color: #A0B8AC;
+}

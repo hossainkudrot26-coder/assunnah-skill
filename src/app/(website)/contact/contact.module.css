@@ -220,3 +220,67 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ——— DARK MODE ——— */
+[data-theme="dark"] .contactSection {
+  background: transparent;
+}
+
+[data-theme="dark"] .formWrapper {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .formTitle {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .formSubtitle {
+  color: #7E9A8C;
+}
+
+[data-theme="dark"] .formGroup label {
+  color: #C0D4C8;
+}
+
+[data-theme="dark"] .formGroup input,
+[data-theme="dark"] .formGroup select,
+[data-theme="dark"] .formGroup textarea {
+  background: #0B3224;
+  border-color: #1E6B50;
+  color: #E0E8E4;
+}
+
+[data-theme="dark"] .formGroup input:focus,
+[data-theme="dark"] .formGroup select:focus,
+[data-theme="dark"] .formGroup textarea:focus {
+  background: #14493A;
+  border-color: var(--color-primary-400);
+  box-shadow: 0 0 0 3px rgba(27, 138, 80, 0.2);
+}
+
+[data-theme="dark"] .formGroup input::placeholder,
+[data-theme="dark"] .formGroup textarea::placeholder {
+  color: #5E7A6C;
+}
+
+[data-theme="dark"] .infoCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .infoCard:hover {
+  border-color: var(--color-primary-400);
+}
+
+[data-theme="dark"] .infoCard h3 {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .infoCard p {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .infoIconWrap {
+  background: rgba(27, 138, 80, 0.2);
+}

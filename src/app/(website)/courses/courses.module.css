@@ -308,3 +308,63 @@
 .scholarshipBtn:hover {
     background: rgba(255,255,255,0.22);
 }
+/* ——— DARK MODE ——— */
+[data-theme="dark"] .coursesSection {
+  background: transparent;
+}
+
+[data-theme="dark"] .filterBar {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .filterBtn {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .filterBtn:hover {
+  background: #1E6B50;
+}
+
+[data-theme="dark"] .resultCount {
+  color: #7E9A8C;
+}
+
+[data-theme="dark"] .courseCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .courseCard:hover {
+  border-color: var(--color-primary-400);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .courseTitle {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .courseSubtitle {
+  color: #7E9A8C;
+}
+
+[data-theme="dark"] .courseDesc {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .courseBadgeFee {
+  background: rgba(27, 138, 80, 0.2);
+  color: var(--color-secondary-400);
+}
+
+[data-theme="dark"] .syllabus {
+  background: #0B3224;
+}
+
+[data-theme="dark"] .syllabusModule strong {
+  color: #C0D4C8;
+}
+
+[data-theme="dark"] .syllabus li {
+  color: #A0B8AC;
+}

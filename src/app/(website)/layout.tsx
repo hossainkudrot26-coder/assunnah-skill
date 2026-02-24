@@ -8,8 +8,11 @@ export default function WebsiteLayout({
 }) {
   return (
     <>
+      <a href="#main-content" className="skip-to-content">
+        মূল বিষয়বস্তুতে যান
+      </a>
       <Header />
-      <main>{children}</main>
+      <main id="main-content" role="main">{children}</main>
       <Footer />
     </>
   );

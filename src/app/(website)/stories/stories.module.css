@@ -152,3 +152,29 @@
     padding: 24px 20px;
   }
 }
+
+/* ——— DARK MODE ——— */
+[data-theme="dark"] .storiesSection {
+  background: transparent;
+}
+
+[data-theme="dark"] .storyCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .storyCard:hover {
+  border-color: var(--color-primary-400);
+}
+
+[data-theme="dark"] .storyHeader h3 {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .storyBatch {
+  color: #7E9A8C;
+}
+
+[data-theme="dark"] .storyText {
+  color: #A0B8AC;
+}

@@ -548,3 +548,47 @@
     height: 32px;
   }
 }
+
+/* ——— DARK MODE ——— */
+[data-theme="dark"] .header {
+  background: rgba(11, 50, 36, 0.85);
+  border-bottom-color: #1E6B50;
+}
+
+[data-theme="dark"] .headerScrolled {
+  background: rgba(11, 50, 36, 0.95);
+}
+
+[data-theme="dark"] .navLink {
+  color: #C0D4C8;
+}
+
+[data-theme="dark"] .navLink:hover {
+  color: var(--color-secondary-400);
+}
+
+[data-theme="dark"] .megaMenu {
+  background: rgba(20, 73, 58, 0.96);
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .megaCourseItem:hover {
+  background: rgba(30, 107, 80, 0.5);
+}
+
+[data-theme="dark"] .megaCourseTitle {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .megaCourseDesc {
+  color: #7E9A8C;
+}
+
+[data-theme="dark"] .mobilePanel {
+  background: #0B3224;
+}
+
+[data-theme="dark"] .mobileLink {
+  color: #C0D4C8;
+  border-bottom-color: #1E6B50;
+}

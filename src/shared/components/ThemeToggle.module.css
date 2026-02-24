@@ -1,0 +1,58 @@
+.toggle {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-neutral-100);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 10px;
+  color: var(--color-neutral-700);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggle:hover {
+  background: var(--color-neutral-200);
+  color: var(--color-primary-500);
+}
+
+.iconWrap {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rotated {
+  transform: rotate(180deg);
+}
+
+.icon {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.iconVisible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.iconHidden {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+/* Dark theme override */
+[data-theme="dark"] .toggle {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--color-neutral-300);
+}
+
+[data-theme="dark"] .toggle:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--color-accent-400);
+}

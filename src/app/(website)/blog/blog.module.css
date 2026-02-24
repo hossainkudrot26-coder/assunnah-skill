@@ -216,3 +216,37 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ——— DARK MODE ——— */
+[data-theme="dark"] .blogSection {
+  background: transparent;
+}
+
+[data-theme="dark"] .featuredPost {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .featuredContent h2,
+[data-theme="dark"] .postBody h3 {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .featuredContent p,
+[data-theme="dark"] .postBody p {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .postCategory {
+  background: rgba(27, 138, 80, 0.2);
+  color: var(--color-secondary-400);
+}
+
+[data-theme="dark"] .postCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .postCard:hover {
+  border-color: var(--color-primary-500);
+}

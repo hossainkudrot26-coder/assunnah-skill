@@ -10,6 +10,7 @@ import {
   MessageCircleIcon, MegaphoneIcon, PhoneIcon, MailIcon, ShieldCheckIcon,
   ArrowRightIcon,
 } from "@/shared/components/Icons";
+import { ThemeToggle } from "@/shared/components/ThemeToggle";
 import styles from "./Header.module.css";
 
 const iconMap: Record<string, (s: number, c: string) => React.ReactNode> = {
@@ -117,7 +118,7 @@ export function Header() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className={styles.nav}>
+          <nav className={styles.nav} aria-label="প্রধান নেভিগেশন">
             {mainNav.map((item) => (
               <div
                 key={item.label}
@@ -155,6 +156,7 @@ export function Header() {
           </nav>
 
           <div className={styles.headerActions}>
+            <ThemeToggle />
             <Link href="/login" className={styles.ctaBtn}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
@@ -167,7 +169,7 @@ export function Header() {
             <button
               className={`${styles.menuToggle} hide-desktop`}
               onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle menu"
+              aria-label="মেনু খুলুন" aria-expanded={menuOpen}
             >
               <span className={`${styles.menuBar} ${menuOpen ? styles.menuBarOpen : ""}`} />
               <span className={`${styles.menuBar} ${menuOpen ? styles.menuBarOpen : ""}`} />
@@ -192,7 +194,7 @@ export function Header() {
               height={35}
               className={styles.logoImage}
             />
-            <button className={styles.mobileClose} onClick={() => setMenuOpen(false)} aria-label="Close">
+            <button className={styles.mobileClose} onClick={() => setMenuOpen(false)} aria-label="মেনু বন্ধ করুন">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
@@ -200,7 +202,7 @@ export function Header() {
             </button>
           </div>
 
-          <nav className={styles.mobileNav}>
+          <nav className={styles.mobileNav} aria-label="মোবাইল নেভিগেশন">
             {mainNav.map((item) => (
               <div key={item.label} className={styles.mobileNavGroup}>
                 {item.children ? (

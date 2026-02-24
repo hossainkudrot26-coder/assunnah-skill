@@ -1449,3 +1449,102 @@
     animation: none;
   }
 }
+
+/* ════════════════════════════════════════════
+   HOMEPAGE — DARK MODE
+   ════════════════════════════════════════════ */
+[data-theme="dark"] .marqueeSection {
+  background: #0F3D2D;
+  border-bottom-color: #1E6B50;
+}
+
+[data-theme="dark"] .marqueeItem {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .coursesSection {
+  background: transparent;
+}
+
+[data-theme="dark"] .bentoCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .bentoCardFeatured {
+  border-color: var(--color-primary-500);
+}
+
+[data-theme="dark"] .bentoTitle {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .bentoDesc {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .viewAllBtn {
+  background: #14493A;
+  border-color: #1E6B50;
+  color: var(--color-secondary-400);
+}
+
+[data-theme="dark"] .missionSection {
+  background: #0B3224;
+}
+
+[data-theme="dark"] .featureCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .featureCard:hover {
+  background: #1A5C47;
+  border-color: var(--color-primary-400);
+}
+
+[data-theme="dark"] .featureTitle {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .featureDesc {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .missionFloat {
+  background: #14493A;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .testimonialSection {
+  background: transparent;
+}
+
+[data-theme="dark"] .testimonialCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .testimonialCard:hover {
+  border-color: var(--color-primary-400);
+}
+
+[data-theme="dark"] .testimonialText {
+  color: #C0D4C8;
+}
+
+[data-theme="dark"] .testimonialName {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .testimonialBatch {
+  color: #7E9A8C;
+}
+
+[data-theme="dark"] .impactNumber {
+  color: var(--color-secondary-400);
+}
+
+[data-theme="dark"] .impactLabel {
+  color: #A0B8AC;
+}

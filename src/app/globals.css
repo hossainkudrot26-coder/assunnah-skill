@@ -528,6 +528,76 @@ ul, ol {
   color: white;
 }
 
+/* ════════════════════════════════════════════
+   DARK MODE — Deep Forest Green (NOT black)
+   ════════════════════════════════════════════ */
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+[data-theme="dark"] body {
+  background-color: #0B3224;
+  color: #E0E8E4;
+}
+
+/* Cards, surfaces, inputs */
+[data-theme="dark"] .card,
+[data-theme="dark"] .formWrapper {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+/* Section backgrounds */
+[data-theme="dark"] .section {
+  background: transparent;
+}
+
+/* Headings */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
+  color: #F0F5F2;
+}
+
+/* Muted text */
+[data-theme="dark"] p,
+[data-theme="dark"] .text-muted,
+[data-theme="dark"] .section-subtitle {
+  color: #A0B8AC;
+}
+
+/* Section badges */
+[data-theme="dark"] .section-badge {
+  background: rgba(27, 138, 80, 0.2);
+  color: var(--color-secondary-400);
+  border-color: rgba(27, 138, 80, 0.35);
+}
+
+/* Buttons */
+[data-theme="dark"] .btn-secondary {
+  border-color: var(--color-secondary-400);
+  color: var(--color-secondary-400);
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+  background: var(--color-secondary-500);
+  color: #0B3224;
+}
+
+/* Scrollbar */
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #0B3224;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #1E6B50;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-500);
+}
+
 /* ——— SCROLLBAR ——— */
 ::-webkit-scrollbar {
   width: 8px;
@@ -544,4 +614,74 @@ ul, ol {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-primary-500);
+}
+
+/* ════════════════════════════════════════════
+   ACCESSIBILITY
+   ════════════════════════════════════════════ */
+
+/* Skip to main content */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 10000;
+  padding: 12px 24px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+  background: var(--color-primary-500);
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.skip-to-content:focus {
+  top: 0;
+  outline: 2px solid var(--color-accent-400);
+  outline-offset: 2px;
+}
+
+/* Focus visible — keyboard-only focus ring */
+*:focus-visible {
+  outline: 2px solid var(--color-primary-400);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Remove focus ring for mouse clicks */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Improved focus for buttons */
+.btn:focus-visible {
+  outline: 2px solid var(--color-accent-400);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(212, 168, 67, 0.2);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }

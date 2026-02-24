@@ -359,3 +359,36 @@
     display: none;
   }
 }
+
+/* ——— DARK MODE ——— */
+[data-theme="dark"] .gallerySection {
+  background: transparent;
+}
+
+[data-theme="dark"] .filterBar {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .filterBtn {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .filterBtn:hover {
+  background: #1E6B50;
+}
+
+[data-theme="dark"] .imageCard {
+  background: #14493A;
+}
+
+[data-theme="dark"] .socialBtnOutline {
+  background: #14493A;
+  border-color: #1E6B50;
+  color: var(--color-secondary-400);
+}
+
+[data-theme="dark"] .socialBtnOutline:hover {
+  background: #1E6B50;
+  border-color: var(--color-primary-500);
+}

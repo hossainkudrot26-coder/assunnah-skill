@@ -6,7 +6,7 @@ import styles from "./Footer.module.css";
 
 export function Footer() {
   return (
-    <footer className={styles.footer}>
+    <footer className={styles.footer} role="contentinfo">
       {/* Wave Separator */}
       <div className={styles.waveSeparator}>
         <svg viewBox="0 0 1440 120" preserveAspectRatio="none">

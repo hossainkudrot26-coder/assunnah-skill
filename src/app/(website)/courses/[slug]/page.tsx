@@ -2,8 +2,10 @@
 
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { getCourseBySlug, getRelatedCourses, type Course } from "@/config/courses";
+import { courseImageMap } from "@/config/images";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { Accordion, AccordionItem } from "@/shared/components/Accordion";
 import {
@@ -65,6 +67,29 @@ export default function CourseDetailPage() {
           { label: course.title },
         ]}
       />
+
+      {/* Course Hero Image */}
+      {courseImageMap[course.slug] && (
+        <section className={styles.courseImageSection}>
+          <div className="container">
+            <motion.div
+              className={styles.courseImageWrap}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <Image
+                src={courseImageMap[course.slug]}
+                alt={course.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 1200px"
+                className={styles.courseImage}
+                priority
+              />
+            </motion.div>
+          </div>
+        </section>
+      )}
 
       {/* Stats Row */}
       <section className={styles.statsSection}>

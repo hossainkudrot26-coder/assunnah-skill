@@ -1,3 +1,29 @@
+/* ——— COURSE HERO IMAGE ——— */
+.courseImageSection {
+  padding: 0 0 20px;
+  background: var(--color-neutral-50);
+}
+
+.courseImageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 21 / 8;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.courseImage {
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .courseImageWrap {
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+  }
+}
+
 .notFound {
   text-align: center;
   padding: var(--space-32) var(--space-6);

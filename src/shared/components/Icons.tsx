@@ -559,3 +559,39 @@ export function PartyIcon({ size = 24, className, color = "currentColor" }: Icon
         </svg>
     );
 }
+
+export function XIcon({ size = 24, className, color = "currentColor" }: IconProps) {
+    return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+            <line x1="18" y1="6" x2="6" y2="18" stroke={color} strokeWidth="2" strokeLinecap="round" />
+            <line x1="6" y1="6" x2="18" y2="18" stroke={color} strokeWidth="2" strokeLinecap="round" />
+        </svg>
+    );
+}
+
+export function ChevronLeftIcon({ size = 24, className, color = "currentColor" }: IconProps) {
+    return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+            <polyline points="15,18 9,12 15,6" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    );
+}
+
+export function ChevronRightIcon({ size = 24, className, color = "currentColor" }: IconProps) {
+    return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+            <polyline points="9,6 15,12 9,18" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    );
+}
+
+export function ExpandIcon({ size = 24, className, color = "currentColor" }: IconProps) {
+    return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+            <polyline points="15,3 21,3 21,9" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <polyline points="9,21 3,21 3,15" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <line x1="21" y1="3" x2="14" y2="10" stroke={color} strokeWidth="2" strokeLinecap="round" />
+            <line x1="3" y1="21" x2="10" y2="14" stroke={color} strokeWidth="2" strokeLinecap="round" />
+        </svg>
+    );
+}

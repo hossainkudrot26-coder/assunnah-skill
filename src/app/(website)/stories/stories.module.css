@@ -1,129 +1,154 @@
-.pageHeader {
-    position: relative;
-    padding: var(--space-32) 0 var(--space-16);
-    overflow: hidden;
-}
-
-.pageHeaderBg {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, var(--color-dark-bg), var(--color-primary-900));
-}
-
-.pageHeaderBg::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -20%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(27, 138, 80, 0.15), transparent 70%);
-}
-
-.pageHeaderContent {
-    position: relative;
-    z-index: 2;
-}
+/* ════════════════════════════════════════════
+   STORIES — Testimonials Grid
+   ════════════════════════════════════════════ */
 
 .storiesSection {
-    background: var(--color-neutral-50);
+  padding: 80px 0 100px;
+  background: var(--color-neutral-50);
 }
 
 .storiesGrid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-6);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
 }
 
+/* ——— STORY CARD ——— */
 .storyCard {
-    background: white;
-    border: 1px solid var(--color-neutral-200);
-    border-top: 3px solid;
-    border-radius: var(--radius-xl);
-    padding: var(--space-6);
-    transition: all var(--transition-base);
+  position: relative;
+  background: white;
+  border-radius: 20px;
+  padding: 32px 28px;
+  border: 1px solid var(--color-neutral-200);
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
 }
 
 .storyCard:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+  border-color: var(--color-primary-200);
+  transform: translateY(-4px);
+}
+
+.quoteIcon {
+  position: absolute;
+  top: 20px;
+  right: 24px;
 }
 
 .storyHeader {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    margin-bottom: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
 }
 
 .storyAvatar {
-    width: 52px;
-    height: 52px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-full);
-    flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .storyAvatar span {
-    font-size: var(--text-sm);
-    font-weight: var(--font-bold);
-    color: white;
-    letter-spacing: 0.03em;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
 }
 
 .storyHeader h3 {
-    font-size: var(--text-lg);
-    font-weight: var(--font-semibold);
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--color-neutral-900);
+  margin-bottom: 2px;
 }
 
 .storyBatch {
-    font-size: var(--text-xs);
-    color: var(--color-primary-500);
-    font-weight: var(--font-medium);
+  font-size: 0.78rem;
+  color: var(--color-neutral-500);
 }
 
 .storyText {
-    font-size: var(--text-base);
-    line-height: var(--leading-relaxed);
-    color: var(--color-neutral-600);
-    margin-bottom: var(--space-4);
-    font-style: italic;
+  font-size: 0.9rem;
+  color: var(--color-neutral-600);
+  line-height: 1.7;
+  margin-bottom: 20px;
 }
 
 .storyAchievement {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-4);
-    border-radius: var(--radius-lg);
-    font-size: var(--text-sm);
-    font-weight: var(--font-semibold);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 1px solid;
 }
 
+/* ——— CTA ——— */
 .storiesCta {
-    text-align: center;
-    margin-top: var(--space-12);
-    padding: var(--space-10);
-    background: white;
-    border: 1px solid var(--color-neutral-200);
-    border-radius: var(--radius-2xl);
+  text-align: center;
+  margin-top: 60px;
+  padding: 48px 36px;
+  background: linear-gradient(160deg, #0d4a2b, #1B8A50);
+  border-radius: 24px;
+  color: white;
 }
 
 .storiesCta h3 {
-    font-size: var(--text-xl);
-    margin-bottom: var(--space-2);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 8px;
 }
 
 .storiesCta p {
-    color: var(--color-neutral-500);
-    margin-bottom: var(--space-6);
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 24px;
 }
 
-@media (max-width: 768px) {
-    .storiesGrid {
-        grid-template-columns: 1fr;
-    }
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s;
+}
+
+.ctaBtn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  gap: 12px;
+}
+
+/* ——— RESPONSIVE ——— */
+@media (max-width: 1024px) {
+  .storiesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .storiesSection {
+    padding: 48px 0 64px;
+  }
+
+  .storiesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .storyCard {
+    padding: 24px 20px;
+  }
 }

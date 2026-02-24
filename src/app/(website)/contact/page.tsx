@@ -8,6 +8,7 @@ import {
   CheckCircleIcon, LockIcon,
 } from "@/shared/components/Icons";
 import { PageHeader } from "@/shared/components/PageHeader";
+import { submitContactForm } from "@/lib/actions/contact";
 import styles from "./contact.module.css";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -38,11 +39,35 @@ const infoCards = [
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
+    setError("");
+    setLoading(true);
+
+    const form = e.currentTarget;
+    const formData = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      phone: (form.elements.namedItem("phone") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value || "",
+      subject: (form.elements.namedItem("subject") as HTMLSelectElement).value || "",
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+    };
+
+    try {
+      const result = await submitContactForm(formData);
+      if (result.success) {
+        setSubmitted(true);
+      } else {
+        setError(result.error || "সমস্যা হয়েছে");
+      }
+    } catch {
+      setError("বার্তা পাঠাতে সমস্যা হয়েছে। পরে আবার চেষ্টা করুন।");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -84,37 +109,66 @@ export default function ContactPage() {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className={styles.form}>
+                  {error && (
+                    <div style={{
+                      padding: "12px 16px",
+                      background: "#FEF2F2",
+                      border: "1px solid #FECACA",
+                      borderRadius: "10px",
+                      color: "#DC2626",
+                      fontSize: "0.85rem",
+                      marginBottom: "16px",
+                    }}>
+                      {error}
+                    </div>
+                  )}
                   <div className={styles.formRow}>
                     <div className={styles.formGroup}>
                       <label htmlFor="name">আপনার নাম *</label>
-                      <input type="text" id="name" placeholder="পূর্ণ নাম লিখুন" required />
+                      <input type="text" id="name" name="name" placeholder="পূর্ণ নাম লিখুন" required disabled={loading} />
                     </div>
                     <div className={styles.formGroup}>
                       <label htmlFor="phone">ফোন নম্বর *</label>
-                      <input type="tel" id="phone" placeholder="০১XXXXXXXXX" required />
+                      <input type="tel" id="phone" name="phone" placeholder="০১XXXXXXXXX" required disabled={loading} />
                     </div>
                   </div>
                   <div className={styles.formGroup}>
                     <label htmlFor="email">ইমেইল</label>
-                    <input type="email" id="email" placeholder="your@email.com" />
+                    <input type="email" id="email" name="email" placeholder="your@email.com" disabled={loading} />
                   </div>
                   <div className={styles.formGroup}>
                     <label htmlFor="subject">বিষয়</label>
-                    <select id="subject">
+                    <select id="subject" name="subject" disabled={loading}>
                       <option value="">বিষয় নির্বাচন করুন</option>
-                      <option value="admission">ভর্তি সংক্রান্ত</option>
-                      <option value="courses">কোর্স সম্পর্কে</option>
-                      <option value="scholarship">স্কলারশিপ</option>
-                      <option value="other">অন্যান্য</option>
+                      <option value="ভর্তি সংক্রান্ত">ভর্তি সংক্রান্ত</option>
+                      <option value="কোর্স সম্পর্কে">কোর্স সম্পর্কে</option>
+                      <option value="স্কলারশিপ">স্কলারশিপ</option>
+                      <option value="অন্যান্য">অন্যান্য</option>
                     </select>
                   </div>
                   <div className={styles.formGroup}>
                     <label htmlFor="message">বিস্তারিত *</label>
-                    <textarea id="message" rows={5} placeholder="আপনার বার্তা লিখুন..." required />
+                    <textarea id="message" name="message" rows={5} placeholder="আপনার বার্তা লিখুন..." required disabled={loading} />
                   </div>
-                  <button type="submit" className={styles.submitBtn}>
-                    <SendIcon size={18} color="white" />
-                    মেসেজ পাঠান
+                  <button type="submit" className={styles.submitBtn} disabled={loading}>
+                    {loading ? (
+                      <>
+                        <span style={{
+                          width: 18, height: 18,
+                          border: "2px solid rgba(255,255,255,0.3)",
+                          borderTopColor: "white",
+                          borderRadius: "50%",
+                          animation: "spin 0.6s linear infinite",
+                          display: "inline-block",
+                        }} />
+                        পাঠানো হচ্ছে...
+                      </>
+                    ) : (
+                      <>
+                        <SendIcon size={18} color="white" />
+                        মেসেজ পাঠান
+                      </>
+                    )}
                   </button>
                   <p className={styles.formSecurityNote}>
                     <LockIcon size={13} color="var(--color-neutral-400)" />

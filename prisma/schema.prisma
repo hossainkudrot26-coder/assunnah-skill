@@ -1,0 +1,397 @@
+// ════════════════════════════════════════════════════════
+// AS-SUNNAH SKILL DEVELOPMENT INSTITUTE — DATABASE SCHEMA
+// ════════════════════════════════════════════════════════
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ──────────── AUTH & USERS ────────────
+
+enum Role {
+  STUDENT
+  INSTRUCTOR
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+model User {
+  id             String    @id @default(cuid())
+  name           String
+  nameBn         String?
+  email          String    @unique
+  emailVerified  DateTime?
+  phone          String?   @unique
+  password       String?
+  image          String?
+  role           Role      @default(STUDENT)
+  gender         Gender?
+  dateOfBirth    DateTime?
+  nidNumber      String?
+  address        String?
+  guardianName   String?
+  guardianPhone  String?
+  isActive       Boolean   @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  accounts     Account[]
+  sessions     Session[]
+  applications Application[]
+  enrollments  Enrollment[]
+  blogPosts    BlogPost[]     @relation("author")
+  testimonials Testimonial[]
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ──────────── COURSES ────────────
+
+enum CourseStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model Course {
+  id          String       @id @default(cuid())
+  slug        String       @unique
+  title       String
+  titleEn     String?
+  shortDesc   String
+  fullDesc    String       @db.Text
+  iconName    String?
+  color       String       @default("#1B8A50")
+  image       String?
+  duration    String
+  type        String       // রেসিডেন্সিয়াল, ফ্রি, নারীদের জন্য
+  batchInfo   String?
+  status      CourseStatus @default(PUBLISHED)
+  sortOrder   Int          @default(0)
+  isFeatured  Boolean      @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  fee          CourseFee?
+  syllabus     SyllabusModule[]
+  highlights   CourseHighlight[]
+  batches      Batch[]
+  applications Application[]
+  enrollments  Enrollment[]
+
+  @@map("courses")
+}
+
+model CourseFee {
+  id           String  @id @default(cuid())
+  courseId      String  @unique
+  admission    String  // "বিনামূল্যে" / "১০,০০০ টাকা"
+  monthly      String?
+  total        String?
+  scholarship  String? // "১০০% পর্যন্ত"
+  includes     String[] // ["আবাসন", "খাবার", ...]
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@map("course_fees")
+}
+
+model SyllabusModule {
+  id       String   @id @default(cuid())
+  courseId  String
+  title    String
+  topics   String[]
+  sortOrder Int     @default(0)
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@map("syllabus_modules")
+}
+
+model CourseHighlight {
+  id       String @id @default(cuid())
+  courseId  String
+  text     String
+  sortOrder Int   @default(0)
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@map("course_highlights")
+}
+
+// ──────────── BATCHES & ENROLLMENT ────────────
+
+enum BatchStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+}
+
+model Batch {
+  id           String      @id @default(cuid())
+  courseId      String
+  batchNumber  Int
+  startDate    DateTime?
+  endDate      DateTime?
+  capacity     Int         @default(30)
+  status       BatchStatus @default(UPCOMING)
+
+  createdAt DateTime @default(now())
+
+  course      Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  enrollments Enrollment[]
+
+  @@unique([courseId, batchNumber])
+  @@map("batches")
+}
+
+enum EnrollmentStatus {
+  ENROLLED
+  IN_PROGRESS
+  COMPLETED
+  DROPPED
+}
+
+model Enrollment {
+  id        String           @id @default(cuid())
+  userId    String
+  courseId   String
+  batchId   String?
+  status    EnrollmentStatus @default(ENROLLED)
+  progress  Int              @default(0) // 0-100
+
+  enrolledAt  DateTime @default(now())
+  completedAt DateTime?
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  batch  Batch?  @relation(fields: [batchId], references: [id])
+
+  @@unique([userId, courseId, batchId])
+  @@map("enrollments")
+}
+
+// ──────────── APPLICATIONS ────────────
+
+enum ApplicationStatus {
+  PENDING
+  UNDER_REVIEW
+  INTERVIEW_SCHEDULED
+  ACCEPTED
+  REJECTED
+  WAITLISTED
+}
+
+model Application {
+  id             String            @id @default(cuid())
+  userId         String?
+  courseId        String
+  status         ApplicationStatus @default(PENDING)
+
+  // Applicant info (for non-registered users too)
+  applicantName  String
+  applicantPhone String
+  applicantEmail String?
+  fatherName     String?
+  motherName     String?
+  dateOfBirth    DateTime?
+  gender         Gender?
+  nidNumber      String?
+  address        String?
+  education      String?
+  experience     String?
+  motivation     String?           @db.Text
+
+  // Documents
+  documents      String[]          // URLs to uploaded docs
+
+  // Review
+  reviewNotes    String?           @db.Text
+  interviewDate  DateTime?
+  reviewedBy     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User?  @relation(fields: [userId], references: [id])
+  course Course @relation(fields: [courseId], references: [id])
+
+  @@map("applications")
+}
+
+// ──────────── BLOG ────────────
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model BlogPost {
+  id        String     @id @default(cuid())
+  slug      String     @unique
+  title     String
+  excerpt   String?    @db.Text
+  content   String     @db.Text
+  image     String?
+  category  String?
+  tags      String[]
+  status    PostStatus @default(DRAFT)
+  authorId  String?
+  readTime  String?
+  isFeatured Boolean   @default(false)
+
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  author User? @relation("author", fields: [authorId], references: [id])
+
+  @@map("blog_posts")
+}
+
+// ──────────── CONTACT & MESSAGES ────────────
+
+enum MessageStatus {
+  UNREAD
+  READ
+  REPLIED
+  ARCHIVED
+}
+
+model ContactMessage {
+  id       String        @id @default(cuid())
+  name     String
+  phone    String
+  email    String?
+  subject  String?
+  message  String        @db.Text
+  status   MessageStatus @default(UNREAD)
+  reply    String?       @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("contact_messages")
+}
+
+// ──────────── GALLERY ────────────
+
+model GalleryItem {
+  id        String  @id @default(cuid())
+  title     String
+  titleBn   String?
+  desc      String?
+  image     String
+  category  String  // ক্লাসরুম, ইভেন্ট, প্রতিষ্ঠান
+  span      String? // wide, tall
+  sortOrder Int     @default(0)
+  isVisible Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  @@map("gallery_items")
+}
+
+// ──────────── TESTIMONIALS ────────────
+
+model Testimonial {
+  id          String  @id @default(cuid())
+  userId      String?
+  name        String
+  initials    String?
+  batch       String
+  story       String  @db.Text
+  achievement String
+  color       String  @default("#1B8A50")
+  isVisible   Boolean @default(true)
+  sortOrder   Int     @default(0)
+
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id])
+
+  @@map("testimonials")
+}
+
+// ──────────── SETTINGS ────────────
+
+model SiteSetting {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String @db.Text
+  type  String @default("string") // string, json, boolean, number
+
+  updatedAt DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
+// ──────────── NOTIFICATIONS ────────────
+
+model Notification {
+  id      String   @id @default(cuid())
+  userId  String
+  title   String
+  message String
+  type    String   @default("info") // info, success, warning, error
+  isRead  Boolean  @default(false)
+  link    String?
+
+  createdAt DateTime @default(now())
+
+  @@map("notifications")
+}

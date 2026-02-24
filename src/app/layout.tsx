@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { siteConfig } from "@/config/site";
 import { ThemeProvider } from "@/shared/components/ThemeProvider";
+import { AuthProvider } from "@/shared/components/AuthProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -57,9 +58,11 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>
+            {children}
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

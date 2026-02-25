@@ -4,7 +4,7 @@ import prisma from "@/lib/db";
 import { applicationSchema } from "@/lib/validations";
 import type { ApplicationInput } from "@/lib/validations";
 import { auth } from "@/lib/auth";
-import { sendEmail, applicationNotificationEmail, applicationStatusEmail } from "@/lib/email";
+import { sendApplicationNotification } from "@/lib/email";
 
 export async function submitApplication(data: ApplicationInput) {
   try {
@@ -35,19 +35,15 @@ export async function submitApplication(data: ApplicationInput) {
     });
 
     // Email notification to admin (non-blocking)
-    const adminEmail = process.env.ADMIN_EMAIL;
-    if (adminEmail) {
-      const course = await prisma.course.findUnique({
-        where: { id: validated.courseId },
-        select: { title: true },
-      });
-      const { subject, html } = applicationNotificationEmail({
-        name: validated.applicantName,
-        phone: validated.applicantPhone,
-        courseTitle: course?.title || "অজানা কোর্স",
-      });
-      sendEmail({ to: adminEmail, subject, html }).catch(() => {});
-    }
+    const course = await prisma.course.findUnique({
+      where: { id: validated.courseId },
+      select: { title: true },
+    });
+    sendApplicationNotification({
+      applicantName: validated.applicantName,
+      applicantPhone: validated.applicantPhone,
+      courseTitle: course?.title || "অজানা কোর্স",
+    }).catch(() => {});
 
     return { success: true, message: "আবেদন সফলভাবে জমা হয়েছে! আমরা শীঘ্রই যোগাযোগ করবো।" };
   } catch (error: any) {
@@ -100,22 +96,8 @@ export async function updateApplicationStatus(
     },
   });
 
-  // Send status update email to applicant (non-blocking)
-  if (["ACCEPTED", "REJECTED", "UNDER_REVIEW"].includes(status)) {
-    const application = await prisma.application.findUnique({
-      where: { id },
-      include: { course: { select: { title: true } } },
-    });
-    if (application?.applicantEmail) {
-      const { subject, html } = applicationStatusEmail({
-        name: application.applicantName,
-        courseTitle: application.course?.title || "",
-        status,
-        email: application.applicantEmail,
-      });
-      sendEmail({ to: application.applicantEmail, subject, html }).catch(() => {});
-    }
-  }
+  // Status update email — to be implemented when needed
+  // For now, status changes are tracked in the admin panel
 
   return { success: true };
 }

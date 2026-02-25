@@ -72,3 +72,77 @@ export async function registerAction(data: RegisterInput) {
     return { success: false, error: "অ্যাকাউন্ট তৈরি করতে সমস্যা হয়েছে" };
   }
 }
+
+// ──────────── PROFILE UPDATE ────────────
+
+export async function updateProfile(userId: string, data: { name: string; phone?: string }) {
+  try {
+    if (!data.name || data.name.length < 2) {
+      return { success: false, error: "নাম কমপক্ষে ২ অক্ষরের হতে হবে" };
+    }
+
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        name: data.name,
+        phone: data.phone || undefined,
+      },
+    });
+
+    return { success: true, message: "প্রোফাইল আপডেট হয়েছে!" };
+  } catch (error: any) {
+    if (error?.code === "P2002") {
+      return { success: false, error: "এই ফোন নম্বর ইতিমধ্যে ব্যবহৃত" };
+    }
+    return { success: false, error: "আপডেট করতে সমস্যা হয়েছে" };
+  }
+}
+
+// ──────────── CHANGE PASSWORD ────────────
+
+export async function changePassword(userId: string, data: { currentPassword: string; newPassword: string }) {
+  try {
+    if (!data.newPassword || data.newPassword.length < 6) {
+      return { success: false, error: "নতুন পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে" };
+    }
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user || !user.password) {
+      return { success: false, error: "ব্যবহারকারী পাওয়া যায়নি" };
+    }
+
+    const isValid = await bcrypt.compare(data.currentPassword, user.password);
+    if (!isValid) {
+      return { success: false, error: "বর্তমান পাসওয়ার্ড ভুল" };
+    }
+
+    const hashed = await bcrypt.hash(data.newPassword, 12);
+    await prisma.user.update({
+      where: { id: userId },
+      data: { password: hashed },
+    });
+
+    return { success: true, message: "পাসওয়ার্ড পরিবর্তন হয়েছে!" };
+  } catch {
+    return { success: false, error: "পাসওয়ার্ড পরিবর্তন করতে সমস্যা হয়েছে" };
+  }
+}
+
+// ──────────── GET PROFILE DATA ────────────
+
+export async function getProfileData(userId: string) {
+  return prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      phone: true,
+      role: true,
+      gender: true,
+      dateOfBirth: true,
+      address: true,
+      createdAt: true,
+    },
+  });
+}

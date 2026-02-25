@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "cdn.klasio.com",
       },
+      {
+        protocol: "http",
+        hostname: "localhost",
+      },
     ],
   },
 };

@@ -56,6 +56,8 @@ export default function AdminDashboard() {
           { label: "মেসেজ পড়ুন", href: "/admin/messages", icon: "💬" },
           { label: "কোর্স ম্যানেজ", href: "/admin/courses", icon: "📚" },
           { label: "ব্লগ লিখুন", href: "/admin/blog", icon: "✏️" },
+          { label: "গ্যালারি", href: "/admin/gallery", icon: "🖼️" },
+          { label: "শিক্ষার্থী", href: "/admin/students", icon: "🎓" },
         ].map((item) => (
           <Link key={item.href} href={item.href} className={styles.quickCard}>
             <span className={styles.quickIcon}>{item.icon}</span>

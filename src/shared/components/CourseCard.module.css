@@ -198,3 +198,13 @@
     padding: 22px;
   }
 }
+
+/* ─── Dark Mode (Theme Toggle) ─── */
+[data-theme="dark"] .cardLink { background: #14493A; border-color: #1E6B50; }
+[data-theme="dark"] .card:hover .cardLink { border-color: #2A8B6A; }
+[data-theme="dark"] .title { color: #F0F5F2; }
+[data-theme="dark"] .desc { color: #A0B8AC; }
+[data-theme="dark"] .bottom { border-top-color: #1E6B50; }
+[data-theme="dark"] .duration { color: #7A9E8C; }
+[data-theme="dark"] .categoryBadge { background: #1E6B50; border-color: #2A8B6A; color: #A0B8AC; }
+[data-theme="dark"] .card:hover { box-shadow: 0 20px 60px rgba(0,0,0,0.3); }

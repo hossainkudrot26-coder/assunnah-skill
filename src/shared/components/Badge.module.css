@@ -53,3 +53,6 @@
   color: var(--color-neutral-600);
   border: 1px solid var(--color-neutral-300);
 }
+
+/* ─── Dark Mode ─── */
+[data-theme="dark"] .badge { color: #A0B8AC; }

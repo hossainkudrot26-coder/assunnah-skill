@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { siteConfig } from "@/config/site";
+import { getPublishedCourses, getTestimonials } from "@/lib/actions/data";
 import {
   GraduationIcon, BookIcon,
   BriefcaseIcon, ChefHatIcon, ScissorsIcon, ChartIcon,
@@ -162,10 +163,46 @@ export default function HomePage() {
 
   // Testimonial carousel
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [dbCourses, setDbCourses] = useState<any[]>([]);
+  const [dbTestimonials, setDbTestimonials] = useState<any[]>([]);
+
+  // Fetch from database
+  useEffect(() => {
+    getPublishedCourses().then((data) => {
+      if (data && data.length > 0) setDbCourses(data);
+    }).catch(() => {});
+    getTestimonials().then((data) => {
+      if (data && data.length > 0) setDbTestimonials(data);
+    }).catch(() => {});
+  }, []);
+
+  // Use DB data if available, fallback to static
+  const displayCourses = dbCourses.length > 0
+    ? dbCourses.map((c: any) => ({
+        id: c.id,
+        slug: c.slug,
+        title: c.title,
+        desc: c.shortDesc,
+        duration: c.duration,
+        type: c.type,
+        icon: courses.find((sc) => sc.slug === c.slug)?.icon || <BookIcon size={26} color={c.color} />,
+        color: c.color,
+        featured: c.isFeatured,
+      }))
+    : courses;
+
+  const displayTestimonials = dbTestimonials.length > 0
+    ? dbTestimonials.map((t: any) => ({
+        name: t.name,
+        batch: t.batch,
+        text: t.story,
+        initials: t.initials || t.name.slice(0, 2),
+      }))
+    : testimonials;
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
+      setActiveTestimonial((prev) => (prev + 1) % displayTestimonials.length);
     }, 6000);
     return () => clearInterval(interval);
   }, []);
@@ -409,7 +446,7 @@ export default function HomePage() {
             viewport={{ once: true, margin: "-50px" }}
             variants={sectionStagger}
           >
-            {courses.map((course, i) => (
+            {displayCourses.map((course, i) => (
               <motion.div
                 key={course.id}
                 variants={fadeScale}
@@ -613,16 +650,16 @@ export default function HomePage() {
                   className={styles.testimonialFeaturedInner}
                 >
                   <p className={styles.testimonialFeaturedText}>
-                    {testimonials[activeTestimonial].text}
+                    {displayTestimonials[activeTestimonial].text}
                   </p>
                   <div className={styles.testimonialFeaturedAuthor}>
                     <div className={styles.testimonialAvatar}>
-                      <span>{testimonials[activeTestimonial].initials}</span>
+                      <span>{displayTestimonials[activeTestimonial].initials}</span>
                     </div>
                     <div>
-                      <strong>{testimonials[activeTestimonial].name}</strong>
+                      <strong>{displayTestimonials[activeTestimonial].name}</strong>
                       <span className={styles.testimonialBatch}>
-                        {testimonials[activeTestimonial].batch}
+                        {displayTestimonials[activeTestimonial].batch}
                       </span>
                     </div>
                   </div>
@@ -631,7 +668,7 @@ export default function HomePage() {
 
               {/* Dots */}
               <div className={styles.testimonialDots}>
-                {testimonials.map((_, i) => (
+                {displayTestimonials.map((_, i) => (
                   <button
                     key={i}
                     className={`${styles.testimonialDot} ${i === activeTestimonial ? styles.testimonialDotActive : ""}`}

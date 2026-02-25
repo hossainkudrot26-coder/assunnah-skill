@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { images } from "@/config/images";
+import { getGalleryItems } from "@/lib/actions/data";
 import {
   CameraIcon, XIcon, ChevronLeftIcon, ChevronRightIcon,
   ExpandIcon, MonitorIcon, GraduationIcon, ChefHatIcon,
@@ -42,10 +43,30 @@ const filterCategories = ["সকল", "ক্লাসরুম", "ইভেন
 export default function GalleryPage() {
   const [activeFilter, setActiveFilter] = useState("সকল");
   const [lightbox, setLightbox] = useState<number | null>(null);
+  const [dbItems, setDbItems] = useState<any[]>([]);
+
+  // Fetch from database
+  useEffect(() => {
+    getGalleryItems().then((data) => {
+      if (data && data.length > 0) {
+        setDbItems(data.map((item: any, i: number) => ({
+          id: i + 100,
+          src: item.image,
+          title: item.titleBn || item.title,
+          desc: item.desc || "",
+          category: item.category,
+          span: item.span as any,
+        })));
+      }
+    }).catch(() => {});
+  }, []);
+
+  // Use DB data if available, fallback to static
+  const allItems = dbItems.length > 0 ? dbItems : galleryItems;
 
   const filtered = activeFilter === "সকল"
-    ? galleryItems
-    : galleryItems.filter((item) => item.category === activeFilter);
+    ? allItems
+    : allItems.filter((item) => item.category === activeFilter);
 
   const openLightbox = useCallback((id: number) => setLightbox(id), []);
   const closeLightbox = useCallback(() => setLightbox(null), []);

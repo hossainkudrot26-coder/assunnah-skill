@@ -870,6 +870,123 @@
 }
 
 /* ══════════════════════════════════════════
+   PARTNERS / NSDA — Logo Strip
+   ══════════════════════════════════════════ */
+.partnersSection {
+  padding: var(--space-16) 0;
+  background: white;
+}
+
+.partnersHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: var(--space-10);
+}
+
+.partnersDivider {
+  flex: 1;
+  max-width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-neutral-200), transparent);
+}
+
+.partnersLabel {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-neutral-400);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.partnersGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+
+.partnerCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 12px;
+  background: var(--color-neutral-50);
+  border: 1px solid var(--color-neutral-100);
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.partnerCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  border-color: var(--color-primary-100);
+}
+
+.partnerLogo {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border: 2px solid;
+  border-radius: 14px;
+}
+
+.partnerName {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-neutral-500);
+  text-align: center;
+  line-height: 1.35;
+}
+
+/* ══════════════════════════════════════════
+   FOUNDER QUOTE — Mission Section Enhancement
+   ══════════════════════════════════════════ */
+.founderQuote {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  max-width: 640px;
+  margin: 0 auto var(--space-12);
+  padding: var(--space-8) var(--space-10);
+  background: linear-gradient(135deg, var(--color-primary-50), rgba(141, 198, 63, 0.05));
+  border: 1px solid var(--color-primary-100);
+  border-radius: 20px;
+  position: relative;
+}
+
+.founderQuote blockquote {
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.7;
+  color: var(--color-neutral-700);
+  font-style: italic;
+}
+
+.founderQuote cite {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-primary-600);
+  font-style: normal;
+}
+
+/* ══════════════════════════════════════════
+   TESTIMONIAL STARS
+   ══════════════════════════════════════════ */
+.testimonialStars {
+  display: flex;
+  gap: 3px;
+  margin-bottom: var(--space-6);
+}
+
+/* ══════════════════════════════════════════
    COURSES — Bento Grid on Deep Forest Green
    ══════════════════════════════════════════ */
 .coursesSection {
@@ -1568,6 +1685,32 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
+.ctaTrust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ctaTrustItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+.ctaTrustDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+}
+
 /* CTA Floating */
 .ctaFloat1 {
   position: absolute;
@@ -1680,6 +1823,15 @@
 
   .ctaFloat1,
   .ctaFloat2 {
+    display: none;
+  }
+
+  .ctaTrust {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .ctaTrustDot {
     display: none;
   }
 
@@ -1891,6 +2043,51 @@
   color: #7A9E8C;
 }
 
+/* Partners dark mode */
+[data-theme="dark"] .partnersSection {
+  background: #0B3224;
+}
+
+[data-theme="dark"] .partnersDivider {
+  background: linear-gradient(90deg, transparent, #1E6B50, transparent);
+}
+
+[data-theme="dark"] .partnersLabel {
+  color: #7A9E8C;
+}
+
+[data-theme="dark"] .partnerCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .partnerCard:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  border-color: var(--color-primary-400);
+}
+
+[data-theme="dark"] .partnerLogo {
+  background: #0D3B2E;
+}
+
+[data-theme="dark"] .partnerName {
+  color: #A0B8AC;
+}
+
+/* Founder quote dark mode */
+[data-theme="dark"] .founderQuote {
+  background: linear-gradient(135deg, rgba(30, 107, 80, 0.3), rgba(141, 198, 63, 0.05));
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .founderQuote blockquote {
+  color: #C0D4C8;
+}
+
+[data-theme="dark"] .founderQuote cite {
+  color: var(--color-secondary-400);
+}
+
 /* ─── New sections responsive ─── */
 @media (max-width: 768px) {
   .whyGrid {
@@ -1950,5 +2147,36 @@
 
   .batchTitle {
     font-size: 1.2rem;
+  }
+
+  .partnersGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .partnerCard {
+    padding: 14px 8px;
+  }
+
+  .partnerLogo {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+  }
+
+  .partnerLogo span {
+    font-size: 0.85rem !important;
+  }
+
+  .partnerName {
+    font-size: 0.62rem;
+  }
+
+  .founderQuote {
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .founderQuote blockquote {
+    font-size: 0.92rem;
   }
 }

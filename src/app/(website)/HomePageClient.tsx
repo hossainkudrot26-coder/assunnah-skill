@@ -121,6 +121,15 @@ const impactCounters = [
   { end: 24000, suffix: "", label: "স্কয়ার ফিট ক্যাম্পাস", icon: <BuildingIcon size={32} color="#1565C0" /> },
 ];
 
+const partnerLogos = [
+  { name: "জাতীয় দক্ষতা উন্নয়ন কর্তৃপক্ষ (NSDA)", abbr: "NSDA", color: "#1B6B3A" },
+  { name: "আস-সুন্নাহ ফাউন্ডেশন", abbr: "ASF", color: "#1B8A50" },
+  { name: "বাংলাদেশ কারিগরি শিক্ষা বোর্ড", abbr: "BTEB", color: "#1565C0" },
+  { name: "তথ্য ও যোগাযোগ প্রযুক্তি বিভাগ", abbr: "ICT", color: "#7B1FA2" },
+  { name: "যুব ও ক্রীড়া মন্ত্রণালয়", abbr: "MoYS", color: "#E65100" },
+  { name: "সমাজসেবা অধিদপ্তর", abbr: "DSS", color: "#2E7D32" },
+];
+
 /* ═══════════════════════════════════════════
    ANIMATED COUNTER HOOK
    ═══════════════════════════════════════════ */
@@ -487,6 +496,45 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
       </section>
 
       {/* ════════════════════════════════════
+          PARTNERS / NSDA — Logo Strip
+          ════════════════════════════════════ */}
+      <section className={styles.partnersSection}>
+        <div className="container">
+          <motion.div
+            className={styles.partnersHeader}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className={styles.partnersDivider} />
+            <span className={styles.partnersLabel}>সহযোগী প্রতিষ্ঠানসমূহ</span>
+            <span className={styles.partnersDivider} />
+          </motion.div>
+          <motion.div
+            className={styles.partnersGrid}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={sectionStagger}
+          >
+            {partnerLogos.map((p, i) => (
+              <motion.div
+                key={i}
+                className={styles.partnerCard}
+                variants={fadeUp}
+              >
+                <div className={styles.partnerLogo} style={{ borderColor: `${p.color}30` }}>
+                  <span style={{ color: p.color, fontWeight: 800, fontSize: "1.1rem" }}>{p.abbr}</span>
+                </div>
+                <span className={styles.partnerName}>{p.name}</span>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════
           UPCOMING BATCH — Urgency Banner
           ════════════════════════════════════ */}
       <section className={styles.batchBanner}>
@@ -663,6 +711,21 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
             </motion.p>
           </motion.div>
 
+          {/* Founder Quote */}
+          <motion.div
+            className={styles.founderQuote}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <QuoteIcon size={24} color="var(--color-primary-300)" />
+            <blockquote>
+              আমরা চাই প্রতিটি বেকার যুবক-যুবতী একটি সম্মানজনক পেশায় নিজেকে প্রতিষ্ঠিত করুক — এটাই আমাদের স্বপ্ন।
+            </blockquote>
+            <cite>— শায়খ আহমাদুল্লাহ, প্রতিষ্ঠাতা</cite>
+          </motion.div>
+
           <div className={styles.missionGrid}>
             {/* Feature Cards */}
             <motion.div
@@ -748,6 +811,9 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
               <span className="gradient-text">শিক্ষার্থীরা</span>{" "}
               বলছেন
             </motion.h2>
+            <motion.p className="section-subtitle" style={{ color: "rgba(255, 255, 255, 0.45)" }} variants={fadeUp}>
+              যারা আস-সুন্নাহ থেকে প্রশিক্ষণ নিয়ে জীবন বদলে ফেলেছেন
+            </motion.p>
           </motion.div>
 
           <motion.div
@@ -774,6 +840,11 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
                   <p className={styles.testimonialFeaturedText}>
                     {testimonials[activeTestimonial]?.text}
                   </p>
+                  <div className={styles.testimonialStars}>
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <StarIcon key={s} size={16} color="var(--color-accent-400)" />
+                    ))}
+                  </div>
                   <div className={styles.testimonialFeaturedAuthor}>
                     <div className={styles.testimonialAvatar}>
                       <span>{testimonials[activeTestimonial]?.initials}</span>
@@ -869,6 +940,24 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
           <motion.div className={styles.ctaContact} variants={fadeUp}>
             <PhoneIcon size={14} color="rgba(255,255,255,0.5)" />
             <span>কল করুন: {siteConfig.contact.phone} | {siteConfig.contact.phone2}</span>
+          </motion.div>
+
+          {/* Trust indicators */}
+          <motion.div className={styles.ctaTrust} variants={fadeUp}>
+            <div className={styles.ctaTrustItem}>
+              <ShieldCheckIcon size={16} color="var(--color-secondary-400)" />
+              <span>NSDA নিবন্ধিত</span>
+            </div>
+            <div className={styles.ctaTrustDot} />
+            <div className={styles.ctaTrustItem}>
+              <GraduationIcon size={16} color="var(--color-secondary-400)" />
+              <span>২,৫০০+ গ্র্যাজুয়েট</span>
+            </div>
+            <div className={styles.ctaTrustDot} />
+            <div className={styles.ctaTrustItem}>
+              <HeartIcon size={16} color="var(--color-secondary-400)" />
+              <span>১০০% স্কলারশিপ</span>
+            </div>
           </motion.div>
         </motion.div>
 

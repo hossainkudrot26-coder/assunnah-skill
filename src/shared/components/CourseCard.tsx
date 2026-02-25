@@ -4,13 +4,17 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   BriefcaseIcon, ChefHatIcon, ScissorsIcon, ChartIcon,
-  CarIcon, ShoeIcon, ClockIcon, ArrowRightIcon,
+  CarIcon, ShoeIcon, ClockIcon, ArrowRightIcon, UsersIcon,
 } from "@/shared/components/Icons";
 import type { Course } from "@/config/courses";
 import styles from "./CourseCard.module.css";
 
 const iconMap: Record<string, React.ComponentType<{ size?: number; color?: string }>> = {
   BriefcaseIcon, ChefHatIcon, ScissorsIcon, ChartIcon, CarIcon, ShoeIcon,
+  LanguageIcon: BriefcaseIcon,
+  CodeIcon: BriefcaseIcon,
+  WrenchIcon: BriefcaseIcon,
+  VideoIcon: BriefcaseIcon,
 };
 
 interface CourseCardProps {
@@ -52,6 +56,13 @@ export function CourseCard({ course, variant = "grid", index = 0 }: CourseCardPr
             {course.type}
           </span>
         </div>
+
+        {course.category && (
+          <span className={styles.categoryBadge}>
+            <UsersIcon size={12} color="var(--color-neutral-500)" />
+            {course.category}
+          </span>
+        )}
 
         <h3 className={styles.title}>{course.title}</h3>
         <p className={styles.desc}>{course.shortDesc}</p>

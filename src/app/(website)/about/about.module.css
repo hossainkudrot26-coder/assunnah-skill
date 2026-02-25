@@ -134,6 +134,71 @@
     color: var(--color-neutral-500);
 }
 
+/* ——— MISSION & VISION ——— */
+.missionSection {
+    background: var(--color-neutral-50);
+}
+
+.missionGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+}
+
+.missionCard {
+    background: white;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    transition: all var(--transition-base);
+}
+
+.missionCard:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-primary-300);
+}
+
+.missionIconBox {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary-50);
+    border: 1px solid var(--color-primary-100);
+    border-radius: var(--radius-xl);
+    margin-bottom: var(--space-4);
+}
+
+.missionCard h3 {
+    font-size: var(--text-xl);
+    font-weight: var(--font-bold);
+    color: var(--color-neutral-900);
+    margin-bottom: var(--space-3);
+}
+
+.missionCard p {
+    font-size: var(--text-base);
+    color: var(--color-neutral-600);
+    line-height: var(--leading-relaxed);
+}
+
+.orgTypeBox {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    justify-content: center;
+    margin-top: var(--space-6);
+    padding: var(--space-4) var(--space-6);
+    background: var(--color-primary-50);
+    border: 1px solid var(--color-primary-100);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    color: var(--color-primary-700);
+    font-weight: var(--font-medium);
+}
+
 /* ——— VALUES ——— */
 .valuesGrid {
     display: grid;
@@ -378,6 +443,10 @@
         grid-template-columns: 1fr;
     }
 
+    .missionGrid {
+        grid-template-columns: 1fr;
+    }
+
     .facilitiesGrid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -408,6 +477,34 @@
 }
 
 /* ——— DARK MODE ——— */
+[data-theme="dark"] .missionSection {
+  background: transparent;
+}
+
+[data-theme="dark"] .missionCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .missionCard h3 {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .missionCard p {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .missionIconBox {
+  background: rgba(27, 138, 80, 0.15);
+  border-color: rgba(27, 138, 80, 0.3);
+}
+
+[data-theme="dark"] .orgTypeBox {
+  background: rgba(27, 138, 80, 0.12);
+  border-color: rgba(27, 138, 80, 0.25);
+  color: var(--color-secondary-400);
+}
+
 [data-theme="dark"] .founderSection {
   background: transparent;
 }

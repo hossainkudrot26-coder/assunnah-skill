@@ -36,8 +36,8 @@ const values = [
 const facilities = [
     { number: "৭", label: "কম্পিউটার ল্যাব", icon: <MonitorIcon size={28} color="var(--color-primary-500)" /> },
     { number: "২৪,০০০", label: "বর্গফুট প্রশিক্ষণ কেন্দ্র", icon: <BuildingIcon size={28} color="var(--color-primary-500)" /> },
-    { number: "৪০০", label: "একসাথে প্রশিক্ষণার্থী ধারণক্ষমতা", icon: <UsersIcon size={28} color="var(--color-primary-500)" /> },
-    { number: "৩২,৫০০", label: "বর্গফুট নতুন শেড নির্মাণাধীন", icon: <BuildingIcon size={28} color="var(--color-accent-500)" /> },
+    { number: "২,৫০০+", label: "প্রশিক্ষিত জনশক্তি", icon: <UsersIcon size={28} color="var(--color-primary-500)" /> },
+    { number: "১০+", label: "চলমান কোর্স", icon: <BookIcon size={28} color="var(--color-accent-500)" /> },
 ];
 
 export default function AboutPage() {
@@ -102,6 +102,36 @@ export default function AboutPage() {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Mission & Vision Section */}
+            <section className={`section ${styles.missionSection}`}>
+                <div className="container">
+                    <div className={styles.missionGrid}>
+                        <div className={styles.missionCard}>
+                            <div className={styles.missionIconBox}>
+                                <TargetIcon size={32} color="var(--color-primary-500)" />
+                            </div>
+                            <h3>আমাদের লক্ষ্য</h3>
+                            <p>
+                                {siteConfig.mission}
+                            </p>
+                        </div>
+                        <div className={styles.missionCard}>
+                            <div className={styles.missionIconBox}>
+                                <GlobeIcon size={32} color="var(--color-accent-500)" />
+                            </div>
+                            <h3>আমাদের ভিশন</h3>
+                            <p>
+                                {siteConfig.vision}
+                            </p>
+                        </div>
+                    </div>
+                    <div className={styles.orgTypeBox}>
+                        <ShieldCheckIcon size={18} color="var(--color-primary-500)" />
+                        <span>{siteConfig.orgType} — {siteConfig.registration}</span>
                     </div>
                 </div>
             </section>
@@ -185,7 +215,7 @@ export default function AboutPage() {
                                 <TargetIcon size={22} color="var(--color-primary-500)" />
                             </div>
                             <h3>লক্ষ্য</h3>
-                            <p>আফতাবনগরের কাছে ২০০ কাঠা জমিতে স্থায়ী কেন্দ্র নির্মাণ — বছরে ১ লক্ষ প্রশিক্ষণার্থী</p>
+                            <p>স্থায়ী ও বৃহৎ প্রশিক্ষণ কেন্দ্র নির্মাণ — বছরে ১ লক্ষ দক্ষ জনশক্তি তৈরি</p>
                         </div>
                     </div>
                 </div>

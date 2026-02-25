@@ -198,3 +198,12 @@
 [data-theme="dark"] .empty { background: #14493A; border-color: #1E6B50; }
 [data-theme="dark"] .toastSuccess { background: #14493A; color: #4ADE80; border-color: #1E6B50; }
 [data-theme="dark"] .toastError { background: #3B1212; color: #FCA5A5; border-color: #7F1D1D; }
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .header { flex-direction: column; gap: 12px; align-items: stretch; }
+  .tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .statsGrid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .tableWrapper { overflow-x: auto; }
+  .table { min-width: 600px; }
+}

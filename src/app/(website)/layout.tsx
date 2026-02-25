@@ -2,6 +2,7 @@ import { Header } from "@/modules/website/components/Header";
 import { Footer } from "@/modules/website/components/Footer";
 import { AnnouncementBar } from "@/modules/website/components/AnnouncementBar";
 import { FloatingWhatsApp } from "@/modules/website/components/FloatingWhatsApp";
+import { ScrollToTop } from "@/shared/components/ScrollToTop";
 
 export default function WebsiteLayout({
   children,
@@ -18,6 +19,7 @@ export default function WebsiteLayout({
       <main id="main-content" role="main">{children}</main>
       <Footer />
       <FloatingWhatsApp />
+      <ScrollToTop />
     </>
   );
 }

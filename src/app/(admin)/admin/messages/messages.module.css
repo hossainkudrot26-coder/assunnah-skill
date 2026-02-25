@@ -84,3 +84,11 @@
 [data-theme="dark"] .messageTop strong { color: #F0F5F2; }
 [data-theme="dark"] .messageBody { color: #A0B8AC; }
 [data-theme="dark"] .empty { background: #14493A; border-color: #1E6B50; }
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .header { flex-direction: column; gap: 12px; align-items: stretch; }
+  .statsGrid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .messageGrid { grid-template-columns: 1fr; }
+  .detailPanel { position: fixed; inset: 0; z-index: 100; border-radius: 0; }
+}

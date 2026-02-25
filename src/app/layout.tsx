@@ -50,6 +50,48 @@ export default function RootLayout({
             __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.setAttribute('data-theme','dark')}}catch(e){}})()`,
           }}
         />
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "EducationalOrganization",
+              "name": siteConfig.name,
+              "alternateName": siteConfig.nameBn,
+              "url": siteConfig.url,
+              "logo": siteConfig.logo,
+              "description": siteConfig.descriptionEn,
+              "foundingDate": "2022",
+              "founder": {
+                "@type": "Person",
+                "name": siteConfig.founderEn,
+              },
+              "parentOrganization": {
+                "@type": "Organization",
+                "name": siteConfig.parentOrgEn,
+                "url": siteConfig.parentOrgUrl,
+              },
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": siteConfig.contact.addressEn,
+                "addressLocality": "Dhaka",
+                "addressCountry": "BD",
+              },
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": siteConfig.contact.phone,
+                "email": siteConfig.contact.email,
+                "contactType": "customer service",
+                "availableLanguage": ["bn", "en"],
+              },
+              "sameAs": [
+                siteConfig.social.facebook,
+                siteConfig.social.youtube,
+              ],
+            }),
+          }}
+        />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#1B8A50" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

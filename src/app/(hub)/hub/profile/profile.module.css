@@ -162,3 +162,9 @@
 [data-theme="dark"] .changePasswordBtn:hover { background: #1E6B50; }
 [data-theme="dark"] .toastSuccess { background: #14493A; color: #4ADE80; border-color: #1E6B50; }
 [data-theme="dark"] .toastError { background: #3B1212; color: #FCA5A5; border-color: #7F1D1D; }
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .profileHeader { flex-direction: column; text-align: center; }
+  .infoGrid { grid-template-columns: 1fr; }
+}

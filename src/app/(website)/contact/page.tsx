@@ -201,13 +201,13 @@ export default function ContactPage() {
               {/* Google Map */}
               <div className={styles.mapWrapper}>
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.0!2d90.43!3d23.77!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ2JzA1LjIiTiA5MMKwMjUnNDYuNCJF!5e0!3m2!1sbn!2sbd!4v1700000000000"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.2!2d90.4280!3d23.7808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7a0d2c6b9e9%3A0x1!2sUttar%20Badda%2C%20Dhaka!5e0!3m2!1sbn!2sbd!4v1700000000000"
                   width="100%"
                   height="220"
                   style={{ border: 0, borderRadius: "16px" }}
                   allowFullScreen
                   loading="lazy"
-                  title="আস-সুন্নাহ স্কিলের অবস্থান"
+                  title="আস-সুন্নাহ স্কিলের অবস্থান — উত্তর বাড্ডা, ঢাকা"
                 />
               </div>
             </div>

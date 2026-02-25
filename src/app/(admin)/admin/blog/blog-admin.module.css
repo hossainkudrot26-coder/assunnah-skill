@@ -1,0 +1,105 @@
+.blogAdmin { max-width: 800px; }
+
+.header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.header h2 { font-size: 1.1rem; font-weight: 700; }
+
+.createBtn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 9px 18px; font-size: 0.82rem; font-weight: 600;
+  color: white; background: var(--color-primary-500);
+  border: none; border-radius: 10px; cursor: pointer; font-family: inherit;
+}
+
+.backBtn {
+  padding: 8px 16px; font-size: 0.82rem; font-weight: 600;
+  color: var(--color-neutral-600); background: var(--color-neutral-50);
+  border: 1px solid var(--color-neutral-200); border-radius: 10px;
+  cursor: pointer; font-family: inherit;
+}
+
+.empty { text-align: center; padding: 60px; background: white; border: 1px solid var(--color-neutral-200); border-radius: 16px; color: var(--color-neutral-500); }
+
+.postsList { display: flex; flex-direction: column; gap: 12px; }
+
+.postCard {
+  padding: 18px 20px; background: white;
+  border: 1px solid var(--color-neutral-200); border-radius: 14px;
+}
+
+.postTop { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+.postTop strong { font-size: 0.9rem; }
+.category { font-size: 0.72rem; font-weight: 600; color: var(--color-primary-600); background: var(--color-primary-50); padding: 2px 8px; border-radius: 5px; margin-left: 8px; }
+
+.postActions { display: flex; gap: 8px; }
+
+.statusBadge { font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 6px; }
+.published { background: #F0FDF4; color: #16A34A; }
+.draft { background: #FEF3C7; color: #D97706; }
+
+.excerpt { font-size: 0.82rem; color: var(--color-neutral-500); line-height: 1.5; margin-bottom: 10px; }
+
+.postBottom { display: flex; justify-content: space-between; align-items: center; }
+.date { font-size: 0.75rem; color: var(--color-neutral-400); }
+.postBtns { display: flex; gap: 8px; }
+
+.editBtn, .deleteBtn {
+  padding: 5px 12px; font-size: 0.75rem; font-weight: 600;
+  border-radius: 6px; cursor: pointer; font-family: inherit; border: 1px solid;
+}
+.editBtn { background: var(--color-primary-50); color: var(--color-primary-600); border-color: var(--color-primary-200); }
+.deleteBtn { background: #FEF2F2; color: #DC2626; border-color: #FECACA; }
+
+/* ——— FORM ——— */
+.form { display: flex; flex-direction: column; gap: 16px; }
+
+.formRow { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.formGroup { display: flex; flex-direction: column; gap: 5px; }
+.formGroup label { font-size: 0.78rem; font-weight: 600; color: var(--color-neutral-600); }
+
+.formGroup input, .formGroup select, .formGroup textarea {
+  padding: 10px 14px; border: 1.5px solid var(--color-neutral-200);
+  border-radius: 10px; font-size: 0.88rem; font-family: inherit;
+  background: white; width: 100%;
+}
+.formGroup input:focus, .formGroup select:focus, .formGroup textarea:focus {
+  outline: none; border-color: var(--color-primary-400);
+  box-shadow: 0 0 0 3px rgba(27, 138, 80, 0.08);
+}
+
+.checkbox {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.85rem; font-weight: 500; cursor: pointer;
+}
+.checkbox input { width: 18px; height: 18px; accent-color: var(--color-primary-500); }
+
+.formActions { display: flex; justify-content: flex-end; padding-top: 8px; }
+
+.submitBtn {
+  padding: 11px 28px; font-size: 0.88rem; font-weight: 600;
+  color: white; background: var(--color-primary-500);
+  border: none; border-radius: 10px; cursor: pointer; font-family: inherit;
+}
+.submitBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.errorMsg {
+  padding: 12px 16px; background: #FEF2F2; border: 1px solid #FECACA;
+  border-radius: 10px; color: #DC2626; font-size: 0.85rem; margin-bottom: 12px;
+}
+.successMsg {
+  padding: 12px 16px; background: #F0FDF4; border: 1px solid #BBF7D0;
+  border-radius: 10px; color: #16A34A; font-size: 0.85rem; margin-bottom: 12px;
+}
+
+@media (max-width: 768px) { .formRow { grid-template-columns: 1fr; } }
+
+[data-theme="dark"] .header h2 { color: #F0F5F2; }
+[data-theme="dark"] .postCard, [data-theme="dark"] .empty { background: #14493A; border-color: #1E6B50; }
+[data-theme="dark"] .postTop strong { color: #F0F5F2; }
+[data-theme="dark"] .excerpt { color: #7E9A8C; }
+[data-theme="dark"] .formGroup input, [data-theme="dark"] .formGroup select, [data-theme="dark"] .formGroup textarea {
+  background: #0B3224; border-color: #1E6B50; color: #E0E8E4;
+}
+[data-theme="dark"] .formGroup label { color: #A0B8AC; }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import { mainNav, type NavItem } from "@/config/navigation";
@@ -29,6 +30,8 @@ const iconMap: Record<string, (s: number, c: string) => React.ReactNode> = {
 };
 
 export function Header() {
+  const { data: session } = useSession();
+  const isLoggedIn = !!session?.user;
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -157,12 +160,12 @@ export function Header() {
 
           <div className={styles.headerActions}>
             <ThemeToggle />
-            <Link href="/login" className={styles.ctaBtn}>
+            <Link href={isLoggedIn ? "/hub" : "/login"} className={styles.ctaBtn}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
               </svg>
-              কমিউনিটি
+              {isLoggedIn ? "ড্যাশবোর্ড" : "কমিউনিটি"}
             </Link>
 
             {/* Mobile Toggle */}
@@ -263,8 +266,8 @@ export function Header() {
           </nav>
 
           <div className={styles.mobilePanelFooter}>
-            <Link href="/login" className={styles.mobileCta} onClick={() => setMenuOpen(false)}>
-              কমিউনিটিতে যোগ দিন
+            <Link href={isLoggedIn ? "/hub" : "/login"} className={styles.mobileCta} onClick={() => setMenuOpen(false)}>
+              {isLoggedIn ? "ড্যাশবোর্ডে যান" : "কমিউনিটিতে যোগ দিন"}
             </Link>
             <div className={styles.mobileContact}>
               <a href="tel:+8809610001089">+৮৮০ ৯৬১০-০০১০৮৯</a>

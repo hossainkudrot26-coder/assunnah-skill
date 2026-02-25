@@ -116,6 +116,7 @@ model Course {
   image       String?
   duration    String
   type        String       // রেসিডেন্সিয়াল, ফ্রি, নারীদের জন্য
+  category    String?      // শুধুমাত্র পুরুষ, শুধুমাত্র নারী, সবার জন্য
   batchInfo   String?
   status      CourseStatus @default(PUBLISHED)
   sortOrder   Int          @default(0)

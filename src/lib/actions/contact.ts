@@ -3,6 +3,7 @@
 import prisma from "@/lib/db";
 import { contactSchema } from "@/lib/validations";
 import type { ContactInput } from "@/lib/validations";
+import { sendEmail, contactNotificationEmail } from "@/lib/email";
 
 export async function submitContactForm(data: ContactInput) {
   try {
@@ -18,6 +19,24 @@ export async function submitContactForm(data: ContactInput) {
         status: "UNREAD",
       },
     });
+
+    // Send email notification to admin (non-blocking)
+    const adminEmail = process.env.ADMIN_EMAIL;
+    if (adminEmail) {
+      const { subject, html } = contactNotificationEmail({
+        name: validated.name,
+        phone: validated.phone,
+        email: validated.email,
+        subject: validated.subject,
+        message: validated.message,
+      });
+      sendEmail({
+        to: adminEmail,
+        subject,
+        html,
+        replyTo: validated.email || undefined,
+      }).catch(() => {}); // Non-blocking
+    }
 
     return { success: true, message: "আপনার বার্তা সফলভাবে পাঠানো হয়েছে!" };
   } catch (error: any) {

@@ -1,0 +1,150 @@
+.page { max-width: 960px; }
+
+/* ─── Header ─── */
+.header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.headerLeft { display: flex; align-items: center; gap: 12px; }
+.headerLeft h2 { font-size: 1.15rem; font-weight: 700; color: var(--color-neutral-900); }
+.count { font-size: 0.78rem; color: var(--color-neutral-500); background: var(--color-neutral-100); padding: 3px 10px; border-radius: 20px; }
+
+.addBtn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 18px; font-size: 0.82rem; font-weight: 600; font-family: inherit;
+  color: white; background: var(--color-primary-600); border: none; border-radius: 10px; cursor: pointer;
+}
+.addBtn:hover { background: var(--color-primary-700); }
+
+/* ─── Filters ─── */
+.filters { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+.filterBtn { padding: 6px 14px; font-size: 0.78rem; font-weight: 600; font-family: inherit; color: var(--color-neutral-600); background: white; border: 1px solid var(--color-neutral-200); border-radius: 8px; cursor: pointer; }
+.filterBtn:hover { border-color: var(--color-primary-300); }
+.filterBtnActive { color: white; background: var(--color-primary-600); border-color: var(--color-primary-600); }
+
+/* ─── Grid ─── */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+
+.gridCard {
+  background: white; border: 1px solid var(--color-neutral-200); border-radius: 14px; overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.gridCard:hover { border-color: var(--color-primary-300); box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+.gridCardHidden { opacity: 0.6; }
+
+.imageWrap { position: relative; aspect-ratio: 3/2; overflow: hidden; background: var(--color-neutral-100); }
+.image { width: 100%; height: 100%; object-fit: cover; }
+.hiddenOverlay {
+  position: absolute; top: 8px; right: 8px;
+  padding: 3px 10px; font-size: 0.7rem; font-weight: 600;
+  background: rgba(0,0,0,0.6); color: white; border-radius: 6px;
+}
+
+.cardBody { padding: 14px; }
+.cardTitle { font-size: 0.88rem; font-weight: 700; color: var(--color-neutral-900); margin-bottom: 6px; }
+.cardMeta { display: flex; gap: 6px; margin-bottom: 10px; }
+.catBadge { font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 5px; background: var(--color-primary-50); color: var(--color-primary-600); }
+.spanBadge { font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 5px; background: #FEF3C7; color: #D97706; }
+
+.cardActions { display: flex; gap: 6px; }
+.actionBtn { padding: 5px 10px; font-size: 0.72rem; font-weight: 600; font-family: inherit; border-radius: 6px; cursor: pointer; border: 1px solid; }
+.editBtn { color: var(--color-primary-600); border-color: var(--color-primary-200); background: var(--color-primary-50); }
+.editBtn:hover { background: var(--color-primary-100); }
+.deleteBtn { color: #DC2626; border-color: #FECACA; background: #FEF2F2; }
+.deleteBtn:hover { background: #FEE2E2; }
+.visBtn { color: #6366F1; border-color: #C7D2FE; background: #EEF2FF; }
+.visBtn:hover { background: #E0E7FF; }
+
+/* ─── Empty ─── */
+.empty { text-align: center; padding: 60px; background: white; border: 1px dashed var(--color-neutral-300); border-radius: 16px; color: var(--color-neutral-500); }
+.emptyIcon { font-size: 2rem; margin-bottom: 8px; opacity: 0.5; }
+
+/* ─── Modal ─── */
+.modalOverlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+.modal { background: white; border-radius: 20px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+.modalHeader { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid var(--color-neutral-200); position: sticky; top: 0; background: white; border-radius: 20px 20px 0 0; z-index: 2; }
+.modalHeader h3 { font-size: 1.05rem; font-weight: 700; }
+.closeBtn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: var(--color-neutral-100); border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; color: var(--color-neutral-600); }
+.closeBtn:hover { background: var(--color-neutral-200); }
+.modalBody { padding: 24px; }
+
+/* ─── Upload Area ─── */
+.uploadArea { margin-bottom: 16px; }
+.uploadBox {
+  border: 2px dashed var(--color-neutral-300); border-radius: 14px; padding: 32px; text-align: center; cursor: pointer;
+  transition: border-color 0.15s;
+}
+.uploadBox:hover { border-color: var(--color-primary-400); }
+.uploadIcon { font-size: 2rem; margin-bottom: 8px; }
+.uploadBox p { font-size: 0.88rem; font-weight: 600; color: var(--color-neutral-700); margin-bottom: 4px; }
+.uploadBox span { font-size: 0.75rem; color: var(--color-neutral-400); }
+
+.previewWrap { position: relative; border-radius: 14px; overflow: hidden; }
+.preview { width: 100%; height: auto; display: block; border-radius: 14px; max-height: 250px; object-fit: cover; }
+.removeImgBtn {
+  position: absolute; top: 8px; right: 8px;
+  padding: 4px 12px; font-size: 0.75rem; font-weight: 600; font-family: inherit;
+  background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 6px; cursor: pointer;
+}
+
+/* ─── Form ─── */
+.formGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.formGroup { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+.formGroup label { font-size: 0.78rem; font-weight: 600; color: var(--color-neutral-700); }
+.formGroup input, .formGroup select, .formGroup textarea {
+  padding: 9px 13px; font-size: 0.85rem; font-family: inherit;
+  border: 1px solid var(--color-neutral-200); border-radius: 9px; color: var(--color-neutral-900); background: white;
+}
+.formGroup input:focus, .formGroup select:focus, .formGroup textarea:focus { outline: none; border-color: var(--color-primary-400); box-shadow: 0 0 0 3px rgba(27,138,80,0.1); }
+.formGroup textarea { min-height: 60px; resize: vertical; }
+
+.checkboxGroup { flex-direction: row !important; align-items: center; gap: 8px !important; }
+.checkboxGroup input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--color-primary-600); }
+
+.errorMsg { margin-top: 8px; padding: 10px 14px; font-size: 0.82rem; color: #DC2626; background: #FEF2F2; border: 1px solid #FECACA; border-radius: 10px; }
+
+.formActions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--color-neutral-100); }
+.cancelBtn { padding: 9px 18px; font-size: 0.85rem; font-weight: 600; font-family: inherit; color: var(--color-neutral-600); background: white; border: 1px solid var(--color-neutral-200); border-radius: 10px; cursor: pointer; }
+.saveBtn { padding: 9px 22px; font-size: 0.85rem; font-weight: 600; font-family: inherit; color: white; background: var(--color-primary-600); border: none; border-radius: 10px; cursor: pointer; }
+.saveBtn:hover { background: var(--color-primary-700); }
+.saveBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ─── Confirm ─── */
+.confirmOverlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1100; padding: 20px; }
+.confirmBox { background: white; border-radius: 16px; padding: 28px; max-width: 400px; width: 100%; text-align: center; }
+.confirmBox h4 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+.confirmBox p { font-size: 0.85rem; color: var(--color-neutral-500); margin-bottom: 20px; }
+.confirmActions { display: flex; gap: 10px; justify-content: center; }
+.confirmDeleteBtn { padding: 10px 20px; font-size: 0.85rem; font-weight: 600; font-family: inherit; color: white; background: #DC2626; border: none; border-radius: 10px; cursor: pointer; }
+
+/* ─── Toast ─── */
+.toast { position: fixed; top: 20px; right: 20px; padding: 12px 20px; font-size: 0.85rem; font-weight: 600; border-radius: 10px; z-index: 2000; animation: slideIn 0.3s ease; }
+.toastSuccess { background: #F0FDF4; color: #16A34A; border: 1px solid #BBF7D0; }
+.toastError { background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; }
+@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+/* ─── Dark Mode ─── */
+[data-theme="dark"] .headerLeft h2 { color: #F0F5F2; }
+[data-theme="dark"] .count { background: #1E6B50; color: #A0B8AC; }
+[data-theme="dark"] .gridCard { background: #14493A; border-color: #1E6B50; }
+[data-theme="dark"] .gridCard:hover { border-color: #2A8B6A; }
+[data-theme="dark"] .imageWrap { background: #0D3B2E; }
+[data-theme="dark"] .cardTitle { color: #F0F5F2; }
+[data-theme="dark"] .catBadge { background: #1E6B50; color: #8DC63F; }
+[data-theme="dark"] .filterBtn { background: #14493A; border-color: #1E6B50; color: #A0B8AC; }
+[data-theme="dark"] .filterBtnActive { background: var(--color-primary-600); border-color: var(--color-primary-600); color: white; }
+[data-theme="dark"] .empty { background: #14493A; border-color: #1E6B50; }
+[data-theme="dark"] .modal { background: #0D3B2E; }
+[data-theme="dark"] .modalHeader { background: #0D3B2E; border-color: #1E6B50; }
+[data-theme="dark"] .modalHeader h3 { color: #F0F5F2; }
+[data-theme="dark"] .closeBtn { background: #1E6B50; color: #A0B8AC; }
+[data-theme="dark"] .uploadBox { border-color: #1E6B50; }
+[data-theme="dark"] .uploadBox:hover { border-color: #2A8B6A; }
+[data-theme="dark"] .uploadBox p { color: #A0B8AC; }
+[data-theme="dark"] .uploadBox span { color: #5A8870; }
+[data-theme="dark"] .formGroup label { color: #A0B8AC; }
+[data-theme="dark"] .formGroup input, [data-theme="dark"] .formGroup select, [data-theme="dark"] .formGroup textarea { background: #14493A; border-color: #1E6B50; color: #F0F5F2; }
+[data-theme="dark"] .formActions { border-color: #1E6B50; }
+[data-theme="dark"] .cancelBtn { background: #14493A; border-color: #1E6B50; color: #A0B8AC; }
+[data-theme="dark"] .confirmBox { background: #0D3B2E; }
+[data-theme="dark"] .confirmBox h4 { color: #F0F5F2; }
+[data-theme="dark"] .confirmBox p { color: #7A9E8C; }
+[data-theme="dark"] .toastSuccess { background: #14493A; color: #4ADE80; border-color: #1E6B50; }
+[data-theme="dark"] .toastError { background: #3B1212; color: #FCA5A5; border-color: #7F1D1D; }

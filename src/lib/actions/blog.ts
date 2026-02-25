@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/db";
 import { auth } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
 import { blogPostSchema } from "@/lib/validations";
 import type { BlogPostInput } from "@/lib/validations";
 
@@ -64,6 +65,9 @@ export async function createBlogPost(data: BlogPostInput) {
       },
     });
 
+    revalidatePath("/blog");
+    revalidatePath("/admin/blog");
+
     return { success: true, message: "পোস্ট তৈরি হয়েছে!" };
   } catch (error: any) {
     if (error?.issues) return { success: false, error: error.issues[0].message };
@@ -83,6 +87,9 @@ export async function updateBlogPost(id: string, data: Partial<BlogPostInput>) {
     },
   });
 
+  revalidatePath("/blog");
+  revalidatePath("/admin/blog");
+
   return { success: true };
 }
 
@@ -91,6 +98,10 @@ export async function deleteBlogPost(id: string) {
   if (!session?.user) return { success: false, error: "অননুমোদিত" };
 
   await prisma.blogPost.delete({ where: { id } });
+
+  revalidatePath("/blog");
+  revalidatePath("/admin/blog");
+
   return { success: true };
 }
 

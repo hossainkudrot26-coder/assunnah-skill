@@ -11,6 +11,8 @@ import {
   MosqueIcon, TrophyIcon, QuoteIcon, ArrowRightIcon,
   ClockIcon, HeartIcon, SparkleIcon, UsersIcon,
   CheckCircleIcon, PhoneIcon, TargetIcon,
+  HandshakeIcon, BuildingIcon, AwardIcon, StarIcon,
+  CalendarIcon, ZapIcon,
 } from "@/shared/components/Icons";
 import styles from "./page.module.css";
 
@@ -102,6 +104,71 @@ const features = [
   { icon: <MosqueIcon size={24} color="var(--color-primary-500)" />, title: "পৃথক পরিবেশ", desc: "নারী ও পুরুষের জন্য সম্পূর্ণ পৃথক প্রশিক্ষণ ব্যবস্থা" },
   { icon: <TrophyIcon size={24} color="var(--color-accent-500)" />, title: "জব প্লেসমেন্ট", desc: "প্রশিক্ষণ শেষে কর্মসংস্থানের সুযোগ ও সহায়তা" },
 ];
+
+const whyChooseUs = [
+  { icon: <ShieldCheckIcon size={28} color="var(--color-primary-500)" />, title: "সরকারি স্বীকৃতি", desc: "NSDA নিবন্ধিত — আপনার সার্টিফিকেট সরকারিভাবে গ্রহণযোগ্য", highlight: "NSDA" },
+  { icon: <HeartIcon size={28} color="#E65100" />, title: "সম্পূর্ণ বিনামূল্যে", desc: "অনেক কোর্সে ১০০% ফ্রি প্রশিক্ষণ — থাকা-খাওয়া সহ", highlight: "ফ্রি" },
+  { icon: <BuildingIcon size={28} color="#1565C0" />, title: "আবাসিক ক্যাম্পাস", desc: "২৪,০০০ স্কয়ার ফিটের আধুনিক ক্যাম্পাসে রেসিডেন্সিয়াল প্রশিক্ষণ", highlight: "২৪,০০০ sqft" },
+  { icon: <HandshakeIcon size={28} color="#7B1FA2" />, title: "চাকরি সহায়তা", desc: "প্রশিক্ষণ শেষে কর্মসংস্থান ও উদ্যোক্তাদের জন্য আর্থিক সহায়তা", highlight: "চাকরি" },
+  { icon: <MosqueIcon size={28} color="#2E7D32" />, title: "ইসলামি পরিবেশ", desc: "ইসলামি মূল্যবোধের আলোকে — নারী-পুরুষ সম্পূর্ণ পৃথক ব্যবস্থা", highlight: "পৃথক" },
+  { icon: <AwardIcon size={28} color="#D4A843" />, title: "অভিজ্ঞ প্রশিক্ষক", desc: "ইন্ডাস্ট্রি এক্সপার্টদের তত্ত্বাবধানে হাতে-কলমে শিক্ষা ও ২৪/৭ মেন্টর সাপোর্ট", highlight: "২৪/৭" },
+];
+
+const impactCounters = [
+  { end: 2500, suffix: "+", label: "প্রশিক্ষিত শিক্ষার্থী", icon: <GraduationIcon size={32} color="var(--color-secondary-400)" /> },
+  { end: 15, suffix: "টি", label: "সম্পন্ন ব্যাচ", icon: <AwardIcon size={32} color="var(--color-accent-400)" /> },
+  { end: 95, suffix: "%", label: "কর্মসংস্থান হার", icon: <TrophyIcon size={32} color="#E65100" /> },
+  { end: 24000, suffix: "", label: "স্কয়ার ফিট ক্যাম্পাস", icon: <BuildingIcon size={32} color="#1565C0" /> },
+];
+
+/* ═══════════════════════════════════════════
+   ANIMATED COUNTER HOOK
+   ═══════════════════════════════════════════ */
+
+function useCountUp(end: number, duration: number = 2000) {
+  const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting && !hasStarted) setHasStarted(true); },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasStarted]);
+
+  useEffect(() => {
+    if (!hasStarted) return;
+    const startTime = performance.now();
+    const tick = (now: number) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      setCount(Math.floor(eased * end));
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, [hasStarted, end, duration]);
+
+  return { count, ref };
+}
+
+function CounterCard({ end, suffix, label, icon }: { end: number; suffix: string; label: string; icon: React.ReactNode }) {
+  const { count, ref } = useCountUp(end, end > 1000 ? 2500 : 2000);
+  const formatted = end >= 1000 ? count.toLocaleString("bn-BD") : count.toLocaleString("bn-BD");
+  return (
+    <div ref={ref} className={styles.counterCard}>
+      <div className={styles.counterIcon}>{icon}</div>
+      <div className={styles.counterValue}>
+        {formatted}<span className={styles.counterSuffix}>{suffix}</span>
+      </div>
+      <div className={styles.counterLabel}>{label}</div>
+    </div>
+  );
+}
 
 /* ═══════════════════════════════════════════
    MARQUEE COMPONENT
@@ -343,6 +410,129 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
             </div>
           ))}
         </Marquee>
+      </section>
+
+      {/* ════════════════════════════════════
+          WHY CHOOSE US — USP Cards
+          ════════════════════════════════════ */}
+      <section className={styles.whySection}>
+        <div className="container">
+          <motion.div
+            className="section-header"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={sectionStagger}
+          >
+            <motion.div className={styles.sectionBadge} variants={fadeUp}>
+              <StarIcon size={15} color="var(--color-primary-600)" />
+              <span>কেন আস-সুন্নাহ?</span>
+            </motion.div>
+            <motion.h2 className="heading-md" variants={fadeUp}>
+              <span className="gradient-text">আমাদের বেছে নেওয়ার</span> ৬টি কারণ
+            </motion.h2>
+            <motion.p className="section-subtitle" variants={fadeUp}>
+              শুধু প্রশিক্ষণ নয় — জীবন বদলানোর সম্পূর্ণ প্ল্যাটফর্ম
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            className={styles.whyGrid}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={sectionStagger}
+          >
+            {whyChooseUs.map((item, i) => (
+              <motion.div key={i} className={styles.whyCard} variants={fadeUp}>
+                <div className={styles.whyCardIcon}>{item.icon}</div>
+                <div className={styles.whyCardContent}>
+                  <h3>{item.title}</h3>
+                  <p>{item.desc}</p>
+                </div>
+                <span className={styles.whyHighlight}>{item.highlight}</span>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════
+          IMPACT COUNTER — Animated Numbers
+          ════════════════════════════════════ */}
+      <section className={styles.counterSection}>
+        <div className={styles.counterBgPattern} />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+          <motion.div
+            className="section-header"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={sectionStagger}
+          >
+            <motion.div className={`${styles.sectionBadge} ${styles.sectionBadgeDark}`} variants={fadeUp}>
+              <ZapIcon size={15} color="var(--color-secondary-400)" />
+              <span>আমাদের প্রভাব</span>
+            </motion.div>
+            <motion.h2 className="heading-md" variants={fadeUp}>
+              সংখ্যায় <span className="gradient-text">আস-সুন্নাহ</span>
+            </motion.h2>
+          </motion.div>
+          <div className={styles.counterGrid}>
+            {impactCounters.map((c, i) => (
+              <CounterCard key={i} {...c} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════
+          UPCOMING BATCH — Urgency Banner
+          ════════════════════════════════════ */}
+      <section className={styles.batchBanner}>
+        <div className="container">
+          <motion.div
+            className={styles.batchInner}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease }}
+          >
+            <div className={styles.batchLeft}>
+              <div className={styles.batchLive}>
+                <span className={styles.batchLiveDot} />
+                ভর্তি চলছে
+              </div>
+              <h3 className={styles.batchTitle}>পরবর্তী ব্যাচ শীঘ্রই শুরু হচ্ছে</h3>
+              <p className={styles.batchDesc}>
+                সীমিত আসন — এখনই আবেদন করুন এবং আপনার ভবিষ্যৎ গড়ে তুলুন
+              </p>
+            </div>
+            <div className={styles.batchRight}>
+              <div className={styles.batchStats}>
+                <div className={styles.batchStat}>
+                  <CalendarIcon size={18} color="var(--color-secondary-400)" />
+                  <div>
+                    <strong>কোর্স সময়কাল</strong>
+                    <span>৩-৪ মাস</span>
+                  </div>
+                </div>
+                <div className={styles.batchStat}>
+                  <UsersIcon size={18} color="var(--color-secondary-400)" />
+                  <div>
+                    <strong>ব্যাচ সাইজ</strong>
+                    <span>৩০-৪০ জন</span>
+                  </div>
+                </div>
+              </div>
+              <Link href="/admission/apply" className={styles.batchBtn}>
+                <span className={styles.heroBtnShine} />
+                এখনই আবেদন করুন
+                <ArrowRightIcon size={16} color="white" />
+              </Link>
+            </div>
+          </motion.div>
+        </div>
       </section>
 
       {/* ════════════════════════════════════

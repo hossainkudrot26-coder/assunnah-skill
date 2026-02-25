@@ -596,6 +596,280 @@
 }
 
 /* ══════════════════════════════════════════
+   WHY CHOOSE US — USP Cards
+   ══════════════════════════════════════════ */
+.whySection {
+  padding: var(--space-20) 0;
+  background: white;
+}
+
+.whyGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: var(--space-10);
+}
+
+.whyCard {
+  position: relative;
+  padding: 28px 24px;
+  background: white;
+  border: 1px solid var(--color-neutral-100);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
+}
+
+.whyCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary-500), var(--color-secondary-500));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.whyCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(27, 138, 80, 0.1);
+  border-color: var(--color-primary-100);
+}
+
+.whyCard:hover::before {
+  opacity: 1;
+}
+
+.whyCardIcon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-50);
+  border-radius: 14px;
+  flex-shrink: 0;
+}
+
+.whyCardContent h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-neutral-900);
+  margin-bottom: 4px;
+}
+
+.whyCardContent p {
+  font-size: 0.85rem;
+  color: var(--color-neutral-500);
+  line-height: 1.55;
+}
+
+.whyHighlight {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 3px 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-primary-600);
+  background: var(--color-primary-50);
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+}
+
+/* ══════════════════════════════════════════
+   IMPACT COUNTER — Animated Numbers
+   ══════════════════════════════════════════ */
+.counterSection {
+  position: relative;
+  padding: var(--space-20) 0;
+  background: var(--color-dark-bg);
+  overflow: hidden;
+}
+
+.counterBgPattern {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(rgba(123, 199, 77, 0.06) 1px, transparent 1px),
+    radial-gradient(rgba(123, 199, 77, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px, 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+.counterGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: var(--space-10);
+}
+
+.counterCard {
+  text-align: center;
+  padding: 32px 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.counterCard:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(123, 199, 77, 0.2);
+  transform: translateY(-4px);
+}
+
+.counterIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.counterValue {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: white;
+  line-height: 1;
+  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.counterSuffix {
+  font-size: 1.6rem;
+  color: var(--color-secondary-400);
+  font-weight: 700;
+}
+
+.counterLabel {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+
+/* ══════════════════════════════════════════
+   UPCOMING BATCH — Urgency Banner
+   ══════════════════════════════════════════ */
+.batchBanner {
+  padding: var(--space-12) 0;
+  background: linear-gradient(135deg, #F0FDF4, #ECFDF5, #F0FFF4);
+}
+
+.batchInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 40px 48px;
+  background: white;
+  border: 2px solid var(--color-primary-100);
+  border-radius: 24px;
+  box-shadow: 0 8px 40px rgba(27, 138, 80, 0.08);
+}
+
+.batchLeft { flex: 1; }
+
+.batchLive {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  background: #FEF3C7;
+  color: #B45309;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+
+.batchLiveDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #F59E0B;
+  animation: livePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+  50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
+}
+
+.batchTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-neutral-900);
+  margin-bottom: 8px;
+}
+
+.batchDesc {
+  font-size: 0.92rem;
+  color: var(--color-neutral-500);
+  line-height: 1.5;
+}
+
+.batchRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.batchStats {
+  display: flex;
+  gap: 24px;
+}
+
+.batchStat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--color-primary-50);
+  border-radius: 14px;
+}
+
+.batchStat strong {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-neutral-800);
+}
+
+.batchStat span {
+  font-size: 0.75rem;
+  color: var(--color-neutral-500);
+}
+
+.batchBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: white;
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
+  border-radius: 14px;
+  text-decoration: none;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 4px 20px rgba(27, 138, 80, 0.3);
+}
+
+.batchBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(27, 138, 80, 0.4);
+}
+
+/* ══════════════════════════════════════════
    COURSES — Bento Grid on Deep Forest Green
    ══════════════════════════════════════════ */
 .coursesSection {
@@ -1547,4 +1821,134 @@
 
 [data-theme="dark"] .impactLabel {
   color: #A0B8AC;
+}
+
+/* ─── New sections dark mode ─── */
+[data-theme="dark"] .whySection {
+  background: #0B3224;
+}
+
+[data-theme="dark"] .whyCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .whyCard:hover {
+  background: #1A5C47;
+  border-color: var(--color-primary-400);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .whyCardContent h3 {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .whyCardContent p {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .whyCardIcon {
+  background: #1E6B50;
+}
+
+[data-theme="dark"] .whyHighlight {
+  background: #1E6B50;
+  color: #8DC63F;
+}
+
+[data-theme="dark"] .batchBanner {
+  background: linear-gradient(135deg, #0B3224, #0D3B2E, #0B3224);
+}
+
+[data-theme="dark"] .batchInner {
+  background: #14493A;
+  border-color: #1E6B50;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .batchTitle {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .batchDesc {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .batchLive {
+  background: #422006;
+  color: #FBBF24;
+}
+
+[data-theme="dark"] .batchStat {
+  background: #0D3B2E;
+}
+
+[data-theme="dark"] .batchStat strong {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .batchStat span {
+  color: #7A9E8C;
+}
+
+/* ─── New sections responsive ─── */
+@media (max-width: 768px) {
+  .whyGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .whyCard {
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .whyCardIcon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+
+  .whyHighlight {
+    display: none;
+  }
+
+  .counterGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .counterValue {
+    font-size: 2rem;
+  }
+
+  .counterSuffix {
+    font-size: 1.1rem;
+  }
+
+  .counterCard {
+    padding: 24px 16px;
+  }
+
+  .batchInner {
+    flex-direction: column;
+    padding: 28px 24px;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .batchRight {
+    align-items: center;
+  }
+
+  .batchStats {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .batchTitle {
+    font-size: 1.2rem;
+  }
 }

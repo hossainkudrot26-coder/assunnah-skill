@@ -1,0 +1,137 @@
+/* ═══════════════════════════════════════════
+   FLOATING WHATSAPP BUTTON
+   ═══════════════════════════════════════════ */
+
+.container {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+/* Tooltip */
+.tooltip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: white;
+  color: #1f2937;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  animation: tooltipIn 0.4s ease;
+  white-space: nowrap;
+}
+
+.tooltipClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 50%;
+  color: #9ca3af;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+@keyframes tooltipIn {
+  from { opacity: 0; transform: translateX(10px) scale(0.9); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+/* Button */
+.button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: #25D366;
+  color: white;
+  border-radius: 50%;
+  box-shadow:
+    0 4px 14px rgba(37, 211, 102, 0.4),
+    0 8px 32px rgba(37, 211, 102, 0.2);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  text-decoration: none;
+  animation: buttonIn 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.button:hover {
+  transform: scale(1.08);
+  box-shadow:
+    0 6px 20px rgba(37, 211, 102, 0.5),
+    0 12px 40px rgba(37, 211, 102, 0.25);
+}
+
+.button:active {
+  transform: scale(0.96);
+}
+
+@keyframes buttonIn {
+  from { opacity: 0; transform: scale(0) rotate(-180deg); }
+  to { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+.icon {
+  width: 28px;
+  height: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Ripple pulse */
+.ripple {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(37, 211, 102, 0.4);
+  animation: ripplePulse 2s ease-out infinite;
+}
+
+@keyframes ripplePulse {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* Dark mode */
+[data-theme="dark"] .tooltip {
+  background: #14493A;
+  color: #F0F5F2;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .tooltipClose {
+  background: #1E6B50;
+  color: #7A9E8C;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .container {
+    bottom: 20px;
+    right: 20px;
+  }
+  .button {
+    width: 50px;
+    height: 50px;
+  }
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+  .tooltip {
+    font-size: 0.75rem;
+    padding: 8px 12px;
+  }
+}

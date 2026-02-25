@@ -190,7 +190,7 @@ export default function ProfilePage() {
           </div>
         ) : (
           <button className={styles.changePasswordBtn} onClick={() => setChangingPw(true)}>
-            🔒 পাসওয়ার্ড পরিবর্তন করুন
+            পাসওয়ার্ড পরিবর্তন করুন
           </button>
         )}
       </div>

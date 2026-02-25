@@ -122,12 +122,12 @@ const impactCounters = [
 ];
 
 const partnerLogos = [
-  { name: "জাতীয় দক্ষতা উন্নয়ন কর্তৃপক্ষ (NSDA)", abbr: "NSDA", color: "#1B6B3A" },
-  { name: "আস-সুন্নাহ ফাউন্ডেশন", abbr: "ASF", color: "#1B8A50" },
-  { name: "বাংলাদেশ কারিগরি শিক্ষা বোর্ড", abbr: "BTEB", color: "#1565C0" },
-  { name: "তথ্য ও যোগাযোগ প্রযুক্তি বিভাগ", abbr: "ICT", color: "#7B1FA2" },
-  { name: "যুব ও ক্রীড়া মন্ত্রণালয়", abbr: "MoYS", color: "#E65100" },
-  { name: "সমাজসেবা অধিদপ্তর", abbr: "DSS", color: "#2E7D32" },
+  { name: "জাতীয় দক্ষতা উন্নয়ন কর্তৃপক্ষ", abbr: "NSDA", color: "#1B6B3A", desc: "সরকারি নিবন্ধন" },
+  { name: "আস-সুন্নাহ ফাউন্ডেশন", abbr: "ASF", color: "#1B8A50", desc: "প্রতিষ্ঠাতা সংস্থা" },
+  { name: "বাংলাদেশ কারিগরি শিক্ষা বোর্ড", abbr: "BTEB", color: "#1565C0", desc: "কারিগরি সনদ" },
+  { name: "তথ্য ও যোগাযোগ প্রযুক্তি বিভাগ", abbr: "ICT", color: "#7B1FA2", desc: "ডিজিটাল প্রশিক্ষণ" },
+  { name: "যুব ও ক্রীড়া মন্ত্রণালয়", abbr: "MoYS", color: "#E65100", desc: "যুব উন্নয়ন" },
+  { name: "সমাজসেবা অধিদপ্তর", abbr: "DSS", color: "#2E7D32", desc: "সামাজিক কল্যাণ" },
 ];
 
 /* ═══════════════════════════════════════════
@@ -155,7 +155,7 @@ function useCountUp(end: number, duration: number = 2000) {
     const startTime = performance.now();
     const tick = (now: number) => {
       const progress = Math.min((now - startTime) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
       setCount(Math.floor(eased * end));
       if (progress < 1) requestAnimationFrame(tick);
     };
@@ -165,14 +165,19 @@ function useCountUp(end: number, duration: number = 2000) {
   return { count, ref };
 }
 
+// Convert to Bengali numerals reliably
+function toBanglaNum(n: number): string {
+  const banglaDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+  return n.toLocaleString("en-US").replace(/\d/g, (d) => banglaDigits[parseInt(d)]);
+}
+
 function CounterCard({ end, suffix, label, icon }: { end: number; suffix: string; label: string; icon: React.ReactNode }) {
   const { count, ref } = useCountUp(end, end > 1000 ? 2500 : 2000);
-  const formatted = end >= 1000 ? count.toLocaleString("bn-BD") : count.toLocaleString("bn-BD");
   return (
     <div ref={ref} className={styles.counterCard}>
       <div className={styles.counterIcon}>{icon}</div>
       <div className={styles.counterValue}>
-        {formatted}<span className={styles.counterSuffix}>{suffix}</span>
+        {toBanglaNum(count)}<span className={styles.counterSuffix}>{suffix}</span>
       </div>
       <div className={styles.counterLabel}>{label}</div>
     </div>
@@ -274,7 +279,23 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
           HERO — Aurora + Deep Forest Green
           ════════════════════════════════════ */}
       <section className={styles.hero} ref={heroRef}>
-        {/* Aurora Background */}
+        {/* Video Background (when available) */}
+        <div className={styles.heroVideoWrap}>
+          <video
+            className={styles.heroVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster="/images/hero-banner.png"
+          >
+            {/* Sir: ক্যাম্পাসের video এখানে যোগ করুন */}
+            {/* <source src="/videos/campus-loop.mp4" type="video/mp4" /> */}
+          </video>
+          <div className={styles.heroVideoOverlay} />
+        </div>
+
+        {/* Aurora Background (fallback when no video) */}
         <motion.div className={styles.heroAurora} style={{ y: heroY }}>
           <div className={styles.auroraBlob1} />
           <div className={styles.auroraBlob2} />
@@ -454,6 +475,7 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
           >
             {whyChooseUs.map((item, i) => (
               <motion.div key={i} className={styles.whyCard} variants={fadeUp}>
+                <span className={styles.whyNumber}>0{i + 1}</span>
                 <div className={styles.whyCardIcon}>{item.icon}</div>
                 <div className={styles.whyCardContent}>
                   <h3>{item.title}</h3>
@@ -528,6 +550,7 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
                   <span style={{ color: p.color, fontWeight: 800, fontSize: "1.1rem" }}>{p.abbr}</span>
                 </div>
                 <span className={styles.partnerName}>{p.name}</span>
+                <span className={styles.partnerDesc}>{p.desc}</span>
               </motion.div>
             ))}
           </motion.div>
@@ -551,9 +574,9 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
                 <span className={styles.batchLiveDot} />
                 ভর্তি চলছে
               </div>
-              <h3 className={styles.batchTitle}>পরবর্তী ব্যাচ শীঘ্রই শুরু হচ্ছে</h3>
+              <h3 className={styles.batchTitle}>ব্যাচ ১৭ — ভর্তি চলছে</h3>
               <p className={styles.batchDesc}>
-                সীমিত আসন — এখনই আবেদন করুন এবং আপনার ভবিষ্যৎ গড়ে তুলুন
+                মাত্র ১৫টি আসন বাকি — এখনই আবেদন করুন এবং আপনার ভবিষ্যৎ গড়ে তুলুন
               </p>
             </div>
             <div className={styles.batchRight}>

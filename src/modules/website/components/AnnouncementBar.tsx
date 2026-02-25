@@ -40,6 +40,13 @@ export function AnnouncementBar() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const dismissed = sessionStorage.getItem("announcement-dismissed");
+    if (dismissed === "true") setIsVisible(false);
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (announcements.length <= 1) return;
@@ -53,7 +60,12 @@ export function AnnouncementBar() {
     return () => clearInterval(interval);
   }, []);
 
-  if (!isVisible || announcements.length === 0) return null;
+  const handleDismiss = () => {
+    setIsVisible(false);
+    sessionStorage.setItem("announcement-dismissed", "true");
+  };
+
+  if (!mounted || !isVisible || announcements.length === 0) return null;
 
   const current = announcements[currentIndex];
 
@@ -88,7 +100,7 @@ export function AnnouncementBar() {
             ))}
           </div>
         )}
-        <button className={styles.close} onClick={() => setIsVisible(false)} aria-label="বন্ধ করুন">
+        <button className={styles.close} onClick={handleDismiss} aria-label="বন্ধ করুন">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />

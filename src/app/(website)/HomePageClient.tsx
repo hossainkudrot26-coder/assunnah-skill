@@ -790,6 +790,74 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
       </section>
 
       {/* ════════════════════════════════════
+          BEFORE→AFTER — Transformation Stories
+          ════════════════════════════════════ */}
+      <section className={styles.transformSection}>
+        <div className="container">
+          <motion.div
+            className="section-header"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={sectionStagger}
+          >
+            <motion.div className={styles.sectionBadge} variants={fadeUp}>
+              <TrophyIcon size={15} color="var(--color-primary-600)" />
+              <span>জীবন বদলের গল্প</span>
+            </motion.div>
+            <motion.h2 className="heading-md" variants={fadeUp}>
+              প্রশিক্ষণ নিয়ে <span className="gradient-text">জীবন বদলেছেন</span>
+            </motion.h2>
+          </motion.div>
+
+          <motion.div
+            className={styles.transformGrid}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={sectionStagger}
+          >
+            {[
+              { name: "আব্দুল্লাহ আল মামুন", before: "বেকার যুবক", after: "নিজের ব্যবসা, মাসে ৩০,০০০+ আয়", course: "স্মল বিজনেস", color: "#1B8A50" },
+              { name: "ফাতেমা খাতুন", before: "গ্রাম থেকে আসা, কোনো কাজ নেই", after: "টেইলারিং ব্যবসার মালিক", course: "স্মার্ট টেইলারিং", color: "#AD1457" },
+              { name: "মোহাম্মদ হাসান", before: "দিনমজুর, অনিশ্চিত আয়", after: "রেস্টুরেন্ট শেফ, স্থায়ী চাকরি", course: "শেফ ট্রেনিং", color: "#E65100" },
+            ].map((t, i) => (
+              <motion.div key={i} className={styles.transformCard} variants={fadeUp}>
+                <div className={styles.transformBefore}>
+                  <span>আগে</span>
+                  <p>{t.before}</p>
+                </div>
+                <div className={styles.transformArrow}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary-500)" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                </div>
+                <div className={styles.transformAfter}>
+                  <span>এখন</span>
+                  <p>{t.after}</p>
+                </div>
+                <div className={styles.transformFooter}>
+                  <strong>{t.name}</strong>
+                  <span style={{ color: t.color }}>{t.course}</span>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <motion.div
+            className={styles.transformCta}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+          >
+            <Link href="/stories" className={styles.viewAllBtn}>
+              <ArrowRightIcon size={15} color="var(--color-dark-bg)" />
+              সকল সাফল্যের গল্প দেখুন
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════
           TESTIMONIALS — Featured Carousel
           ════════════════════════════════════ */}
       <section className={`section section-dark ${styles.testimonialSection}`}>

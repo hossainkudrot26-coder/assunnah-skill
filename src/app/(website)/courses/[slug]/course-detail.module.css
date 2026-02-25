@@ -470,3 +470,57 @@
 [data-theme="dark"] .relatedCard p {
   color: #7E9A8C;
 }
+
+/* ═══ Success Rate Banner ═══ */
+.successBanner {
+  padding: 0 0 40px;
+  background: var(--color-neutral-50);
+}
+
+.successInner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 28px 36px;
+  background: linear-gradient(135deg, #0D4530, #1B8A50);
+  border-radius: 20px;
+  flex-wrap: wrap;
+}
+
+.successStat {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.successStat strong {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: white;
+}
+
+.successStat span {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.successDivider {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 768px) {
+  .successInner {
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px 20px;
+    text-align: center;
+  }
+  .successStat { flex-direction: column; gap: 8px; }
+  .successDivider { width: 80px; height: 1px; }
+}
+
+[data-theme="dark"] .successBanner { background: transparent; }

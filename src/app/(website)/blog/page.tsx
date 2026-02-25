@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { getPublishedPosts, getFeaturedPost } from "@/lib/actions/blog";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { CalendarIcon, ClockIcon, ArrowRightIcon } from "@/shared/components/Icons";
@@ -16,6 +16,8 @@ export default function BlogPage() {
   const [posts, setPosts] = useState<any[]>([]);
   const [featured, setFeatured] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState("সব");
 
   useEffect(() => {
     Promise.all([
@@ -40,6 +42,28 @@ export default function BlogPage() {
 
   const displayPosts = posts.length > 0 ? posts : staticPosts.slice(1);
   const displayFeatured = featured || staticPosts[0];
+
+  // Categories
+  const allPosts = posts.length > 0 ? posts : staticPosts;
+  const categories = useMemo(() => {
+    const cats = [...new Set(allPosts.map((p: any) => p.category || "সংবাদ"))];
+    return ["সব", ...cats];
+  }, [allPosts]);
+
+  // Filtered posts
+  const filteredPosts = useMemo(() => {
+    let result = displayPosts;
+    if (activeCategory !== "সব") {
+      result = result.filter((p: any) => (p.category || "সংবাদ") === activeCategory);
+    }
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      result = result.filter((p: any) =>
+        p.title.toLowerCase().includes(q) || (p.excerpt || "").toLowerCase().includes(q)
+      );
+    }
+    return result;
+  }, [displayPosts, activeCategory, search]);
 
   function formatDate(date: string | Date) {
     try {
@@ -96,10 +120,39 @@ export default function BlogPage() {
                 </Link>
               )}
 
+              {/* Search + Filter */}
+              <div className={styles.searchFilter}>
+                <div className={styles.searchBox}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
+                  </svg>
+                  <input
+                    type="text"
+                    placeholder="পোস্ট খুঁজুন..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className={styles.searchInput}
+                  />
+                </div>
+                <div className={styles.categoryChips}>
+                  {categories.map((cat) => (
+                    <button
+                      key={cat}
+                      className={`${styles.categoryChip} ${activeCategory === cat ? styles.categoryChipActive : ""}`}
+                      onClick={() => setActiveCategory(cat)}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Grid */}
               <div className={styles.postsGrid}>
-                {displayPosts.map((post) => (
-                  <Link key={post.id} href={`/blog/${post.slug}`} className={styles.postCard}>
+                <AnimatePresence mode="popLayout">
+                {filteredPosts.map((post) => (
+                  <motion.div key={post.id} layout initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.3 }}>
+                  <Link href={`/blog/${post.slug}`} className={styles.postCard}>
                     <div className={styles.postImageWrap}>
                       <Image
                         src={post.image || images.blog.admission}
@@ -124,7 +177,14 @@ export default function BlogPage() {
                       </div>
                     </div>
                   </Link>
+                  </motion.div>
                 ))}
+                </AnimatePresence>
+                {filteredPosts.length === 0 && (
+                  <p style={{ gridColumn: "1/-1", textAlign: "center", color: "var(--color-neutral-400)", padding: "40px" }}>
+                    কোনো পোস্ট পাওয়া যায়নি
+                  </p>
+                )}
               </div>
             </>
           )}

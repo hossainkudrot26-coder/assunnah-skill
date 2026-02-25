@@ -987,6 +987,99 @@
 }
 
 /* ══════════════════════════════════════════
+   BEFORE→AFTER TRANSFORMATION
+   ══════════════════════════════════════════ */
+.transformSection {
+  padding: var(--space-20) 0;
+  background: white;
+}
+
+.transformGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: var(--space-10);
+}
+
+.transformCard {
+  background: white;
+  border: 1px solid var(--color-neutral-100);
+  border-radius: 20px;
+  padding: 24px;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  text-align: center;
+}
+
+.transformCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.06);
+  border-color: var(--color-primary-200);
+}
+
+.transformBefore, .transformAfter {
+  padding: 14px;
+  border-radius: 12px;
+}
+
+.transformBefore {
+  background: #FEF2F2;
+}
+
+.transformAfter {
+  background: #F0FDF4;
+}
+
+.transformBefore span, .transformAfter span {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+
+.transformBefore span { color: #DC2626; }
+.transformAfter span { color: #16A34A; }
+
+.transformBefore p, .transformAfter p {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-neutral-700);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.transformArrow {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+.transformFooter {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-neutral-100);
+}
+
+.transformFooter strong {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-neutral-900);
+  margin-bottom: 2px;
+}
+
+.transformFooter span {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.transformCta {
+  text-align: center;
+  margin-top: var(--space-8);
+}
+
+/* ══════════════════════════════════════════
    COURSES — Bento Grid on Deep Forest Green
    ══════════════════════════════════════════ */
 .coursesSection {
@@ -2088,6 +2181,16 @@
   color: var(--color-secondary-400);
 }
 
+/* Transform dark mode */
+[data-theme="dark"] .transformSection { background: #0B3224; }
+[data-theme="dark"] .transformCard { background: #14493A; border-color: #1E6B50; }
+[data-theme="dark"] .transformCard:hover { border-color: var(--color-primary-400); box-shadow: 0 16px 48px rgba(0,0,0,0.3); }
+[data-theme="dark"] .transformBefore { background: #3B1212; }
+[data-theme="dark"] .transformAfter { background: #052E16; }
+[data-theme="dark"] .transformBefore p, [data-theme="dark"] .transformAfter p { color: #C0D4C8; }
+[data-theme="dark"] .transformFooter { border-top-color: #1E6B50; }
+[data-theme="dark"] .transformFooter strong { color: #F0F5F2; }
+
 /* ─── New sections responsive ─── */
 @media (max-width: 768px) {
   .whyGrid {
@@ -2178,5 +2281,10 @@
 
   .founderQuote blockquote {
     font-size: 0.92rem;
+  }
+
+  .transformGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 }

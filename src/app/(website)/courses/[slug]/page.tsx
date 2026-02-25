@@ -12,7 +12,7 @@ import {
   BriefcaseIcon, ChefHatIcon, ChartIcon, ScissorsIcon,
   ShoeIcon, CarIcon, ClockIcon, ArrowRightIcon, UsersIcon,
   CheckCircleIcon, BookIcon, AwardIcon, CalendarIcon,
-  TargetIcon, GraduationIcon, ShieldCheckIcon,
+  TargetIcon, GraduationIcon, ShieldCheckIcon, TrophyIcon,
 } from "@/shared/components/Icons";
 import styles from "./course-detail.module.css";
 
@@ -130,6 +130,37 @@ export default function CourseDetailPage() {
               </div>
             </motion.div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Success Rate Banner */}
+      <section className={styles.successBanner}>
+        <div className="container">
+          <div className={styles.successInner}>
+            <div className={styles.successStat}>
+              <TrophyIcon size={28} color="var(--color-accent-400)" />
+              <div>
+                <strong>৮৫%+</strong>
+                <span>গ্র্যাজুয়েটদের কর্মসংস্থান হয়েছে</span>
+              </div>
+            </div>
+            <div className={styles.successDivider} />
+            <div className={styles.successStat}>
+              <GraduationIcon size={28} color="var(--color-secondary-400)" />
+              <div>
+                <strong>NSDA</strong>
+                <span>স্বীকৃত সার্টিফিকেট প্রদান করা হয়</span>
+              </div>
+            </div>
+            <div className={styles.successDivider} />
+            <div className={styles.successStat}>
+              <ShieldCheckIcon size={28} color="var(--color-primary-400)" />
+              <div>
+                <strong>২৪/৭</strong>
+                <span>মেন্টর সাপোর্ট পাবেন</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

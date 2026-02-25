@@ -1,0 +1,200 @@
+.page { max-width: 960px; }
+
+/* ─── Header ─── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.headerLeft h2 { font-size: 1.15rem; font-weight: 700; color: var(--color-neutral-900); }
+
+/* ─── View Toggle ─── */
+.viewToggle {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  background: var(--color-neutral-100);
+  padding: 4px;
+  border-radius: 10px;
+  width: fit-content;
+}
+
+.toggleBtn {
+  padding: 8px 16px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--color-neutral-600);
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.toggleBtn:hover { color: var(--color-neutral-900); }
+.toggleBtnActive { color: white; background: var(--color-primary-600); }
+
+/* ─── Card List ─── */
+.list { display: flex; flex-direction: column; gap: 12px; }
+
+.card {
+  padding: 20px;
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 14px;
+  transition: border-color 0.15s;
+}
+
+.card:hover { border-color: var(--color-primary-300); }
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.cardInfo { flex: 1; }
+.cardName { font-size: 0.95rem; font-weight: 700; color: var(--color-neutral-900); margin-bottom: 4px; }
+.cardMeta { display: flex; gap: 14px; font-size: 0.78rem; color: var(--color-neutral-500); }
+
+.badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.cardCourse {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-primary-600);
+  margin-bottom: 12px;
+}
+
+.batchBadge {
+  margin-left: 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 5px;
+  background: var(--color-primary-50);
+  color: var(--color-primary-600);
+}
+
+/* ─── Progress ─── */
+.progressRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.progressBar {
+  flex: 1;
+  height: 6px;
+  background: var(--color-neutral-100);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary-500), var(--color-secondary-500));
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+.progressText {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-primary-600);
+  min-width: 32px;
+}
+
+/* ─── Bottom ─── */
+.cardBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardDate { font-size: 0.75rem; color: var(--color-neutral-400); }
+.cardActions { display: flex; gap: 6px; }
+
+/* ─── Action Buttons ─── */
+.actionBtn {
+  padding: 5px 12px;
+  font-size: 0.73rem;
+  font-weight: 600;
+  font-family: inherit;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid;
+}
+
+.progressBtn { color: #1565C0; border-color: #BBDEFB; background: #E3F2FD; }
+.progressBtn:hover { background: #BBDEFB; }
+
+.completeBtn { color: #1B8A50; border-color: #BBF7D0; background: #F0FDF4; }
+.completeBtn:hover { background: #DCFCE7; }
+
+.dropBtn { color: #DC2626; border-color: #FECACA; background: #FEF2F2; }
+.dropBtn:hover { background: #FEE2E2; }
+
+/* ─── Empty ─── */
+.empty {
+  text-align: center;
+  padding: 60px;
+  background: white;
+  border: 1px dashed var(--color-neutral-300);
+  border-radius: 16px;
+  color: var(--color-neutral-500);
+}
+
+.emptyIcon { font-size: 2rem; margin-bottom: 8px; opacity: 0.5; }
+
+/* ─── Toast ─── */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 10px;
+  z-index: 2000;
+  animation: slideIn 0.3s ease;
+}
+
+.toastSuccess { background: #F0FDF4; color: #16A34A; border: 1px solid #BBF7D0; }
+.toastError { background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; }
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* ─── Dark Mode ─── */
+[data-theme="dark"] .headerLeft h2 { color: #F0F5F2; }
+[data-theme="dark"] .viewToggle { background: #14493A; }
+[data-theme="dark"] .toggleBtn { color: #7A9E8C; }
+[data-theme="dark"] .toggleBtn:hover { color: #F0F5F2; }
+[data-theme="dark"] .toggleBtnActive { color: white; background: var(--color-primary-600); }
+[data-theme="dark"] .card { background: #14493A; border-color: #1E6B50; }
+[data-theme="dark"] .card:hover { border-color: #2A8B6A; }
+[data-theme="dark"] .cardName { color: #F0F5F2; }
+[data-theme="dark"] .cardMeta { color: #7A9E8C; }
+[data-theme="dark"] .cardCourse { color: #8DC63F; }
+[data-theme="dark"] .batchBadge { background: #1E6B50; color: #8DC63F; }
+[data-theme="dark"] .cardDate { color: #5A8870; }
+[data-theme="dark"] .progressBar { background: #1E6B50; }
+[data-theme="dark"] .progressText { color: #8DC63F; }
+[data-theme="dark"] .empty { background: #14493A; border-color: #1E6B50; }
+[data-theme="dark"] .toastSuccess { background: #14493A; color: #4ADE80; border-color: #1E6B50; }
+[data-theme="dark"] .toastError { background: #3B1212; color: #FCA5A5; border-color: #7F1D1D; }

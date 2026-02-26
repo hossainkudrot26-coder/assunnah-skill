@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import Logo from "@/shared/components/Logo";
 import { siteConfig } from "@/config/site";
 import { getPublishedCoursesSummary } from "@/lib/actions/data";
 import { ShieldCheckIcon } from "@/shared/components/Icons";
@@ -51,13 +52,7 @@ export async function Footer() {
           {/* Brand */}
           <div className={styles.footerBrand}>
             <div className={styles.footerLogo}>
-              <Image
-                src="/images/logo-real.png"
-                alt="আস-সুন্নাহ স্কিল ডেভেলপমেন্ট ইনস্টিটিউট"
-                width={160}
-                height={40}
-                className={styles.footerLogoImage}
-              />
+              <Logo variant="full" height={34} dark />
             </div>
             <p className={styles.footerBrandDesc}>{siteConfig.description}</p>
 

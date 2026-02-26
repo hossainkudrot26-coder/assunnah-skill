@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
+import Logo from "@/shared/components/Logo";
 import { mainNav, type NavItem } from "@/config/navigation";
 import {
   BookIcon, BriefcaseIcon, ChefHatIcon, ChartIcon, ScissorsIcon,
@@ -109,16 +110,9 @@ export function Header() {
       {/* Main Header */}
       <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
         <div className={`container ${styles.headerInner}`}>
-          <Link href="/" className={styles.logo}>
-            <Image
-              src="/images/logo-real.png"
-              alt="আস-সুন্নাহ স্কিল ডেভেলপমেন্ট ইনস্টিটিউট"
-              width={160}
-              height={40}
-              className={styles.logoImage}
-              priority
-            />
-          </Link>
+          <span className={styles.logo}>
+            <Logo variant="full" height={36} />
+          </span>
 
           {/* Desktop Nav */}
           <nav className={styles.nav} aria-label="প্রধান নেভিগেশন">
@@ -190,13 +184,7 @@ export function Header() {
         {/* Mobile Panel */}
         <div className={`${styles.mobilePanel} ${menuOpen ? styles.mobilePanelOpen : ""}`}>
           <div className={styles.mobilePanelHeader}>
-            <Image
-              src="/images/logo-real.png"
-              alt="আস-সুন্নাহ স্কিল"
-              width={140}
-              height={35}
-              className={styles.logoImage}
-            />
+            <Logo variant="compact" height={32} href={undefined} />
             <button className={styles.mobileClose} onClick={() => setMenuOpen(false)} aria-label="মেনু বন্ধ করুন">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <line x1="18" y1="6" x2="6" y2="18" />

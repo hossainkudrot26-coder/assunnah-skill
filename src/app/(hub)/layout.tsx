@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import Logo from "@/shared/components/Logo";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 import styles from "./hub-layout.module.css";
@@ -87,9 +88,9 @@ export default function HubLayout({ children }: { children: React.ReactNode }) {
       {/* Sidebar */}
       <aside className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ""}`}>
         <div className={styles.sidebarHeader}>
-          <Link href="/" className={styles.sidebarLogo}>
-            <Image src="/images/logo-real.png" alt="আস-সুন্নাহ স্কিল" width={130} height={32} />
-          </Link>
+          <span className={styles.sidebarLogo}>
+            <Logo variant="compact" height={30} />
+          </span>
         </div>
 
         <nav className={styles.sidebarNav}>

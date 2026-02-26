@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import Logo from "@/shared/components/Logo";
 import { registerAction } from "@/lib/actions/auth";
 import { LockIcon, UserIcon } from "@/shared/components/Icons";
 import styles from "../login/login.module.css";
@@ -70,13 +71,7 @@ export default function RegisterPage() {
       <div className={styles.loginCard}>
         <div className={styles.loginHeader}>
           <div className={styles.loginLogo}>
-            <Image
-              src="/images/logo-real.png"
-              alt="আস-সুন্নাহ স্কিল"
-              width={140}
-              height={35}
-              className={styles.loginLogoImage}
-            />
+            <Logo variant="full" height={36} />
           </div>
           <h1>নতুন অ্যাকাউন্ট তৈরি করুন</h1>
           <p>আপনার তথ্য দিয়ে রেজিস্টার করুন</p>

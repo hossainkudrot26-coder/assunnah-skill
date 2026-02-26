@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import Logo from "@/shared/components/Logo";
 import { signIn } from "next-auth/react";
 import { LockIcon } from "@/shared/components/Icons";
 import styles from "./login.module.css";
@@ -49,13 +50,7 @@ export default function LoginPage() {
       <div className={styles.loginCard}>
         <div className={styles.loginHeader}>
           <div className={styles.loginLogo}>
-            <Image
-              src="/images/logo-real.png"
-              alt="আস-সুন্নাহ স্কিল"
-              width={140}
-              height={35}
-              className={styles.loginLogoImage}
-            />
+            <Logo variant="full" height={36} />
           </div>
           <h1>কমিউনিটিতে স্বাগতম</h1>
           <p>আপনার ইমেইল ও পাসওয়ার্ড দিয়ে লগইন করুন</p>

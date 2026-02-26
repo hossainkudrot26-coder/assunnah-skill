@@ -2,10 +2,14 @@
 
 import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { requireAdmin } from "@/lib/auth-guard";
 
 // ──────────── GET ALL COURSES (ADMIN) ────────────
 
 export async function getAdminCourses() {
+  const guard = await requireAdmin();
+  if (!guard.authorized) return [];
+
   return prisma.course.findMany({
     include: {
       fee: true,
@@ -20,6 +24,9 @@ export async function getAdminCourses() {
 // ──────────── GET SINGLE COURSE ────────────
 
 export async function getAdminCourse(id: string) {
+  const guard = await requireAdmin();
+  if (!guard.authorized) return null;
+
   return prisma.course.findUnique({
     where: { id },
     include: {
@@ -58,6 +65,9 @@ interface CreateCourseInput {
 }
 
 export async function createCourse(input: CreateCourseInput) {
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { success: false, error: guard.error };
+
   try {
     const course = await prisma.course.create({
       data: {
@@ -125,6 +135,9 @@ interface UpdateCourseInput extends CreateCourseInput {
 }
 
 export async function updateCourse(input: UpdateCourseInput) {
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { success: false, error: guard.error };
+
   try {
     // Delete existing related data for re-creation
     await prisma.$transaction([
@@ -197,6 +210,9 @@ export async function updateCourse(input: UpdateCourseInput) {
 // ──────────── DELETE COURSE ────────────
 
 export async function deleteCourse(id: string) {
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { success: false, error: guard.error };
+
   try {
     await prisma.course.delete({ where: { id } });
 
@@ -213,6 +229,9 @@ export async function deleteCourse(id: string) {
 // ──────────── TOGGLE STATUS ────────────
 
 export async function toggleCourseStatus(id: string, status: "DRAFT" | "PUBLISHED" | "ARCHIVED") {
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { success: false, error: guard.error };
+
   try {
     await prisma.course.update({
       where: { id },
@@ -232,6 +251,9 @@ export async function toggleCourseStatus(id: string, status: "DRAFT" | "PUBLISHE
 // ──────────── TOGGLE FEATURED ────────────
 
 export async function toggleCourseFeatured(id: string, isFeatured: boolean) {
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { success: false, error: guard.error };
+
   try {
     await prisma.course.update({
       where: { id },

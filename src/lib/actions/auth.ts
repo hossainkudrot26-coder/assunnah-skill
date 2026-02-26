@@ -5,6 +5,7 @@ import { signIn } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { loginSchema, registerSchema } from "@/lib/validations";
 import type { LoginInput, RegisterInput } from "@/lib/validations";
+import { requireOwner } from "@/lib/auth-guard";
 
 export async function loginAction(data: LoginInput) {
   try {
@@ -73,9 +74,12 @@ export async function registerAction(data: RegisterInput) {
   }
 }
 
-// ──────────── PROFILE UPDATE ────────────
+// ──────────── PROFILE UPDATE (OWNER ONLY) ────────────
 
 export async function updateProfile(userId: string, data: { name: string; phone?: string }) {
+  const guard = await requireOwner(userId);
+  if (!guard.authorized) return { success: false, error: guard.error };
+
   try {
     if (!data.name || data.name.length < 2) {
       return { success: false, error: "নাম কমপক্ষে ২ অক্ষরের হতে হবে" };
@@ -98,9 +102,12 @@ export async function updateProfile(userId: string, data: { name: string; phone?
   }
 }
 
-// ──────────── CHANGE PASSWORD ────────────
+// ──────────── CHANGE PASSWORD (OWNER ONLY) ────────────
 
 export async function changePassword(userId: string, data: { currentPassword: string; newPassword: string }) {
+  const guard = await requireOwner(userId);
+  if (!guard.authorized) return { success: false, error: guard.error };
+
   try {
     if (!data.newPassword || data.newPassword.length < 6) {
       return { success: false, error: "নতুন পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে" };
@@ -128,9 +135,12 @@ export async function changePassword(userId: string, data: { currentPassword: st
   }
 }
 
-// ──────────── GET PROFILE DATA ────────────
+// ──────────── GET PROFILE DATA (OWNER ONLY) ────────────
 
 export async function getProfileData(userId: string) {
+  const guard = await requireOwner(userId);
+  if (!guard.authorized) return null;
+
   return prisma.user.findUnique({
     where: { id: userId },
     select: {

@@ -5,6 +5,9 @@ import { applicationSchema } from "@/lib/validations";
 import type { ApplicationInput } from "@/lib/validations";
 import { auth } from "@/lib/auth";
 import { sendApplicationNotification } from "@/lib/email";
+import { requireAdmin, requireOwner } from "@/lib/auth-guard";
+
+// ──────────── SUBMIT APPLICATION (PUBLIC — anyone can apply) ────────────
 
 export async function submitApplication(data: ApplicationInput) {
   try {
@@ -54,11 +57,16 @@ export async function submitApplication(data: ApplicationInput) {
   }
 }
 
+// ──────────── GET ALL APPLICATIONS (ADMIN ONLY) ────────────
+
 export async function getApplications(
   status?: string,
   page: number = 1,
   limit: number = 20
 ) {
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { applications: [], total: 0, pages: 0 };
+
   const skip = (page - 1) * limit;
   const where = status ? { status: status as any } : {};
 
@@ -79,32 +87,38 @@ export async function getApplications(
   return { applications, total, pages: Math.ceil(total / limit) };
 }
 
+// ──────────── UPDATE APPLICATION STATUS (ADMIN ONLY) ────────────
+
 export async function updateApplicationStatus(
   id: string,
   status: string,
   reviewNotes?: string
 ) {
-  const session = await auth();
-  if (!session?.user) return { success: false, error: "অননুমোদিত" };
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { success: false, error: guard.error };
 
-  await prisma.application.update({
-    where: { id },
-    data: {
-      status: status as any,
-      reviewNotes: reviewNotes || undefined,
-      reviewedBy: session.user.id,
-    },
-  });
+  try {
+    await prisma.application.update({
+      where: { id },
+      data: {
+        status: status as any,
+        reviewNotes: reviewNotes || undefined,
+        reviewedBy: guard.session.user.id,
+      },
+    });
 
-  // Status update email — to be implemented when needed
-  // For now, status changes are tracked in the admin panel
-
-  return { success: true };
+    return { success: true };
+  } catch {
+    return { success: false, error: "স্ট্যাটাস পরিবর্তন করতে সমস্যা হয়েছে" };
+  }
 }
 
-// ──────────── GET APPLICATION DETAIL ────────────
+// ──────────── GET APPLICATION DETAIL (ADMIN ONLY) ────────────
 
 export async function getApplicationDetail(id: string) {
+  const guard = await requireAdmin();
+  if (!guard.authorized) return null;
+
   return prisma.application.findUnique({
     where: { id },
     include: {
@@ -114,11 +128,11 @@ export async function getApplicationDetail(id: string) {
   });
 }
 
-// ──────────── ENROLL STUDENT ────────────
+// ──────────── ENROLL STUDENT (ADMIN ONLY) ────────────
 
 export async function enrollStudent(applicationId: string) {
-  const session = await auth();
-  if (!session?.user) return { success: false, error: "অননুমোদিত" };
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { success: false, error: guard.error };
 
   const application = await prisma.application.findUnique({
     where: { id: applicationId },
@@ -193,9 +207,12 @@ export async function enrollStudent(applicationId: string) {
   }
 }
 
-// ──────────── GET ENROLLMENTS ────────────
+// ──────────── GET ENROLLMENTS (ADMIN ONLY) ────────────
 
 export async function getEnrollments(courseId?: string) {
+  const guard = await requireAdmin();
+  if (!guard.authorized) return [];
+
   const where = courseId ? { courseId } : {};
 
   return prisma.enrollment.findMany({
@@ -209,27 +226,34 @@ export async function getEnrollments(courseId?: string) {
   });
 }
 
-// ──────────── UPDATE ENROLLMENT STATUS ────────────
+// ──────────── UPDATE ENROLLMENT STATUS (ADMIN ONLY) ────────────
 
 export async function updateEnrollmentStatus(id: string, status: string, progress?: number) {
-  const session = await auth();
-  if (!session?.user) return { success: false, error: "অননুমোদিত" };
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { success: false, error: guard.error };
 
-  await prisma.enrollment.update({
-    where: { id },
-    data: {
-      status: status as any,
-      progress: progress !== undefined ? progress : undefined,
-      completedAt: status === "COMPLETED" ? new Date() : undefined,
-    },
-  });
+  try {
+    await prisma.enrollment.update({
+      where: { id },
+      data: {
+        status: status as any,
+        progress: progress !== undefined ? progress : undefined,
+        completedAt: status === "COMPLETED" ? new Date() : undefined,
+      },
+    });
 
-  return { success: true };
+    return { success: true };
+  } catch {
+    return { success: false, error: "স্ট্যাটাস পরিবর্তন করতে সমস্যা হয়েছে" };
+  }
 }
 
-// ──────────── GET USER APPLICATIONS ────────────
+// ──────────── GET USER APPLICATIONS (OWNER ONLY) ────────────
 
 export async function getUserApplications(userId: string) {
+  const guard = await requireOwner(userId);
+  if (!guard.authorized) return [];
+
   return prisma.application.findMany({
     where: { userId },
     include: {
@@ -239,9 +263,12 @@ export async function getUserApplications(userId: string) {
   });
 }
 
-// ──────────── GET USER ENROLLMENTS ────────────
+// ──────────── GET USER ENROLLMENTS (OWNER ONLY) ────────────
 
 export async function getUserEnrollments(userId: string) {
+  const guard = await requireOwner(userId);
+  if (!guard.authorized) return [];
+
   return prisma.enrollment.findMany({
     where: { userId },
     include: {

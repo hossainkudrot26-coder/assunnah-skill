@@ -1,12 +1,15 @@
 "use server";
 
 import prisma from "@/lib/db";
-import { auth } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { requireAdmin } from "@/lib/auth-guard";
 
 // ──────────── GET ALL GALLERY ITEMS (ADMIN) ────────────
 
 export async function getAdminGalleryItems() {
+  const guard = await requireAdmin();
+  if (!guard.authorized) return [];
+
   return prisma.galleryItem.findMany({
     orderBy: { sortOrder: "asc" },
   });
@@ -26,8 +29,8 @@ interface GalleryInput {
 }
 
 export async function createGalleryItem(input: GalleryInput) {
-  const session = await auth();
-  if (!session?.user) return { success: false, error: "অননুমোদিত" };
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { success: false, error: guard.error };
 
   try {
     await prisma.galleryItem.create({
@@ -55,8 +58,8 @@ export async function createGalleryItem(input: GalleryInput) {
 // ──────────── UPDATE GALLERY ITEM ────────────
 
 export async function updateGalleryItem(id: string, input: Partial<GalleryInput>) {
-  const session = await auth();
-  if (!session?.user) return { success: false, error: "অননুমোদিত" };
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { success: false, error: guard.error };
 
   try {
     await prisma.galleryItem.update({
@@ -85,8 +88,8 @@ export async function updateGalleryItem(id: string, input: Partial<GalleryInput>
 // ──────────── DELETE GALLERY ITEM ────────────
 
 export async function deleteGalleryItem(id: string) {
-  const session = await auth();
-  if (!session?.user) return { success: false, error: "অননুমোদিত" };
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { success: false, error: guard.error };
 
   try {
     await prisma.galleryItem.delete({ where: { id } });
@@ -103,14 +106,18 @@ export async function deleteGalleryItem(id: string) {
 // ──────────── TOGGLE VISIBILITY ────────────
 
 export async function toggleGalleryVisibility(id: string, isVisible: boolean) {
-  const session = await auth();
-  if (!session?.user) return { success: false, error: "অননুমোদিত" };
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { success: false, error: guard.error };
 
-  await prisma.galleryItem.update({
-    where: { id },
-    data: { isVisible },
-  });
+  try {
+    await prisma.galleryItem.update({
+      where: { id },
+      data: { isVisible },
+    });
 
-  revalidatePath("/gallery");
-  return { success: true };
+    revalidatePath("/gallery");
+    return { success: true };
+  } catch {
+    return { success: false, error: "পরিবর্তন করতে সমস্যা হয়েছে" };
+  }
 }

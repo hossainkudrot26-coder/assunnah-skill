@@ -9,6 +9,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "অননুমোদিত" }, { status: 401 });
   }
 
+  // Only admins can upload files
+  if ((session.user as any).role !== "ADMIN" && (session.user as any).role !== "SUPER_ADMIN") {
+    return NextResponse.json({ error: "অননুমোদিত — শুধুমাত্র অ্যাডমিন" }, { status: 403 });
+  }
+
   try {
     const formData = await req.formData();
     const file = formData.get("file") as File | null;

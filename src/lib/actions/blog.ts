@@ -1,10 +1,10 @@
 "use server";
 
 import prisma from "@/lib/db";
-import { auth } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 import { blogPostSchema } from "@/lib/validations";
 import type { BlogPostInput } from "@/lib/validations";
+import { requireAdmin } from "@/lib/auth-guard";
 
 // ──────────── PUBLIC ────────────
 
@@ -43,8 +43,8 @@ export async function getFeaturedPost() {
 // ──────────── ADMIN ────────────
 
 export async function createBlogPost(data: BlogPostInput) {
-  const session = await auth();
-  if (!session?.user) return { success: false, error: "অননুমোদিত" };
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { success: false, error: guard.error };
 
   try {
     const validated = blogPostSchema.parse(data);
@@ -60,7 +60,7 @@ export async function createBlogPost(data: BlogPostInput) {
       data: {
         ...validated,
         tags: validated.tags || [],
-        authorId: session.user.id,
+        authorId: guard.session.user.id,
         publishedAt: validated.status === "PUBLISHED" ? new Date() : null,
       },
     });
@@ -76,36 +76,47 @@ export async function createBlogPost(data: BlogPostInput) {
 }
 
 export async function updateBlogPost(id: string, data: Partial<BlogPostInput>) {
-  const session = await auth();
-  if (!session?.user) return { success: false, error: "অননুমোদিত" };
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { success: false, error: guard.error };
 
-  await prisma.blogPost.update({
-    where: { id },
-    data: {
-      ...data,
-      publishedAt: data.status === "PUBLISHED" ? new Date() : undefined,
-    },
-  });
+  try {
+    await prisma.blogPost.update({
+      where: { id },
+      data: {
+        ...data,
+        publishedAt: data.status === "PUBLISHED" ? new Date() : undefined,
+      },
+    });
 
-  revalidatePath("/blog");
-  revalidatePath("/admin/blog");
+    revalidatePath("/blog");
+    revalidatePath("/admin/blog");
 
-  return { success: true };
+    return { success: true };
+  } catch {
+    return { success: false, error: "আপডেট করতে সমস্যা হয়েছে" };
+  }
 }
 
 export async function deleteBlogPost(id: string) {
-  const session = await auth();
-  if (!session?.user) return { success: false, error: "অননুমোদিত" };
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { success: false, error: guard.error };
 
-  await prisma.blogPost.delete({ where: { id } });
+  try {
+    await prisma.blogPost.delete({ where: { id } });
 
-  revalidatePath("/blog");
-  revalidatePath("/admin/blog");
+    revalidatePath("/blog");
+    revalidatePath("/admin/blog");
 
-  return { success: true };
+    return { success: true };
+  } catch {
+    return { success: false, error: "মুছতে সমস্যা হয়েছে" };
+  }
 }
 
 export async function getAllPosts(page: number = 1, limit: number = 20) {
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { posts: [], total: 0, pages: 0 };
+
   const skip = (page - 1) * limit;
 
   const [posts, total] = await Promise.all([

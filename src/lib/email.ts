@@ -1,5 +1,16 @@
 import nodemailer from "nodemailer";
 
+// ──────────── HTML SANITIZER ────────────
+
+function esc(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 // ──────────── EMAIL CONFIG ────────────
 // Set these environment variables in .env.local:
 //   SMTP_HOST=smtp.gmail.com
@@ -43,13 +54,20 @@ export async function sendContactNotification(data: {
     return { sent: false, reason: "SMTP not configured" };
   }
 
+  // Sanitize all user-provided fields
+  const name = esc(data.name);
+  const phone = esc(data.phone);
+  const email = data.email ? esc(data.email) : "";
+  const subject = data.subject ? esc(data.subject) : "";
+  const message = esc(data.message);
+
   try {
     const transporter = getTransporter();
 
     await transporter.sendMail({
       from: `"আস-সুন্নাহ স্কিল" <${FROM_EMAIL}>`,
       to: ADMIN_EMAIL,
-      subject: `📩 নতুন যোগাযোগ: ${data.subject || "সাধারণ জিজ্ঞাসা"} — ${data.name}`,
+      subject: `📩 নতুন যোগাযোগ: ${subject || "সাধারণ জিজ্ঞাসা"} — ${name}`,
       html: `
         <div style="font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;">
           <div style="background: linear-gradient(135deg, #1B8A50, #0D5C35); padding: 24px 28px; color: white;">
@@ -60,24 +78,24 @@ export async function sendContactNotification(data: {
             <table style="width: 100%; border-collapse: collapse;">
               <tr>
                 <td style="padding: 10px 0; font-weight: 600; color: #6b7280; font-size: 13px; width: 100px;">নাম</td>
-                <td style="padding: 10px 0; color: #1f2937; font-size: 14px;">${data.name}</td>
+                <td style="padding: 10px 0; color: #1f2937; font-size: 14px;">${name}</td>
               </tr>
               <tr>
                 <td style="padding: 10px 0; font-weight: 600; color: #6b7280; font-size: 13px;">ফোন</td>
-                <td style="padding: 10px 0; color: #1f2937; font-size: 14px;">${data.phone}</td>
+                <td style="padding: 10px 0; color: #1f2937; font-size: 14px;">${phone}</td>
               </tr>
-              ${data.email ? `<tr>
+              ${email ? `<tr>
                 <td style="padding: 10px 0; font-weight: 600; color: #6b7280; font-size: 13px;">ইমেইল</td>
-                <td style="padding: 10px 0; color: #1f2937; font-size: 14px;"><a href="mailto:${data.email}" style="color: #1B8A50;">${data.email}</a></td>
+                <td style="padding: 10px 0; color: #1f2937; font-size: 14px;">${email}</td>
               </tr>` : ""}
-              ${data.subject ? `<tr>
+              ${subject ? `<tr>
                 <td style="padding: 10px 0; font-weight: 600; color: #6b7280; font-size: 13px;">বিষয়</td>
-                <td style="padding: 10px 0; color: #1f2937; font-size: 14px;">${data.subject}</td>
+                <td style="padding: 10px 0; color: #1f2937; font-size: 14px;">${subject}</td>
               </tr>` : ""}
             </table>
             <div style="margin-top: 16px; padding: 16px; background: #f9fafb; border-radius: 8px; border-left: 3px solid #1B8A50;">
               <p style="margin: 0 0 6px; font-weight: 600; color: #6b7280; font-size: 12px;">বার্তা</p>
-              <p style="margin: 0; color: #1f2937; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${data.message}</p>
+              <p style="margin: 0; color: #1f2937; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${message}</p>
             </div>
           </div>
           <div style="padding: 16px 28px; background: #f3f4f6; text-align: center; font-size: 12px; color: #9ca3af;">
@@ -103,21 +121,26 @@ export async function sendApplicationNotification(data: {
 }) {
   if (!isEmailConfigured()) return { sent: false };
 
+  // Sanitize all user-provided fields
+  const applicantName = esc(data.applicantName);
+  const applicantPhone = esc(data.applicantPhone);
+  const courseTitle = esc(data.courseTitle);
+
   try {
     const transporter = getTransporter();
 
     await transporter.sendMail({
       from: `"আস-সুন্নাহ স্কিল" <${FROM_EMAIL}>`,
       to: ADMIN_EMAIL,
-      subject: `📋 নতুন ভর্তি আবেদন: ${data.applicantName} — ${data.courseTitle}`,
+      subject: `📋 নতুন ভর্তি আবেদন: ${applicantName} — ${courseTitle}`,
       html: `
         <div style="font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;">
           <div style="background: linear-gradient(135deg, #1B8A50, #0D5C35); padding: 24px 28px; color: white;">
             <h2 style="margin: 0; font-size: 18px;">📋 নতুন ভর্তি আবেদন</h2>
           </div>
           <div style="padding: 24px 28px;">
-            <p style="font-size: 14px; color: #1f2937;"><strong>${data.applicantName}</strong> "${data.courseTitle}" কোর্সে ভর্তির জন্য আবেদন করেছেন।</p>
-            <p style="font-size: 14px; color: #6b7280;">ফোন: ${data.applicantPhone}</p>
+            <p style="font-size: 14px; color: #1f2937;"><strong>${applicantName}</strong> "${courseTitle}" কোর্সে ভর্তির জন্য আবেদন করেছেন।</p>
+            <p style="font-size: 14px; color: #6b7280;">ফোন: ${applicantPhone}</p>
             <a href="#" style="display: inline-block; margin-top: 16px; padding: 10px 24px; background: #1B8A50; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">অ্যাডমিন প্যানেলে দেখুন</a>
           </div>
         </div>

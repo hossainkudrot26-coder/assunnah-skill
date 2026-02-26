@@ -89,10 +89,12 @@ export function Footer() {
                 { href: "/courses", label: "কোর্সসমূহ" },
                 { href: "/admission", label: "ভর্তি প্রক্রিয়া" },
                 { href: "/scholarship", label: "স্কলারশিপ" },
-                { href: "/faq", label: "সাধারণ জিজ্ঞাসা" },
-                { href: "/gallery", label: "গ্যালারি" },
+                { href: "/notices", label: "নোটিশ বোর্ড" },
+                { href: "/events", label: "ইভেন্ট" },
                 { href: "/blog", label: "ব্লগ / সংবাদ" },
                 { href: "/contact", label: "যোগাযোগ" },
+                { href: "/quiz", label: "কোর্স ফাইন্ডার" },
+                { href: "/downloads", label: "ডাউনলোড সেন্টার" },
               ].map((link) => (
                 <Link key={link.href} href={link.href} className={styles.footerLink}>
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">

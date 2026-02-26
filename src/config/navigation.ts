@@ -161,10 +161,8 @@ export const mainNav: NavItem[] = [
 ];
 
 export const hubNav = [
-  { label: "ড্যাশবোর্ড", labelEn: "Dashboard", href: "/dashboard", icon: "home" },
-  { label: "গ্রুপসমূহ", labelEn: "Groups", href: "/groups", icon: "users" },
-  { label: "ইভেন্ট", labelEn: "Events", href: "/events", icon: "calendar" },
-  { label: "মেসেজ", labelEn: "Messages", href: "/messages", icon: "chat" },
-  { label: "ঘোষণা", labelEn: "Announcements", href: "/announcements", icon: "megaphone" },
-  { label: "ফর্ম", labelEn: "Forms", href: "/forms", icon: "clipboard" },
+  { label: "ড্যাশবোর্ড", labelEn: "Dashboard", href: "/hub", icon: "home" },
+  { label: "আমার কোর্স", labelEn: "My Courses", href: "/hub/courses", icon: "book" },
+  { label: "আবেদনসমূহ", labelEn: "Applications", href: "/hub/applications", icon: "clipboard" },
+  { label: "প্রোফাইল", labelEn: "Profile", href: "/hub/profile", icon: "users" },
 ];

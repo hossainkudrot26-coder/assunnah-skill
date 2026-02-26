@@ -607,6 +607,29 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
       </section>
 
       {/* ════════════════════════════════════
+          QUIZ CTA — Course Finder
+          ════════════════════════════════════ */}
+      <section className={styles.quizCta}>
+        <div className="container">
+          <motion.div
+            className={styles.quizCtaInner}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className={styles.quizCtaLeft}>
+              <h3 className={styles.quizCtaTitle}>কোন কোর্সটি আপনার জন্য উপযুক্ত?</h3>
+              <p className={styles.quizCtaDesc}>কয়েকটি সহজ প্রশ্নের উত্তর দিন — আমরা আপনার জন্য সেরা কোর্স খুঁজে দেবো</p>
+            </div>
+            <Link href="/quiz" className={styles.quizCtaBtn}>
+              কোর্স ফাইন্ডার
+              <ArrowRightIcon size={16} color="white" />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════
           COURSES — Bento Grid
           ════════════════════════════════════ */}
       <section className={`section section-dark ${styles.coursesSection}`}>

@@ -5,7 +5,8 @@ import { siteConfig } from "@/config/site";
 import {
     TargetIcon, MosqueIcon, GlobeIcon, BalanceIcon, TrophyIcon, HeartIcon,
     MonitorIcon, BuildingIcon, UsersIcon, MapPinIcon, CalendarIcon,
-    ShieldCheckIcon, UserIcon, BookIcon, ArrowRightIcon,
+    ShieldCheckIcon, UserIcon, BookIcon, ArrowRightIcon, GraduationIcon,
+    ChefHatIcon, ChartIcon, ScissorsIcon, AwardIcon,
 } from "@/shared/components/Icons";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { AnimatedSection, AnimatedItem } from "@/shared/components/AnimatedSection";
@@ -17,11 +18,11 @@ export const metadata: Metadata = {
 };
 
 const timeline = [
-    { year: "২০১৭", title: "আস-সুন্নাহ ফাউন্ডেশন প্রতিষ্ঠা", desc: "শায়খ আহমাদুল্লাহ কর্তৃক মানবকল্যাণ ও সমাজ সংস্কারের লক্ষ্যে প্রতিষ্ঠিত" },
-    { year: "২০২২", title: "স্কিল ডেভেলপমেন্ট ইনস্টিটিউট চালু", desc: "বেকারত্ব দূরীকরণ ও দক্ষ জনশক্তি তৈরির লক্ষ্যে প্রশিক্ষণ কার্যক্রম শুরু" },
-    { year: "২০২৩", title: "NSDA নিবন্ধন অর্জন", desc: "জাতীয় দক্ষতা উন্নয়ন কর্তৃপক্ষ কর্তৃক আনুষ্ঠানিক নিবন্ধন" },
-    { year: "২০২৪", title: "১০,০০০+ অনলাইন শিক্ষার্থী", desc: "ওয়েব ডেভেলপমেন্ট বুটক্যাম্পের প্রথম ব্যাচে ১০,৯৬২ জন অংশগ্রহণ" },
-    { year: "২০২৫", title: "নতুন শেড নির্মাণ ও সম্প্রসারণ", desc: "৩২,৫০০ বর্গফুটের নতুন ব্রাঞ্চ নির্মাণ চলমান" },
+    { year: "২০১৭", title: "আস-সুন্নাহ ফাউন্ডেশন প্রতিষ্ঠা", desc: "শায়খ আহমাদুল্লাহ কর্তৃক মানবকল্যাণ ও সমাজ সংস্কারের লক্ষ্যে প্রতিষ্ঠিত", icon: <MosqueIcon size={18} color="white" /> },
+    { year: "২০২২", title: "স্কিল ডেভেলপমেন্ট ইনস্টিটিউট চালু", desc: "বেকারত্ব দূরীকরণ ও দক্ষ জনশক্তি তৈরির লক্ষ্যে প্রশিক্ষণ কার্যক্রম শুরু", icon: <GraduationIcon size={18} color="white" /> },
+    { year: "২০২৩", title: "NSDA নিবন্ধন অর্জন", desc: "জাতীয় দক্ষতা উন্নয়ন কর্তৃপক্ষ কর্তৃক আনুষ্ঠানিক নিবন্ধন", icon: <AwardIcon size={18} color="white" /> },
+    { year: "২০২৪", title: "১০,০০০+ অনলাইন শিক্ষার্থী", desc: "ওয়েব ডেভেলপমেন্ট বুটক্যাম্পের প্রথম ব্যাচে ১০,৯৬২ জন অংশগ্রহণ", icon: <UsersIcon size={18} color="white" /> },
+    { year: "২০২৫", title: "নতুন শেড নির্মাণ ও সম্প্রসারণ", desc: "৩২,৫০০ বর্গফুটের নতুন ব্রাঞ্চ নির্মাণ চলমান", icon: <BuildingIcon size={18} color="white" /> },
 ];
 
 const values = [
@@ -38,6 +39,15 @@ const facilities = [
     { number: "২৪,০০০", label: "বর্গফুট প্রশিক্ষণ কেন্দ্র", icon: <BuildingIcon size={28} color="var(--color-primary-500)" /> },
     { number: "২,৫০০+", label: "প্রশিক্ষিত জনশক্তি", icon: <UsersIcon size={28} color="var(--color-primary-500)" /> },
     { number: "১০+", label: "চলমান কোর্স", icon: <BookIcon size={28} color="var(--color-accent-500)" /> },
+];
+
+const teamMembers = [
+    { name: "শায়খ আহমাদুল্লাহ", role: "প্রতিষ্ঠাতা ও চেয়ারম্যান", initials: "শআ", color: "#1B8A50", desc: "আস-সুন্নাহ ফাউন্ডেশনের প্রতিষ্ঠাতা, দূরদর্শী নেতৃত্ব" },
+    { name: "মুহাম্মদ রাশেদুল ইসলাম", role: "পরিচালক — প্রশিক্ষণ বিভাগ", initials: "মরই", color: "#1565C0", desc: "১০+ বছরের শিক্ষা ও প্রশিক্ষণ অভিজ্ঞতা" },
+    { name: "শেফ আব্দুর রহমান", role: "প্রধান প্রশিক্ষক — রন্ধনশিল্প", initials: "আর", color: "#E65100", desc: "৫-তারকা হোটেলে ১৫+ বছরের অভিজ্ঞতা" },
+    { name: "তানভীর আহমেদ", role: "প্রধান প্রশিক্ষক — সেলস ও মার্কেটিং", initials: "তআ", color: "#7B1FA2", desc: "কর্পোরেট সেলস ম্যানেজার, ১২+ বছরের অভিজ্ঞতা" },
+    { name: "আহমদ ফয়সাল", role: "প্রশিক্ষক — অ্যাকাউন্টিং", initials: "আফ", color: "#2E7D32", desc: "চার্টার্ড অ্যাকাউন্ট্যান্ট, কর্পোরেট ট্রেইনার" },
+    { name: "নাদিম হাসান", role: "প্রশিক্ষক — ভিডিও ও AI", initials: "নহ", color: "#C62828", desc: "ইউটিউব কনটেন্ট ক্রিয়েটর, AI বিশেষজ্ঞ" },
 ];
 
 export default function AboutPage() {
@@ -171,7 +181,9 @@ export default function AboutPage() {
                     <div className={styles.timeline}>
                         {timeline.map((item, i) => (
                             <div key={i} className={`${styles.timelineItem} ${i % 2 === 0 ? styles.timelineLeft : styles.timelineRight}`}>
-                                <div className={styles.timelineDot} />
+                                <div className={styles.timelineDot}>
+                                    {item.icon}
+                                </div>
                                 <div className={styles.timelineCard}>
                                     <span className={styles.timelineYear}>{item.year}</span>
                                     <h3>{item.title}</h3>
@@ -218,6 +230,38 @@ export default function AboutPage() {
                             <p>স্থায়ী ও বৃহৎ প্রশিক্ষণ কেন্দ্র নির্মাণ — বছরে ১ লক্ষ দক্ষ জনশক্তি তৈরি</p>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            {/* Team / Faculty Grid */}
+            <section className={`section ${styles.teamSection}`}>
+                <div className="container">
+                    <div className="section-header">
+                        <span className="section-badge">
+                            <UsersIcon size={14} color="var(--color-primary-600)" />
+                            আমাদের টিম
+                        </span>
+                        <h2 className="heading-md">অভিজ্ঞ <span className="gradient-text">প্রশিক্ষক ও পরিচালকবৃন্দ</span></h2>
+                        <p style={{ color: "var(--color-neutral-500)", maxWidth: 600, margin: "var(--space-3) auto 0" }}>
+                            দক্ষ ও অভিজ্ঞ পেশাদারদের তত্ত্বাবধানে পরিচালিত হয় আমাদের সকল কার্যক্রম
+                        </p>
+                    </div>
+                    <AnimatedSection className={styles.teamGrid}>
+                        {teamMembers.map((member, i) => (
+                            <AnimatedItem key={i} className={styles.teamCard}>
+                                <div className={styles.teamAvatar} style={{ borderColor: `${member.color}40` }}>
+                                    <span style={{ color: member.color, fontWeight: 800, fontSize: "1rem" }}>{member.initials}</span>
+                                </div>
+                                <h3 className={styles.teamName}>{member.name}</h3>
+                                <p className={styles.teamRole}>{member.role}</p>
+                                <p className={styles.teamDesc}>{member.desc}</p>
+                            </AnimatedItem>
+                        ))}
+                    </AnimatedSection>
+                    <p className={styles.teamNote}>
+                        <UserIcon size={14} color="var(--color-neutral-400)" />
+                        প্রশিক্ষকদের ছবি শীঘ্রই যুক্ত করা হবে
+                    </p>
                 </div>
             </section>
 

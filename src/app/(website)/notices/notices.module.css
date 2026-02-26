@@ -1,0 +1,261 @@
+/* ═══ NOTICES / নোটিশ বোর্ড ═══ */
+
+.noticesSection {
+  background: var(--color-neutral-50);
+  min-height: 60vh;
+}
+
+/* ═══ Filter Chips ═══ */
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: var(--space-8);
+}
+
+.filterChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-neutral-600);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filterChip:hover {
+  border-color: var(--color-primary-300);
+  color: var(--color-primary-600);
+}
+
+.chipActive {
+  background: var(--color-primary-500);
+  border-color: var(--color-primary-500);
+  color: white;
+}
+
+.chipActive:hover {
+  background: var(--color-primary-600);
+  border-color: var(--color-primary-600);
+  color: white;
+}
+
+/* ═══ Notice Cards ═══ */
+.noticesList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.noticeCard {
+  display: flex;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-2xl);
+  transition: all 0.3s ease;
+}
+
+.noticeCard:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-neutral-300);
+}
+
+.noticeImportant {
+  border-left: 4px solid var(--color-primary-500);
+  background: linear-gradient(135deg, rgba(27, 138, 80, 0.02), white);
+}
+
+.noticeLeft {
+  flex-shrink: 0;
+}
+
+.noticeIcon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xl);
+  border: 1px solid;
+}
+
+.noticeContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.noticeMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.noticeType {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+}
+
+.noticeDate {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--text-xs);
+  color: var(--color-neutral-400);
+}
+
+.noticeUrgent {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  background: rgba(198, 40, 40, 0.08);
+  color: #C62828;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  animation: pulseUrgent 2s ease-in-out infinite;
+}
+
+@keyframes pulseUrgent {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.65; }
+}
+
+.noticeTitle {
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  color: var(--color-neutral-900);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.noticeDesc {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-600);
+  line-height: var(--leading-relaxed);
+  margin-bottom: 10px;
+}
+
+.noticeLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-primary-600);
+  text-decoration: none;
+  transition: gap 0.2s ease;
+}
+
+.noticeLink:hover {
+  gap: 10px;
+  color: var(--color-primary-700);
+}
+
+/* ═══ Empty State ═══ */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-16);
+  gap: var(--space-4);
+  text-align: center;
+}
+
+.emptyState p {
+  font-size: var(--text-lg);
+  color: var(--color-neutral-400);
+}
+
+/* ═══ Responsive ═══ */
+@media (max-width: 768px) {
+  .noticeCard {
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+  }
+
+  .noticeLeft {
+    display: none;
+  }
+
+  .filterRow {
+    gap: 6px;
+  }
+
+  .filterChip {
+    padding: 6px 14px;
+    font-size: var(--text-xs);
+  }
+
+  .noticeTitle {
+    font-size: var(--text-base);
+  }
+}
+
+/* ═══ DARK MODE ═══ */
+[data-theme="dark"] .noticesSection {
+  background: #0B3224;
+}
+
+[data-theme="dark"] .filterChip {
+  background: #14493A;
+  border-color: #1E6B50;
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .filterChip:hover {
+  border-color: var(--color-primary-400);
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .chipActive {
+  background: var(--color-primary-500);
+  border-color: var(--color-primary-500);
+  color: white;
+}
+
+[data-theme="dark"] .noticeCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .noticeCard:hover {
+  border-color: var(--color-primary-400);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .noticeImportant {
+  background: linear-gradient(135deg, rgba(27, 138, 80, 0.08), #14493A);
+  border-left-color: var(--color-primary-400);
+}
+
+[data-theme="dark"] .noticeTitle {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .noticeDesc {
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .noticeLink {
+  color: #8DC63F;
+}
+
+[data-theme="dark"] .emptyState p {
+  color: #5A7E6A;
+}

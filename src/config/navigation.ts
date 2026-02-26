@@ -116,6 +116,13 @@ export const mainNav: NavItem[] = [
         description: "সাম্প্রতিক খবর ও আপডেট",
         iconName: "megaphone",
       },
+      {
+        label: "নোটিশ বোর্ড",
+        labelEn: "Notice Board",
+        href: "/notices",
+        description: "ভর্তি বিজ্ঞপ্তি, ফলাফল ও ঘোষণা",
+        iconName: "clipboard",
+      },
     ],
   },
   {

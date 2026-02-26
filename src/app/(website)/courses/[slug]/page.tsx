@@ -13,6 +13,7 @@ import {
   ShoeIcon, CarIcon, ClockIcon, ArrowRightIcon, UsersIcon,
   CheckCircleIcon, BookIcon, AwardIcon, CalendarIcon,
   TargetIcon, GraduationIcon, ShieldCheckIcon, TrophyIcon,
+  UserIcon, PlayIcon, ArrowLeftIcon, MailIcon,
 } from "@/shared/components/Icons";
 import styles from "./course-detail.module.css";
 
@@ -85,6 +86,28 @@ export default function CourseDetailPage() {
                 sizes="(max-width: 768px) 100vw, 1200px"
                 className={styles.courseImage}
                 priority
+              />
+            </motion.div>
+          </div>
+        </section>
+      )}
+
+      {/* Video Preview (when available) */}
+      {course.videoPreviewUrl && (
+        <section className={styles.videoSection}>
+          <div className="container">
+            <motion.div
+              className={styles.videoWrap}
+              initial={{ opacity: 0, scale: 0.96 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+            >
+              <iframe
+                src={course.videoPreviewUrl}
+                title={`${course.title} প্রিভিউ`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+                allowFullScreen
+                className={styles.videoIframe}
               />
             </motion.div>
           </div>
@@ -164,7 +187,90 @@ export default function CourseDetailPage() {
         </div>
       </section>
 
-      {/* Syllabus */}
+      {/* Instructor Profiles */}
+      {course.instructors && course.instructors.length > 0 && (
+        <section className={`section ${styles.instructorsSection}`}>
+          <div className="container">
+            <div className="section-header">
+              <span className="section-badge">
+                <UserIcon size={14} color="var(--color-primary-600)" />
+                প্রশিক্ষকবৃন্দ
+              </span>
+              <h2 className="heading-md">অভিজ্ঞ <span className="gradient-text">প্রশিক্ষকদের</span> তত্ত্বাবধানে</h2>
+            </div>
+            <motion.div
+              className={styles.instructorsGrid}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={stagger}
+            >
+              {course.instructors.map((inst, i) => (
+                <motion.div key={i} className={styles.instructorCard} variants={fadeUp}>
+                  <div className={styles.instructorAvatar} style={{ borderColor: `${course.color}40` }}>
+                    <span style={{ color: course.color }}>{inst.initials}</span>
+                  </div>
+                  <div className={styles.instructorInfo}>
+                    <h3>{inst.name}</h3>
+                    <p className={styles.instructorRole}>{inst.role}</p>
+                    <p className={styles.instructorBio}>{inst.bio}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+      )}
+
+      {/* Batch Schedule Table */}
+      {course.batchSchedule && course.batchSchedule.length > 0 && (
+        <section className={`section ${styles.batchSection}`}>
+          <div className="container">
+            <div className="section-header">
+              <span className="section-badge">
+                <CalendarIcon size={14} color="var(--color-primary-600)" />
+                ব্যাচ সিডিউল
+              </span>
+              <h2 className="heading-md">আসন্ন <span className="gradient-text">ব্যাচসমূহ</span></h2>
+            </div>
+            <motion.div
+              className={styles.scheduleTableWrap}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <table className={styles.scheduleTable}>
+                <thead>
+                  <tr>
+                    <th>ব্যাচ</th>
+                    <th>শুরু</th>
+                    <th>সমাপ্তি</th>
+                    <th>আসন</th>
+                    <th>অবস্থা</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {course.batchSchedule.map((bs, i) => (
+                    <tr key={i} className={bs.status === "ভর্তি চলছে" ? styles.batchHighlight : ""}>
+                      <td><strong>{bs.batch}</strong></td>
+                      <td>{bs.startDate}</td>
+                      <td>{bs.endDate}</td>
+                      <td>{bs.seats} জন</td>
+                      <td>
+                        <span className={`${styles.batchStatus} ${styles[`status_${bs.status === "চলমান" ? "active" : bs.status === "ভর্তি চলছে" ? "open" : bs.status === "আসন্ন" ? "upcoming" : "done"}`]}`}>
+                          {bs.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </motion.div>
+          </div>
+        </section>
+      )}
+
+      {/* Syllabus + Download */}
       <section className={`section ${styles.syllabusSection}`}>
         <div className="container">
           <div className={styles.twoCol}>
@@ -187,12 +293,29 @@ export default function CourseDetailPage() {
                 </motion.p>
               </motion.div>
 
+              {/* Download Syllabus Button */}
+              <motion.div
+                className={styles.downloadBtnWrap}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <button className={styles.downloadBtn} onClick={() => window.print()}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  সিলেবাস ডাউনলোড (PDF)
+                </button>
+              </motion.div>
+
               <motion.div
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={stagger}
-                style={{ marginTop: "var(--space-8)" }}
+                style={{ marginTop: "var(--space-6)" }}
               >
                 <Accordion>
                   {course.syllabus.map((module, i) => (
@@ -312,6 +435,41 @@ export default function CourseDetailPage() {
           </div>
         </div>
       </section>
+
+      {/* Course-Specific FAQ */}
+      {course.faqs && course.faqs.length > 0 && (
+        <section className={`section ${styles.faqSection}`}>
+          <div className="container">
+            <div className="section-header">
+              <span className="section-badge">
+                <BookIcon size={14} color="var(--color-primary-600)" />
+                সাধারণ জিজ্ঞাসা
+              </span>
+              <h2 className="heading-md">এই কোর্স সম্পর্কে <span className="gradient-text">প্রশ্নোত্তর</span></h2>
+            </div>
+            <motion.div
+              className={styles.faqGrid}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={stagger}
+            >
+              <Accordion>
+                {course.faqs.map((faq, i) => (
+                  <AccordionItem
+                    key={i}
+                    title={faq.question}
+                    defaultOpen={i === 0}
+                    icon={<CheckCircleIcon size={15} color="var(--color-primary-500)" />}
+                  >
+                    <p className={styles.faqAnswer}>{faq.answer}</p>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </motion.div>
+          </div>
+        </section>
+      )}
 
       {/* CTA */}
       <section className={`section section-dark ${styles.ctaSection}`}>

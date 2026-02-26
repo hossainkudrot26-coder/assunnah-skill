@@ -524,3 +524,279 @@
 }
 
 [data-theme="dark"] .successBanner { background: transparent; }
+
+/* ═══ Video Preview ═══ */
+.videoSection {
+  padding: 0 0 32px;
+  background: var(--color-neutral-50);
+}
+
+.videoWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  background: #000;
+}
+
+.videoIframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+[data-theme="dark"] .videoSection { background: #0B3224; }
+
+/* ═══ Instructor Profiles ═══ */
+.instructorsSection {
+  background: white;
+}
+
+.instructorsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-6);
+}
+
+.instructorCard {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  background: var(--color-neutral-50);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-2xl);
+  transition: all 0.3s ease;
+}
+
+.instructorCard:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary-200);
+}
+
+.instructorAvatar {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  border-radius: var(--radius-xl);
+  background: white;
+  border: 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.instructorAvatar span {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.instructorInfo h3 {
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  color: var(--color-neutral-900);
+  margin-bottom: 4px;
+}
+
+.instructorRole {
+  font-size: var(--text-sm);
+  color: var(--color-primary-600);
+  font-weight: var(--font-semibold);
+  margin-bottom: 6px;
+}
+
+.instructorBio {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-500);
+  line-height: var(--leading-relaxed);
+}
+
+[data-theme="dark"] .instructorsSection { background: #0B3224; }
+[data-theme="dark"] .instructorCard { background: #14493A; border-color: #1E6B50; }
+[data-theme="dark"] .instructorCard:hover { border-color: var(--color-primary-400); }
+[data-theme="dark"] .instructorAvatar { background: #0B3224; }
+[data-theme="dark"] .instructorInfo h3 { color: #F0F5F2; }
+[data-theme="dark"] .instructorRole { color: #8DC63F; }
+[data-theme="dark"] .instructorBio { color: #7E9A8C; }
+
+/* ═══ Batch Schedule Table ═══ */
+.batchSection {
+  background: var(--color-neutral-50);
+}
+
+.scheduleTableWrap {
+  overflow-x: auto;
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--color-neutral-200);
+  background: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.scheduleTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.scheduleTable thead {
+  background: var(--color-primary-50);
+}
+
+.scheduleTable th {
+  padding: 14px 20px;
+  text-align: left;
+  font-weight: var(--font-semibold);
+  color: var(--color-primary-700);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  border-bottom: 2px solid var(--color-primary-100);
+}
+
+.scheduleTable td {
+  padding: 14px 20px;
+  color: var(--color-neutral-700);
+  border-bottom: 1px solid var(--color-neutral-100);
+}
+
+.scheduleTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.scheduleTable tbody tr:hover {
+  background: var(--color-neutral-50);
+}
+
+.batchHighlight {
+  background: rgba(141, 198, 63, 0.06) !important;
+}
+
+.batchHighlight td {
+  color: var(--color-neutral-900);
+  font-weight: var(--font-medium);
+}
+
+.batchStatus {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+}
+
+.status_active {
+  background: rgba(27, 138, 80, 0.1);
+  color: #1B8A50;
+}
+
+.status_open {
+  background: rgba(141, 198, 63, 0.15);
+  color: #5a8f1b;
+  animation: pulseStatus 2s ease-in-out infinite;
+}
+
+@keyframes pulseStatus {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.status_upcoming {
+  background: rgba(21, 101, 192, 0.1);
+  color: #1565C0;
+}
+
+.status_done {
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-500);
+}
+
+[data-theme="dark"] .batchSection { background: #0F3D2D; }
+[data-theme="dark"] .scheduleTableWrap { background: #14493A; border-color: #1E6B50; }
+[data-theme="dark"] .scheduleTable thead { background: #1E6B50; }
+[data-theme="dark"] .scheduleTable th { color: #F0F5F2; border-color: #2A7B5C; }
+[data-theme="dark"] .scheduleTable td { color: #A0B8AC; border-color: #1E6B50; }
+[data-theme="dark"] .scheduleTable tbody tr:hover { background: #1E6B5020; }
+[data-theme="dark"] .batchHighlight { background: #1E6B5030 !important; }
+[data-theme="dark"] .batchHighlight td { color: #F0F5F2; }
+
+/* ═══ Download Button ═══ */
+.downloadBtnWrap {
+  margin-top: var(--space-4);
+}
+
+.downloadBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--color-primary-50);
+  color: var(--color-primary-700);
+  border: 1px solid var(--color-primary-200);
+  border-radius: var(--radius-xl);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.downloadBtn:hover {
+  background: var(--color-primary-100);
+  border-color: var(--color-primary-300);
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .downloadBtn {
+  background: #1E6B50;
+  color: #F0F5F2;
+  border-color: #2A7B5C;
+}
+
+[data-theme="dark"] .downloadBtn:hover {
+  background: #2A7B5C;
+}
+
+/* ═══ Course FAQ ═══ */
+.faqSection {
+  background: white;
+}
+
+.faqGrid {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faqAnswer {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-600);
+  line-height: var(--leading-relaxed);
+}
+
+[data-theme="dark"] .faqSection { background: #0B3224; }
+[data-theme="dark"] .faqAnswer { color: #A0B8AC; }
+
+/* ═══ Responsive ═══ */
+@media (max-width: 768px) {
+  .instructorsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .instructorCard {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .scheduleTable th,
+  .scheduleTable td {
+    padding: 10px 12px;
+    font-size: var(--text-xs);
+  }
+
+  .videoWrap {
+    border-radius: 14px;
+  }
+}

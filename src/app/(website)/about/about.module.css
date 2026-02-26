@@ -287,22 +287,25 @@
 
 .timelineDot {
     position: absolute;
-    width: 16px;
-    height: 16px;
-    background: var(--color-primary-500);
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
     border: 3px solid white;
     border-radius: 50%;
-    top: var(--space-8);
-    box-shadow: var(--shadow-md), 0 0 0 3px rgba(27, 138, 80, 0.15);
+    top: var(--space-6);
+    box-shadow: var(--shadow-md), 0 0 0 4px rgba(27, 138, 80, 0.15);
     z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .timelineLeft .timelineDot {
-    right: -8px;
+    right: -18px;
 }
 
 .timelineRight .timelineDot {
-    left: -8px;
+    left: -18px;
 }
 
 .timelineCard {
@@ -471,7 +474,7 @@
     }
 
     .timelineDot {
-        left: 12px !important;
+        left: 2px !important;
         right: auto !important;
     }
 }
@@ -584,4 +587,119 @@
 
 [data-theme="dark"] .timelineCard p {
   color: #A0B8AC;
+}
+
+/* ═══ TEAM / FACULTY GRID ═══ */
+.teamSection {
+  background: white;
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.teamCard {
+  background: var(--color-neutral-50);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.teamCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary-200);
+}
+
+.teamAvatar {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto var(--space-4);
+  border-radius: var(--radius-full);
+  background: white;
+  border: 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.teamName {
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  color: var(--color-neutral-900);
+  margin-bottom: 4px;
+}
+
+.teamRole {
+  font-size: var(--text-sm);
+  color: var(--color-primary-600);
+  font-weight: var(--font-semibold);
+  margin-bottom: 8px;
+}
+
+.teamDesc {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-500);
+  line-height: var(--leading-relaxed);
+}
+
+.teamNote {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  justify-content: center;
+  margin-top: var(--space-6);
+  font-size: var(--text-sm);
+  color: var(--color-neutral-400);
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .teamGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .teamGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+[data-theme="dark"] .teamSection {
+  background: #0F3D2D;
+}
+
+[data-theme="dark"] .teamCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .teamCard:hover {
+  border-color: var(--color-primary-400);
+}
+
+[data-theme="dark"] .teamAvatar {
+  background: #0B3224;
+}
+
+[data-theme="dark"] .teamName {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .teamRole {
+  color: #8DC63F;
+}
+
+[data-theme="dark"] .teamDesc {
+  color: #7E9A8C;
+}
+
+[data-theme="dark"] .teamNote {
+  color: #5A7E6A;
 }

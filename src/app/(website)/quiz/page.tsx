@@ -9,6 +9,7 @@ import {
   ArrowRightIcon, ArrowLeftIcon, CheckCircleIcon, TargetIcon,
   GraduationIcon, BriefcaseIcon, ChefHatIcon, ChartIcon,
   ScissorsIcon, ShoeIcon, CarIcon, BookIcon, SparkleIcon,
+  CodeIcon, WrenchIcon, LanguageIcon, VideoIcon,
 } from "@/shared/components/Icons";
 import styles from "./quiz.module.css";
 
@@ -147,6 +148,10 @@ const iconMap: Record<string, (s: number, c: string) => React.ReactNode> = {
   ScissorsIcon: (s, c) => <ScissorsIcon size={s} color={c} />,
   ShoeIcon: (s, c) => <ShoeIcon size={s} color={c} />,
   CarIcon: (s, c) => <CarIcon size={s} color={c} />,
+  CodeIcon: (s, c) => <CodeIcon size={s} color={c} />,
+  WrenchIcon: (s, c) => <WrenchIcon size={s} color={c} />,
+  LanguageIcon: (s, c) => <LanguageIcon size={s} color={c} />,
+  VideoIcon: (s, c) => <VideoIcon size={s} color={c} />,
 };
 
 export default function QuizPage() {

@@ -15,6 +15,7 @@ import {
   CheckCircleIcon, BookIcon, AwardIcon, CalendarIcon,
   TargetIcon, GraduationIcon, ShieldCheckIcon, TrophyIcon,
   UserIcon, PlayIcon, ArrowLeftIcon, MailIcon,
+  CodeIcon, WrenchIcon, LanguageIcon, VideoIcon,
 } from "@/shared/components/Icons";
 import styles from "./course-detail.module.css";
 
@@ -25,6 +26,10 @@ const iconMap: Record<string, (s: number, c: string) => React.ReactNode> = {
   ScissorsIcon: (s, c) => <ScissorsIcon size={s} color={c} />,
   ShoeIcon: (s, c) => <ShoeIcon size={s} color={c} />,
   CarIcon: (s, c) => <CarIcon size={s} color={c} />,
+  CodeIcon: (s, c) => <CodeIcon size={s} color={c} />,
+  WrenchIcon: (s, c) => <WrenchIcon size={s} color={c} />,
+  LanguageIcon: (s, c) => <LanguageIcon size={s} color={c} />,
+  VideoIcon: (s, c) => <VideoIcon size={s} color={c} />,
 };
 
 const ease = [0.22, 1, 0.36, 1] as const;

@@ -7,7 +7,7 @@ import { courses } from "@/config/courses";
 import {
   BriefcaseIcon, ChartIcon, ScissorsIcon, ChefHatIcon, CarIcon,
   ShoeIcon, ClockIcon, BookIcon, ArrowRightIcon, AwardIcon,
-  CheckCircleIcon,
+  CheckCircleIcon, CodeIcon, WrenchIcon, LanguageIcon, VideoIcon,
 } from "@/shared/components/Icons";
 import { PageHeader } from "@/shared/components/PageHeader";
 import styles from "./courses.module.css";
@@ -19,6 +19,10 @@ const iconMap: Record<string, React.ReactNode> = {
   ScissorsIcon: <ScissorsIcon size={28} color="#AD1457" />,
   ShoeIcon: <ShoeIcon size={28} color="#795548" />,
   CarIcon: <CarIcon size={28} color="#2E7D32" />,
+  CodeIcon: <CodeIcon size={28} color="#6A1B9A" />,
+  WrenchIcon: <WrenchIcon size={28} color="#37474F" />,
+  LanguageIcon: <LanguageIcon size={28} color="#0277BD" />,
+  VideoIcon: <VideoIcon size={28} color="#C62828" />,
 };
 
 const ease = [0.22, 1, 0.36, 1] as const;

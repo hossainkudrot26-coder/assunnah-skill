@@ -604,3 +604,24 @@ export function ArrowLeftIcon({ size = 24, className, color = "currentColor" }: 
         </svg>
     );
 }
+
+/* ——— LANGUAGE / GLOBE-SPEECH ——— */
+export function LanguageIcon({ size = 24, className, color = "currentColor" }: IconProps) {
+    return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+            <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="1.5" />
+            <path d="M2 12h20" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10A15.3 15.3 0 0112 2z" stroke={color} strokeWidth="1.5" />
+        </svg>
+    );
+}
+
+/* ——— VIDEO / CLAPPERBOARD ——— */
+export function VideoIcon({ size = 24, className, color = "currentColor" }: IconProps) {
+    return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+            <rect x="2" y="4" width="20" height="16" rx="2" stroke={color} strokeWidth="1.5" />
+            <path d="M10 9l5 3-5 3V9z" fill={color} opacity="0.3" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    );
+}

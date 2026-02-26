@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/db";
+import { requireAdmin } from "@/lib/auth-guard";
 
 // ──────────── COURSES (PUBLIC) ────────────
 
@@ -71,7 +72,11 @@ export async function getSetting(key: string) {
   }
 }
 
+// ADMIN ONLY — modifies site configuration
 export async function setSetting(key: string, value: any, type: string = "string") {
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { success: false, error: guard.error };
+
   const stringValue = type === "json" ? JSON.stringify(value) : String(value);
 
   await prisma.siteSetting.upsert({
@@ -79,11 +84,25 @@ export async function setSetting(key: string, value: any, type: string = "string
     update: { value: stringValue, type },
     create: { key, value: stringValue, type },
   });
+
+  return { success: true };
 }
 
-// ──────────── DASHBOARD STATS ────────────
+// ──────────── DASHBOARD STATS (ADMIN ONLY) ────────────
 
 export async function getDashboardStats() {
+  const guard = await requireAdmin();
+  if (!guard.authorized) {
+    return {
+      totalStudents: 0,
+      totalApplications: 0,
+      pendingApplications: 0,
+      totalCourses: 0,
+      totalMessages: 0,
+      unreadMessages: 0,
+    };
+  }
+
   const [
     totalStudents,
     totalApplications,

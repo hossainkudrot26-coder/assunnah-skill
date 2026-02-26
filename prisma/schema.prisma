@@ -368,6 +368,68 @@ model Testimonial {
   @@map("testimonials")
 }
 
+// ──────────── NOTICES ────────────
+
+enum NoticeType {
+  ADMISSION    // ভর্তি
+  EXAM         // পরীক্ষা
+  RESULT       // ফলাফল
+  EVENT        // ইভেন্ট
+  GENERAL      // সাধারণ
+}
+
+model Notice {
+  id          String     @id @default(cuid())
+  title       String
+  description String     @db.Text
+  type        NoticeType @default(GENERAL)
+  isImportant Boolean    @default(false)
+  isPublished Boolean    @default(true)
+  link        String?
+  sortOrder   Int        @default(0)
+
+  publishedAt DateTime   @default(now())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@map("notices")
+}
+
+// ──────────── EVENTS ────────────
+
+enum EventStatus {
+  UPCOMING     // আসন্ন
+  ONGOING      // চলমান
+  COMPLETED    // সম্পন্ন
+  CANCELLED    // বাতিল
+}
+
+enum EventType {
+  ADMISSION    // ভর্তি
+  SEMINAR      // সেমিনার
+  WORKSHOP     // ওয়ার্কশপ
+  CEREMONY     // অনুষ্ঠান
+  EXAM         // পরীক্ষা
+}
+
+model Event {
+  id          String      @id @default(cuid())
+  title       String
+  description String      @db.Text
+  date        DateTime
+  time        String                    // "সকাল ১০:০০ — বিকাল ৫:০০"
+  location    String
+  status      EventStatus @default(UPCOMING)
+  type        EventType   @default(CEREMONY)
+  attendees   Int?
+  isPublished Boolean     @default(true)
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@map("events")
+}
+
 // ──────────── SETTINGS ────────────
 
 model SiteSetting {

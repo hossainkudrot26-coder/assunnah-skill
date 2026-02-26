@@ -8,6 +8,7 @@ import { getPublishedPosts, getFeaturedPost } from "@/lib/actions/blog";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { CalendarIcon, ClockIcon, ArrowRightIcon } from "@/shared/components/Icons";
 import { images } from "@/config/images";
+import { getBlurPlaceholder } from "@/lib/image-utils";
 import styles from "./blog.module.css";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -96,6 +97,8 @@ export default function BlogPage() {
                       fill
                       sizes="(max-width: 768px) 100vw, 60vw"
                       className={styles.featuredImg}
+                      placeholder="blur"
+                      blurDataURL={getBlurPlaceholder()}
                     />
                   </div>
                   <div className={styles.featuredContent}>
@@ -160,6 +163,8 @@ export default function BlogPage() {
                         fill
                         sizes="(max-width: 768px) 100vw, 33vw"
                         className={styles.postImg}
+                        placeholder="blur"
+                        blurDataURL={getBlurPlaceholder()}
                       />
                     </div>
                     <div className={styles.postContent}>

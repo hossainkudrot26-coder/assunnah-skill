@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { getCourseBySlug, getRelatedCourses, type Course } from "@/config/courses";
 import { courseImageMap } from "@/config/images";
+import { getBlurPlaceholder } from "@/lib/image-utils";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { Accordion, AccordionItem } from "@/shared/components/Accordion";
 import {
@@ -86,6 +87,8 @@ export default function CourseDetailPage() {
                 sizes="(max-width: 768px) 100vw, 1200px"
                 className={styles.courseImage}
                 priority
+                placeholder="blur"
+                blurDataURL={getBlurPlaceholder(1200, 460)}
               />
             </motion.div>
           </div>

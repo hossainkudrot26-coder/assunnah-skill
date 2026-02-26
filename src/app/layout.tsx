@@ -3,6 +3,7 @@ import "./globals.css";
 import { siteConfig } from "@/config/site";
 import { ThemeProvider } from "@/shared/components/ThemeProvider";
 import { AuthProvider } from "@/shared/components/AuthProvider";
+import { GoogleAnalytics } from "@/shared/components/GoogleAnalytics";
 
 export const metadata: Metadata = {
   title: {
@@ -102,6 +103,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <GoogleAnalytics />
         <AuthProvider>
           <ThemeProvider>
             {children}

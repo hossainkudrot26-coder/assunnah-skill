@@ -266,3 +266,10 @@
   background: rgba(220, 38, 38, 0.1);
   border-color: rgba(220, 38, 38, 0.3);
 }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 768px) {
+  .loginGrid { grid-template-columns: 1fr; }
+  .loginVisual { display: none; }
+  .loginCard { padding: 24px 20px; }
+}

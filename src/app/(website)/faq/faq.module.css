@@ -110,3 +110,10 @@
 [data-theme="dark"] .noResults {
   color: #7E9A8C;
 }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 768px) {
+  .tabsWrapper { gap: 6px; }
+  .tab { padding: 8px 14px; font-size: 0.78rem; }
+  .searchInput { font-size: 0.9rem; }
+}

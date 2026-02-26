@@ -430,6 +430,32 @@ model Event {
   @@map("events")
 }
 
+// ──────────── DOWNLOADS ────────────
+
+enum DownloadCategory {
+  GENERAL      // সাধারণ
+  ADMISSION    // ভর্তি
+  SYLLABUS     // সিলেবাস
+}
+
+model Download {
+  id          String           @id @default(cuid())
+  title       String
+  description String
+  fileUrl     String?                    // null = "শীঘ্রই আসছে"
+  fileType    String           @default("PDF")
+  fileSize    String?                    // "2.5 MB"
+  category    DownloadCategory @default(GENERAL)
+  iconColor   String           @default("#1B8A50")
+  sortOrder   Int              @default(0)
+  isPublished Boolean          @default(true)
+
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@map("downloads")
+}
+
 // ──────────── SETTINGS ────────────
 
 model SiteSetting {

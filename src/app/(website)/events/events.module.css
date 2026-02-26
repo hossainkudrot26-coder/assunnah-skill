@@ -1,0 +1,210 @@
+/* ═══ EVENTS CALENDAR ═══ */
+
+.highlightSection {
+  padding: 0 0 20px;
+  background: var(--color-neutral-50);
+}
+
+.highlightCard {
+  background: linear-gradient(135deg, #0D4530, #1B8A50);
+  border-radius: 24px;
+  padding: 40px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.highlightCard::after {
+  content: "";
+  position: absolute;
+  top: -60%;
+  right: -20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(141, 198, 63, 0.12), transparent 70%);
+  pointer-events: none;
+}
+
+.highlightBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.highlightTitle {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.highlightDesc {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  max-width: 600px;
+}
+
+.highlightMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.highlightMeta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ═══ Events Section ═══ */
+.eventsSection {
+  background: var(--color-neutral-50);
+}
+
+.filterRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.filterChip {
+  padding: 8px 18px;
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 99px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-neutral-600);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filterChip:hover {
+  border-color: var(--color-primary-300);
+}
+
+.chipActive {
+  background: var(--color-primary-500);
+  border-color: var(--color-primary-500);
+  color: white;
+}
+
+/* ═══ Event Cards ═══ */
+.eventsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.eventCard {
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 20px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.eventCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  border-color: var(--color-primary-200);
+}
+
+.eventHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.eventType {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-primary-600);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.eventStatus {
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.eventTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-neutral-900);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.eventDesc {
+  font-size: 0.82rem;
+  color: var(--color-neutral-500);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.eventMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.eventMeta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--color-neutral-500);
+}
+
+/* ═══ Responsive ═══ */
+@media (max-width: 768px) {
+  .highlightCard { padding: 24px 20px; }
+  .highlightTitle { font-size: 1.2rem; }
+  .highlightMeta { flex-direction: column; gap: 8px; }
+  .eventsGrid { grid-template-columns: 1fr; }
+}
+
+/* ═══ DARK MODE ═══ */
+[data-theme="dark"] .highlightSection { background: #0B3224; }
+[data-theme="dark"] .eventsSection { background: #0B3224; }
+
+[data-theme="dark"] .filterChip {
+  background: #14493A;
+  border-color: #1E6B50;
+  color: #A0B8AC;
+}
+[data-theme="dark"] .chipActive {
+  background: var(--color-primary-500);
+  border-color: var(--color-primary-500);
+  color: white;
+}
+
+[data-theme="dark"] .eventCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+[data-theme="dark"] .eventCard:hover { border-color: var(--color-primary-400); }
+[data-theme="dark"] .eventTitle { color: #F0F5F2; }
+[data-theme="dark"] .eventDesc { color: #7E9A8C; }
+[data-theme="dark"] .eventMeta span { color: #7E9A8C; }
+[data-theme="dark"] .eventType { color: #8DC63F; }

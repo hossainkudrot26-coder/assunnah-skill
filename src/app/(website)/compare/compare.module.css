@@ -1,0 +1,292 @@
+/* ═══ COURSE COMPARISON ═══ */
+
+.compareSection {
+  background: var(--color-neutral-50);
+  min-height: 60vh;
+}
+
+/* ═══ Selector ═══ */
+.selectorWrap {
+  margin-bottom: 40px;
+}
+
+.selectorTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-neutral-700);
+  margin-bottom: 16px;
+}
+
+.selectorGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.selectorCard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: white;
+  border: 2px solid var(--color-neutral-200);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  position: relative;
+}
+
+.selectorCard:hover {
+  border-color: var(--color-primary-300);
+  transform: translateY(-2px);
+}
+
+.selectorActive {
+  border-color: var(--color-primary-500) !important;
+  background: var(--color-primary-50) !important;
+}
+
+.selectorDisabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.selectorDisabled:hover {
+  transform: none;
+}
+
+.selectorIcon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid;
+  flex-shrink: 0;
+  background: white;
+}
+
+.selectorName {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-neutral-700);
+  flex: 1;
+  line-height: 1.3;
+}
+
+.selectorCheck {
+  flex-shrink: 0;
+}
+
+/* ═══ Comparison Table ═══ */
+.tableWrap {
+  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid var(--color-neutral-200);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.tableScroll {
+  overflow-x: auto;
+}
+
+.compareTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.labelCol {
+  width: 160px;
+  min-width: 140px;
+  padding: 20px;
+  background: var(--color-neutral-50);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-neutral-500);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border-bottom: 2px solid var(--color-neutral-100);
+  text-align: left;
+  vertical-align: top;
+}
+
+.courseCol {
+  position: relative;
+  padding: 20px;
+  background: white;
+  text-align: center;
+  border-bottom: 2px solid var(--color-neutral-100);
+  min-width: 180px;
+  vertical-align: bottom;
+}
+
+.removeBtn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-neutral-100);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.removeBtn:hover {
+  background: var(--color-neutral-200);
+}
+
+.courseColIcon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+}
+
+.courseColName {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-neutral-900);
+  line-height: 1.3;
+}
+
+.rowLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-neutral-600);
+  background: var(--color-neutral-50);
+  border-bottom: 1px solid var(--color-neutral-100);
+}
+
+.rowValue {
+  padding: 14px 20px;
+  font-size: 0.85rem;
+  color: var(--color-neutral-700);
+  text-align: center;
+  border-bottom: 1px solid var(--color-neutral-100);
+  background: white;
+}
+
+.rowOutcomes {
+  padding: 14px 20px;
+  background: white;
+  border-bottom: 1px solid var(--color-neutral-100);
+}
+
+.rowOutcomes ul {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rowOutcomes li {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--color-neutral-600);
+  text-align: left;
+  line-height: 1.4;
+}
+
+.rowOutcomes li svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.rowAction {
+  padding: 16px 20px;
+  text-align: center;
+  background: white;
+}
+
+.viewBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background: var(--color-primary-500);
+  color: white;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.viewBtn:hover {
+  background: var(--color-primary-600);
+}
+
+.hint {
+  text-align: center;
+  padding: 40px 0;
+  font-size: 0.95rem;
+  color: var(--color-neutral-400);
+}
+
+/* ═══ Responsive ═══ */
+@media (max-width: 768px) {
+  .selectorGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .selectorName {
+    font-size: 0.75rem;
+  }
+
+  .labelCol,
+  .rowLabel {
+    width: 120px;
+    min-width: 120px;
+    padding: 10px 12px;
+    font-size: 0.72rem;
+  }
+
+  .courseCol,
+  .rowValue,
+  .rowOutcomes,
+  .rowAction {
+    padding: 10px 12px;
+    min-width: 140px;
+  }
+}
+
+/* ═══ DARK MODE ═══ */
+[data-theme="dark"] .compareSection { background: #0B3224; }
+[data-theme="dark"] .selectorTitle { color: #A0B8AC; }
+
+[data-theme="dark"] .selectorCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+[data-theme="dark"] .selectorCard:hover { border-color: var(--color-primary-400); }
+[data-theme="dark"] .selectorActive { background: #1E6B5050 !important; border-color: var(--color-primary-400) !important; }
+[data-theme="dark"] .selectorIcon { background: #0B3224; }
+[data-theme="dark"] .selectorName { color: #A0B8AC; }
+
+[data-theme="dark"] .tableWrap { border-color: #1E6B50; }
+[data-theme="dark"] .labelCol { background: #0F3D2D; color: #7E9A8C; border-color: #1E6B50; }
+[data-theme="dark"] .courseCol { background: #14493A; border-color: #1E6B50; }
+[data-theme="dark"] .courseColName { color: #F0F5F2; }
+[data-theme="dark"] .removeBtn { background: #1E6B50; }
+[data-theme="dark"] .rowLabel { background: #0F3D2D; color: #7E9A8C; border-color: #1E6B50; }
+[data-theme="dark"] .rowValue { background: #14493A; color: #A0B8AC; border-color: #1E6B50; }
+[data-theme="dark"] .rowOutcomes { background: #14493A; border-color: #1E6B50; }
+[data-theme="dark"] .rowOutcomes li { color: #A0B8AC; }
+[data-theme="dark"] .rowAction { background: #14493A; }
+[data-theme="dark"] .hint { color: #5A7E6A; }

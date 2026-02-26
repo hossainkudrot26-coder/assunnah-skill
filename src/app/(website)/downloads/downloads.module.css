@@ -1,0 +1,183 @@
+/* ═══ DOWNLOAD CENTER ═══ */
+
+.downloadsSection {
+  background: var(--color-neutral-50);
+  min-height: 60vh;
+}
+
+/* Notice */
+.noticeBanner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--color-primary-50);
+  border: 1px solid var(--color-primary-100);
+  border-radius: 16px;
+  margin-bottom: 32px;
+}
+
+.noticeBanner p {
+  font-size: 0.88rem;
+  color: var(--color-neutral-700);
+}
+
+.noticeLink {
+  color: var(--color-primary-600);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* Grid */
+.downloadGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.downloadCard {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 24px;
+  background: white;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 18px;
+  transition: all 0.3s ease;
+}
+
+.downloadCard:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-neutral-300);
+}
+
+.cardDisabled {
+  opacity: 0.65;
+}
+
+.downloadIcon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-neutral-50);
+  border-radius: 14px;
+  flex-shrink: 0;
+}
+
+.downloadContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.downloadMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.downloadType {
+  padding: 2px 8px;
+  background: rgba(198, 40, 40, 0.08);
+  color: #C62828;
+  border-radius: 6px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.downloadCategory {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-neutral-400);
+}
+
+.downloadContent h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-neutral-900);
+  margin-bottom: 4px;
+}
+
+.downloadContent p {
+  font-size: 0.8rem;
+  color: var(--color-neutral-500);
+  line-height: 1.5;
+}
+
+.downloadAction {
+  flex-shrink: 0;
+}
+
+.downloadBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--color-primary-500);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.downloadBtn:hover {
+  background: var(--color-primary-600);
+  transform: translateY(-1px);
+}
+
+.comingSoon {
+  padding: 8px 16px;
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-400);
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .downloadCard {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 18px;
+  }
+
+  .downloadAction {
+    width: 100%;
+  }
+
+  .downloadBtn,
+  .comingSoon {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+/* ═══ DARK MODE ═══ */
+[data-theme="dark"] .downloadsSection { background: #0B3224; }
+
+[data-theme="dark"] .noticeBanner {
+  background: rgba(27, 138, 80, 0.1);
+  border-color: rgba(27, 138, 80, 0.2);
+}
+[data-theme="dark"] .noticeBanner p { color: #A0B8AC; }
+[data-theme="dark"] .noticeLink { color: #8DC63F; }
+
+[data-theme="dark"] .downloadCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+[data-theme="dark"] .downloadCard:hover { border-color: var(--color-primary-400); }
+[data-theme="dark"] .downloadIcon { background: #0B3224; }
+[data-theme="dark"] .downloadContent h3 { color: #F0F5F2; }
+[data-theme="dark"] .downloadContent p { color: #7E9A8C; }
+[data-theme="dark"] .comingSoon { background: #1E6B50; color: #7E9A8C; }

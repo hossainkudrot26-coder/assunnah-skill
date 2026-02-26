@@ -16,6 +16,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/stories`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.7 },
     { url: `${BASE_URL}/blog`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.7 },
     { url: `${BASE_URL}/contact`, lastModified: new Date(), changeFrequency: "yearly" as const, priority: 0.6 },
+    { url: `${BASE_URL}/notices`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.7 },
+    { url: `${BASE_URL}/events`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.6 },
+    { url: `${BASE_URL}/downloads`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.5 },
+    { url: `${BASE_URL}/quiz`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.7 },
+    { url: `${BASE_URL}/compare`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.6 },
   ];
 
   const coursePages = courses.map((course) => ({

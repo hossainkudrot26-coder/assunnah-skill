@@ -26,6 +26,20 @@ export const mainNav: NavItem[] = [
         iconName: "book",
       },
       {
+        label: "কোর্স ফাইন্ডার",
+        labelEn: "Course Finder",
+        href: "/quiz",
+        description: "আপনার জন্য সেরা কোর্স খুঁজে নিন",
+        iconName: "target",
+      },
+      {
+        label: "কোর্স তুলনা",
+        labelEn: "Compare Courses",
+        href: "/compare",
+        description: "পাশাপাশি কোর্স তুলনা করুন",
+        iconName: "chart",
+      },
+      {
         label: "স্মল বিজনেস ম্যানেজমেন্ট",
         labelEn: "Small Business Management",
         href: "/courses/small-business-management",
@@ -115,6 +129,20 @@ export const mainNav: NavItem[] = [
         href: "/blog",
         description: "সাম্প্রতিক খবর ও আপডেট",
         iconName: "megaphone",
+      },
+      {
+        label: "ইভেন্ট",
+        labelEn: "Events",
+        href: "/events",
+        description: "সেমিনার, ওয়ার্কশপ ও কার্যক্রম",
+        iconName: "calendar",
+      },
+      {
+        label: "ডাউনলোড সেন্টার",
+        labelEn: "Downloads",
+        href: "/downloads",
+        description: "সিলেবাস, ব্রোশিউর ও ফরম",
+        iconName: "clipboard",
       },
       {
         label: "নোটিশ বোর্ড",

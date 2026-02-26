@@ -31,8 +31,11 @@ export default auth((req) => {
     }
   }
 
-  // Redirect logged-in users away from auth pages
+  // Redirect logged-in users away from auth pages — role-aware
   if (isAuthPage && isLoggedIn) {
+    if (role === "ADMIN" || role === "SUPER_ADMIN") {
+      return NextResponse.redirect(new URL("/admin", nextUrl));
+    }
     return NextResponse.redirect(new URL("/hub", nextUrl));
   }
 

@@ -4,9 +4,11 @@ import prisma from "@/lib/db";
 import { applicationSchema } from "@/lib/validations";
 import type { ApplicationInput } from "@/lib/validations";
 import { auth } from "@/lib/auth";
-import { sendApplicationNotification } from "@/lib/email";
+import { sendApplicationNotification, sendStudentCredentials } from "@/lib/email";
 import { requireAdmin, requireOwner } from "@/lib/auth-guard";
 import { checkRateLimit, APPLICATION_LIMIT } from "@/lib/rate-limit";
+import bcrypt from "bcryptjs";
+import crypto from "crypto";
 
 // ──────────── SUBMIT APPLICATION (PUBLIC — anyone can apply) ────────────
 
@@ -161,6 +163,8 @@ export async function enrollStudent(applicationId: string) {
 
   try {
     let userId = application.userId;
+    let generatedPassword: string | null = null;
+    let studentEmail: string | null = null;
 
     if (!userId) {
       // Only create user if they have an email — don't fabricate addresses
@@ -172,16 +176,23 @@ export async function enrollStudent(applicationId: string) {
         };
       }
 
+      studentEmail = email;
+
       // Check if user with this email already exists
       const existingUser = await prisma.user.findUnique({ where: { email } });
       if (existingUser) {
         userId = existingUser.id;
       } else {
+        // Generate a random password for the new student
+        generatedPassword = crypto.randomBytes(4).toString("hex"); // 8-char hex password
+        const hashedPassword = await bcrypt.hash(generatedPassword, 12);
+
         const newUser = await prisma.user.create({
           data: {
             name: application.applicantName,
             email,
             phone: application.applicantPhone,
+            password: hashedPassword,
             role: "STUDENT",
             gender: application.gender || undefined,
             dateOfBirth: application.dateOfBirth || undefined,
@@ -191,6 +202,20 @@ export async function enrollStudent(applicationId: string) {
           },
         });
         userId = newUser.id;
+
+        // Log credentials (always — for admin reference)
+        console.log(`[Enrollment] New student account created:`);
+        console.log(`  Name: ${application.applicantName}`);
+        console.log(`  Email: ${email}`);
+        console.log(`  Password: ${generatedPassword}`);
+
+        // Send credentials via email (non-blocking, fails silently if SMTP not configured)
+        sendStudentCredentials({
+          studentName: application.applicantName,
+          email,
+          password: generatedPassword,
+          courseTitle: application.course?.title || "কোর্স",
+        }).catch(() => {});
       }
 
       // Link application to user
@@ -228,7 +253,13 @@ export async function enrollStudent(applicationId: string) {
       },
     });
 
-    return { success: true, message: "শিক্ষার্থী সফলভাবে ভর্তি করা হয়েছে!" };
+    // Build success message — show credentials if new account was created
+    let message = "শিক্ষার্থী সফলভাবে ভর্তি করা হয়েছে!";
+    if (generatedPassword && studentEmail) {
+      message = `ভর্তি সম্পন্ন! নতুন অ্যাকাউন্ট তৈরি হয়েছে।\n\n📧 ইমেইল: ${studentEmail}\n🔑 পাসওয়ার্ড: ${generatedPassword}\n\n⚠️ এই তথ্য শিক্ষার্থীকে জানিয়ে দিন।`;
+    }
+
+    return { success: true, message };
   } catch (error: unknown) {
     if (error && typeof error === "object" && "code" in error && (error as { code: string }).code === "P2002") {
       return { success: false, error: "শিক্ষার্থী ইতিমধ্যে ভর্তি আছেন" };

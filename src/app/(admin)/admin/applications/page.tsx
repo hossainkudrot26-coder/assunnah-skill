@@ -77,7 +77,9 @@ export default function AdminApplications() {
       setMessage({ type: "error", text: result.error || "সমস্যা হয়েছে" });
     }
     setEnrolling(null);
-    setTimeout(() => setMessage(null), 4000);
+    // Keep credentials visible longer so admin can copy
+    const hasCredentials = result.success && result.message?.includes("পাসওয়ার্ড");
+    setTimeout(() => setMessage(null), hasCredentials ? 15000 : 4000);
   };
 
   // Format date
@@ -95,7 +97,10 @@ export default function AdminApplications() {
     <div className={styles.page}>
       {/* Toast */}
       {message && (
-        <div className={`${styles.toast} ${message.type === "error" ? styles.toastError : styles.toastSuccess}`}>
+        <div
+          className={`${styles.toast} ${message.type === "error" ? styles.toastError : styles.toastSuccess}`}
+          style={{ whiteSpace: "pre-line" }}
+        >
           {message.text}
         </div>
       )}

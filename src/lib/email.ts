@@ -112,6 +112,77 @@ export async function sendContactNotification(data: {
   }
 }
 
+// ──────────── SEND STUDENT CREDENTIALS ────────────
+
+export async function sendStudentCredentials(data: {
+  studentName: string;
+  email: string;
+  password: string;
+  courseTitle: string;
+}) {
+  if (!isEmailConfigured()) {
+    console.log("[Email] SMTP not configured — credentials not emailed (check server logs)");
+    return { sent: false, reason: "SMTP not configured" };
+  }
+
+  const studentName = esc(data.studentName);
+  const email = esc(data.email);
+  const password = esc(data.password);
+  const courseTitle = esc(data.courseTitle);
+  const loginUrl = `${process.env.NEXTAUTH_URL || "http://localhost:3000"}/login`;
+
+  try {
+    const transporter = getTransporter();
+
+    await transporter.sendMail({
+      from: `"আস-সুন্নাহ স্কিল" <${FROM_EMAIL}>`,
+      to: data.email,
+      subject: `🎓 ভর্তি সম্পন্ন — আপনার লগইন তথ্য | আস-সুন্নাহ স্কিল`,
+      html: `
+        <div style="font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;">
+          <div style="background: linear-gradient(135deg, #1B8A50, #0D5C35); padding: 24px 28px; color: white;">
+            <h2 style="margin: 0; font-size: 18px;">🎓 ভর্তি সম্পন্ন!</h2>
+            <p style="margin: 8px 0 0; opacity: 0.85; font-size: 13px;">আস-সুন্নাহ স্কিল ডেভেলপমেন্ট ইনস্টিটিউট</p>
+          </div>
+          <div style="padding: 24px 28px;">
+            <p style="font-size: 14px; color: #1f2937; margin-bottom: 16px;">
+              আসসালামু আলাইকুম <strong>${studentName}</strong>,
+            </p>
+            <p style="font-size: 14px; color: #1f2937; margin-bottom: 16px;">
+              আলহামদুলিল্লাহ! আপনি <strong>"${courseTitle}"</strong> কোর্সে সফলভাবে ভর্তি হয়েছেন।
+            </p>
+            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 16px; margin: 16px 0;">
+              <p style="margin: 0 0 8px; font-weight: 600; color: #166534; font-size: 14px;">আপনার লগইন তথ্য:</p>
+              <table style="border-collapse: collapse;">
+                <tr>
+                  <td style="padding: 4px 12px 4px 0; font-weight: 600; color: #6b7280; font-size: 13px;">ইমেইল:</td>
+                  <td style="padding: 4px 0; color: #1f2937; font-size: 14px;">${email}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 4px 12px 4px 0; font-weight: 600; color: #6b7280; font-size: 13px;">পাসওয়ার্ড:</td>
+                  <td style="padding: 4px 0; color: #1f2937; font-size: 14px; font-family: monospace; letter-spacing: 1px;">${password}</td>
+                </tr>
+              </table>
+            </div>
+            <p style="font-size: 13px; color: #dc2626; margin: 12px 0;">
+              ⚠️ লগইন করার পর অবশ্যই পাসওয়ার্ড পরিবর্তন করুন।
+            </p>
+            <a href="${loginUrl}" style="display: inline-block; margin-top: 12px; padding: 10px 24px; background: #1B8A50; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">লগইন করুন</a>
+          </div>
+          <div style="padding: 16px 28px; background: #f3f4f6; text-align: center; font-size: 12px; color: #9ca3af;">
+            আস-সুন্নাহ স্কিল ডেভেলপমেন্ট ইনস্টিটিউট
+          </div>
+        </div>
+      `,
+    });
+
+    return { sent: true };
+  } catch (error) {
+    console.error("[Email] Failed to send credentials:", error);
+    return { sent: false, reason: "Send failed" };
+  }
+}
+
 // ──────────── SEND APPLICATION NOTIFICATION ────────────
 
 export async function sendApplicationNotification(data: {

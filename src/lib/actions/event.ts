@@ -104,3 +104,20 @@ export async function deleteEvent(id: string) {
     return { success: false, error: "মুছতে সমস্যা হয়েছে" };
   }
 }
+
+export async function toggleEventPublish(id: string, isPublished: boolean) {
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { success: false, error: guard.error };
+
+  try {
+    await prisma.event.update({
+      where: { id },
+      data: { isPublished },
+    });
+    revalidatePath("/events");
+    revalidatePath("/admin/events");
+    return { success: true };
+  } catch {
+    return { success: false, error: "পরিবর্তন করতে সমস্যা হয়েছে" };
+  }
+}

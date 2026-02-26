@@ -1,11 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { siteConfig } from "@/config/site";
-import { courses } from "@/config/courses";
+import { getPublishedCoursesSummary } from "@/lib/actions/data";
 import { ShieldCheckIcon } from "@/shared/components/Icons";
 import styles from "./Footer.module.css";
 
-export function Footer() {
+export async function Footer() {
+  const courses = await getPublishedCoursesSummary();
   return (
     <footer className={styles.footer} role="contentinfo" aria-label="ফুটার">
       {/* Wave Separator */}

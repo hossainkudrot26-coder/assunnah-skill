@@ -24,7 +24,7 @@ export async function requireAdmin(): Promise<GuardResult> {
   if (!session?.user?.id) {
     return { authorized: false, error: "অননুমোদিত — লগইন করুন" };
   }
-  const role = (session.user as any).role;
+  const role = session.user?.role;
   if (role !== "ADMIN" && role !== "SUPER_ADMIN") {
     return { authorized: false, error: "অননুমোদিত — শুধুমাত্র অ্যাডমিন" };
   }

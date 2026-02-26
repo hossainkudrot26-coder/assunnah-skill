@@ -1,8 +1,10 @@
-"use client";
-
-import { useSession } from "next-auth/react";
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { getHubDashboardStats } from "@/lib/actions/data";
 import Link from "next/link";
 import styles from "./dashboard.module.css";
+
+export const dynamic = "force-dynamic";
 
 const quickActions = [
   {
@@ -52,9 +54,18 @@ const quickActions = [
   },
 ];
 
-export default function HubDashboard() {
-  const { data: session } = useSession();
-  const userName = session?.user?.name || "শিক্ষার্থী";
+// Bengali numeral converter
+function toBnNum(n: number): string {
+  const bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+  return String(n).replace(/\d/g, (d) => bnDigits[parseInt(d)]);
+}
+
+export default async function HubDashboard() {
+  const session = await auth();
+  if (!session?.user?.id) redirect("/login");
+
+  const stats = await getHubDashboardStats(session.user.id);
+  const userName = session.user.name || "শিক্ষার্থী";
 
   return (
     <div className={styles.dashboard}>
@@ -86,7 +97,7 @@ export default function HubDashboard() {
         ))}
       </div>
 
-      {/* Info Cards */}
+      {/* Info Cards — REAL DATA */}
       <h3 className={styles.sectionTitle}>আপনার অবস্থা</h3>
       <div className={styles.statsGrid}>
         <div className={styles.statCard}>
@@ -97,7 +108,7 @@ export default function HubDashboard() {
             </svg>
           </div>
           <div>
-            <span className={styles.statValue}>০</span>
+            <span className={styles.statValue}>{toBnNum(stats.enrolledCourses)}</span>
             <span className={styles.statLabel}>এনরোল করা কোর্স</span>
           </div>
         </div>
@@ -109,7 +120,7 @@ export default function HubDashboard() {
             </svg>
           </div>
           <div>
-            <span className={styles.statValue}>০</span>
+            <span className={styles.statValue}>{toBnNum(stats.totalApplications)}</span>
             <span className={styles.statLabel}>মোট আবেদন</span>
           </div>
         </div>
@@ -127,18 +138,37 @@ export default function HubDashboard() {
         </div>
       </div>
 
-      {/* Notice */}
-      <div className={styles.noticeCard}>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary-500)" strokeWidth="1.8">
-          <circle cx="12" cy="12" r="10" />
-          <line x1="12" y1="16" x2="12" y2="12" />
-          <line x1="12" y1="8" x2="12.01" y2="8" />
-        </svg>
-        <div>
-          <strong>নোটিশ</strong>
-          <p>ব্যাচ ১৬-তে ভর্তি চলছে! আগ্রহী হলে এখনই আবেদন করুন — আসন সীমিত।</p>
+      {/* Notice — FROM DB */}
+      {stats.latestNotice ? (
+        <div className={styles.noticeCard}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary-500)" strokeWidth="1.8">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="16" x2="12" y2="12" />
+            <line x1="12" y1="8" x2="12.01" y2="8" />
+          </svg>
+          <div>
+            <strong>{stats.latestNotice.title}</strong>
+            {stats.latestNotice.description && <p>{stats.latestNotice.description}</p>}
+            {stats.latestNotice.link && (
+              <Link href={stats.latestNotice.link} className={styles.noticeLink}>
+                বিস্তারিত দেখুন →
+              </Link>
+            )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className={styles.noticeCard}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary-500)" strokeWidth="1.8">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="16" x2="12" y2="12" />
+            <line x1="12" y1="8" x2="12.01" y2="8" />
+          </svg>
+          <div>
+            <strong>নোটিশ</strong>
+            <p>নতুন ব্যাচে ভর্তি চলছে! আগ্রহী হলে এখনই আবেদন করুন — আসন সীমিত।</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

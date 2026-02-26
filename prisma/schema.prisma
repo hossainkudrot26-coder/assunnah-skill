@@ -46,12 +46,13 @@ model User {
   updatedAt DateTime @updatedAt
 
   // Relations
-  accounts     Account[]
-  sessions     Session[]
-  applications Application[]
-  enrollments  Enrollment[]
-  blogPosts    BlogPost[]     @relation("author")
-  testimonials Testimonial[]
+  accounts      Account[]
+  sessions      Session[]
+  applications  Application[]
+  enrollments   Enrollment[]
+  blogPosts     BlogPost[]      @relation("author")
+  testimonials  Testimonial[]
+  notifications Notification[]
 
   @@map("users")
 }
@@ -105,22 +106,25 @@ enum CourseStatus {
 }
 
 model Course {
-  id          String       @id @default(cuid())
-  slug        String       @unique
-  title       String
-  titleEn     String?
-  shortDesc   String
-  fullDesc    String       @db.Text
-  iconName    String?
-  color       String       @default("#1B8A50")
-  image       String?
-  duration    String
-  type        String       // রেসিডেন্সিয়াল, ফ্রি, নারীদের জন্য
-  category    String?      // শুধুমাত্র পুরুষ, শুধুমাত্র নারী, সবার জন্য
-  batchInfo   String?
-  status      CourseStatus @default(PUBLISHED)
-  sortOrder   Int          @default(0)
-  isFeatured  Boolean      @default(false)
+  id              String       @id @default(cuid())
+  slug            String       @unique
+  title           String
+  titleEn         String?
+  shortDesc       String
+  fullDesc        String       @db.Text
+  iconName        String?
+  color           String       @default("#1B8A50")
+  image           String?
+  duration        String
+  type            String       // আবাসিক, ফ্রি, etc.
+  category        String?      // শুধুমাত্র পুরুষ, শুধুমাত্র নারী, সবার জন্য
+  batchInfo       String?
+  requirements    String[]     // ["ন্যূনতম SSC পাস", ...]
+  outcomes        String[]     // ["NSDA সার্টিফিকেট", ...]
+  videoPreviewUrl String?
+  status          CourseStatus @default(PUBLISHED)
+  sortOrder       Int          @default(0)
+  isFeatured      Boolean      @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -129,6 +133,8 @@ model Course {
   fee          CourseFee?
   syllabus     SyllabusModule[]
   highlights   CourseHighlight[]
+  instructors  CourseInstructor[]
+  faqs         CourseFAQ[]
   batches      Batch[]
   applications Application[]
   enrollments  Enrollment[]
@@ -171,6 +177,32 @@ model CourseHighlight {
   course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@map("course_highlights")
+}
+
+model CourseInstructor {
+  id        String @id @default(cuid())
+  courseId  String
+  name      String
+  role      String
+  bio       String
+  initials  String
+  sortOrder Int    @default(0)
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@map("course_instructors")
+}
+
+model CourseFAQ {
+  id        String @id @default(cuid())
+  courseId  String
+  question  String
+  answer    String @db.Text
+  sortOrder Int    @default(0)
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@map("course_faqs")
 }
 
 // ──────────── BATCHES & ENROLLMENT ────────────
@@ -222,6 +254,8 @@ model Enrollment {
   batch  Batch?  @relation(fields: [batchId], references: [id])
 
   @@unique([userId, courseId, batchId])
+  @@index([userId])
+  @@index([courseId])
   @@map("enrollments")
 }
 
@@ -270,6 +304,9 @@ model Application {
   user   User?  @relation(fields: [userId], references: [id])
   course Course @relation(fields: [courseId], references: [id])
 
+  @@index([userId, status])
+  @@index([courseId, status])
+  @@index([status, createdAt])
   @@map("applications")
 }
 
@@ -482,5 +519,9 @@ model Notification {
 
   createdAt DateTime @default(now())
 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@index([userId, createdAt])
   @@map("notifications")
 }

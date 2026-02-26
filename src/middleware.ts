@@ -6,7 +6,7 @@ export const runtime = "nodejs";
 export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
-  const role = (req.auth?.user as any)?.role;
+  const role = req.auth?.user?.role;
 
   const isHub = nextUrl.pathname.startsWith("/hub");
   const isAdmin = nextUrl.pathname.startsWith("/admin");
@@ -45,5 +45,7 @@ export const config = {
     "/admin/:path*",
     "/login",
     "/register",
+    "/forgot-password",
+    "/reset-password",
   ],
 };

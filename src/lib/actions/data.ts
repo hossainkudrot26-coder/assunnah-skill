@@ -11,6 +11,12 @@ export async function getPublishedCourses() {
     include: {
       fee: true,
       highlights: { orderBy: { sortOrder: "asc" } },
+      syllabus: { orderBy: { sortOrder: "asc" } },
+      instructors: { orderBy: { sortOrder: "asc" } },
+      faqs: { orderBy: { sortOrder: "asc" } },
+      batches: {
+        orderBy: { batchNumber: "desc" },
+      },
     },
     orderBy: { sortOrder: "asc" },
   });
@@ -23,13 +29,45 @@ export async function getCourseBySlug(slug: string) {
       fee: true,
       syllabus: { orderBy: { sortOrder: "asc" } },
       highlights: { orderBy: { sortOrder: "asc" } },
+      instructors: { orderBy: { sortOrder: "asc" } },
+      faqs: { orderBy: { sortOrder: "asc" } },
       batches: {
-        where: { status: { in: ["UPCOMING", "ONGOING"] } },
         orderBy: { batchNumber: "desc" },
-        take: 1,
       },
     },
   });
+}
+
+/** Lightweight — for sitemap only */
+export async function getAllPublishedCourseSlugs() {
+  return prisma.course.findMany({
+    where: { status: "PUBLISHED" },
+    select: { slug: true, updatedAt: true },
+  });
+}
+
+/** Lightweight — for footer links */
+export async function getPublishedCoursesSummary() {
+  return prisma.course.findMany({
+    where: { status: "PUBLISHED" },
+    select: { slug: true, title: true },
+    orderBy: { sortOrder: "asc" },
+  });
+}
+
+/** Hub dashboard stats for a specific user */
+export async function getHubDashboardStats(userId: string) {
+  const [enrolledCourses, totalApplications, latestNotice] = await Promise.all([
+    prisma.enrollment.count({ where: { userId } }),
+    prisma.application.count({ where: { userId } }),
+    prisma.notice.findFirst({
+      where: { isPublished: true },
+      orderBy: [{ isImportant: "desc" }, { publishedAt: "desc" }],
+      select: { title: true, description: true, link: true },
+    }),
+  ]);
+
+  return { enrolledCourses, totalApplications, latestNotice };
 }
 
 // ──────────── GALLERY (PUBLIC) ────────────

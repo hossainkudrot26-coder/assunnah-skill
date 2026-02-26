@@ -5,12 +5,22 @@ import { contactSchema } from "@/lib/validations";
 import type { ContactInput } from "@/lib/validations";
 import { sendContactNotification } from "@/lib/email";
 import { requireAdmin } from "@/lib/auth-guard";
+import { checkRateLimit, CONTACT_LIMIT } from "@/lib/rate-limit";
 
 // ──────────── SUBMIT CONTACT FORM (PUBLIC) ────────────
 
 export async function submitContactForm(data: ContactInput) {
   try {
     const validated = contactSchema.parse(data);
+
+    // Rate limit by phone number
+    const rl = checkRateLimit(`contact:${validated.phone}`, CONTACT_LIMIT);
+    if (!rl.allowed) {
+      return {
+        success: false,
+        error: `অনুগ্রহ করে ${rl.retryAfterSeconds} সেকেন্ড পরে আবার চেষ্টা করুন।`,
+      };
+    }
 
     await prisma.contactMessage.create({
       data: {
@@ -30,12 +40,12 @@ export async function submitContactForm(data: ContactInput) {
       email: validated.email || undefined,
       subject: validated.subject || undefined,
       message: validated.message,
-    }).catch(() => {});
+    }).catch(() => { });
 
     return { success: true, message: "আপনার বার্তা সফলভাবে পাঠানো হয়েছে!" };
-  } catch (error: any) {
-    if (error?.issues) {
-      return { success: false, error: error.issues[0].message };
+  } catch (error: unknown) {
+    if (error && typeof error === "object" && "issues" in error) {
+      return { success: false, error: (error as { issues: { message: string }[] }).issues[0].message };
     }
     return { success: false, error: "বার্তা পাঠাতে সমস্যা হয়েছে। পরে আবার চেষ্টা করুন।" };
   }

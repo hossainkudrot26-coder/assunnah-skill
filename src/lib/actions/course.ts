@@ -87,30 +87,30 @@ export async function createCourse(input: CreateCourseInput) {
         sortOrder: input.sortOrder,
         fee: input.fee
           ? {
-              create: {
-                admission: input.fee.admission,
-                total: input.fee.total || null,
-                scholarship: input.fee.scholarship || null,
-                includes: input.fee.includes || [],
-              },
-            }
+            create: {
+              admission: input.fee.admission,
+              total: input.fee.total || null,
+              scholarship: input.fee.scholarship || null,
+              includes: input.fee.includes || [],
+            },
+          }
           : undefined,
         highlights: input.highlights
           ? {
-              create: input.highlights.map((text, i) => ({
-                text,
-                sortOrder: i,
-              })),
-            }
+            create: input.highlights.map((text, i) => ({
+              text,
+              sortOrder: i,
+            })),
+          }
           : undefined,
         syllabus: input.syllabus
           ? {
-              create: input.syllabus.map((mod, i) => ({
-                title: mod.title,
-                topics: mod.topics,
-                sortOrder: i,
-              })),
-            }
+            create: input.syllabus.map((mod, i) => ({
+              title: mod.title,
+              topics: mod.topics,
+              sortOrder: i,
+            })),
+          }
           : undefined,
       },
     });
@@ -120,8 +120,8 @@ export async function createCourse(input: CreateCourseInput) {
     revalidatePath("/admin/courses");
 
     return { success: true, course };
-  } catch (error: any) {
-    if (error.code === "P2002") {
+  } catch (error: unknown) {
+    if (error && typeof error === "object" && "code" in error && (error as { code: string }).code === "P2002") {
       return { success: false, error: "এই slug ইতিমধ্যে ব্যবহৃত হয়েছে" };
     }
     return { success: false, error: "কোর্স তৈরি করতে সমস্যা হয়েছে" };
@@ -165,30 +165,30 @@ export async function updateCourse(input: UpdateCourseInput) {
         sortOrder: input.sortOrder,
         fee: input.fee
           ? {
-              create: {
-                admission: input.fee.admission,
-                total: input.fee.total || null,
-                scholarship: input.fee.scholarship || null,
-                includes: input.fee.includes || [],
-              },
-            }
+            create: {
+              admission: input.fee.admission,
+              total: input.fee.total || null,
+              scholarship: input.fee.scholarship || null,
+              includes: input.fee.includes || [],
+            },
+          }
           : undefined,
         highlights: input.highlights
           ? {
-              create: input.highlights.map((text, i) => ({
-                text,
-                sortOrder: i,
-              })),
-            }
+            create: input.highlights.map((text, i) => ({
+              text,
+              sortOrder: i,
+            })),
+          }
           : undefined,
         syllabus: input.syllabus
           ? {
-              create: input.syllabus.map((mod, i) => ({
-                title: mod.title,
-                topics: mod.topics,
-                sortOrder: i,
-              })),
-            }
+            create: input.syllabus.map((mod, i) => ({
+              title: mod.title,
+              topics: mod.topics,
+              sortOrder: i,
+            })),
+          }
           : undefined,
       },
     });
@@ -199,8 +199,8 @@ export async function updateCourse(input: UpdateCourseInput) {
     revalidatePath("/admin/courses");
 
     return { success: true, course };
-  } catch (error: any) {
-    if (error.code === "P2002") {
+  } catch (error: unknown) {
+    if (error && typeof error === "object" && "code" in error && (error as { code: string }).code === "P2002") {
       return { success: false, error: "এই slug ইতিমধ্যে ব্যবহৃত হয়েছে" };
     }
     return { success: false, error: "কোর্স আপডেট করতে সমস্যা হয়েছে" };

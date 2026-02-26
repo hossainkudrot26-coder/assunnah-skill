@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
   if (!session?.user) {
     return NextResponse.json({ error: "অননুমোদিত" }, { status: 401 });
   }
-  const role = (session.user as any).role;
+  const role = session.user?.role;
   if (role !== "ADMIN" && role !== "SUPER_ADMIN") {
     return NextResponse.json({ error: "অননুমোদিত — শুধুমাত্র অ্যাডমিন" }, { status: 403 });
   }

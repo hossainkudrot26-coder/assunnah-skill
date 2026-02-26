@@ -129,6 +129,10 @@ export default function LoginPage() {
             অ্যাকাউন্ট নেই?{" "}
             <Link href="/register">রেজিস্টার করুন</Link>
           </p>
+          <p className={styles.registerLink}>
+            পাসওয়ার্ড ভুলে গেছেন?{" "}
+            <Link href="/forgot-password">রিসেট করুন</Link>
+          </p>
         </div>
 
         <Link href="/" className={styles.backLink}>

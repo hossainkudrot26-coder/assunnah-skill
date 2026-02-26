@@ -6,7 +6,6 @@ import {
   BriefcaseIcon, ChefHatIcon, ScissorsIcon, ChartIcon,
   CarIcon, ShoeIcon, ClockIcon, ArrowRightIcon, UsersIcon,
 } from "@/shared/components/Icons";
-import type { Course } from "@/config/courses";
 import styles from "./CourseCard.module.css";
 
 const iconMap: Record<string, React.ComponentType<{ size?: number; color?: string }>> = {
@@ -17,8 +16,19 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; color?: strin
   VideoIcon: BriefcaseIcon,
 };
 
+interface CourseCardCourse {
+  slug: string;
+  title: string;
+  shortDesc: string;
+  duration: string;
+  type: string;
+  category?: string | null;
+  iconName: string | null;
+  color: string;
+}
+
 interface CourseCardProps {
-  course: Course;
+  course: CourseCardCourse;
   variant?: "grid" | "featured";
   index?: number;
 }
@@ -26,7 +36,7 @@ interface CourseCardProps {
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function CourseCard({ course, variant = "grid", index = 0 }: CourseCardProps) {
-  const Icon = iconMap[course.iconName];
+  const Icon = course.iconName ? iconMap[course.iconName] : undefined;
 
   return (
     <motion.div

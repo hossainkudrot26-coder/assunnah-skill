@@ -51,7 +51,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = (user as any).role;
+        token.role = user.role;
         token.id = user.id;
       }
       return token;
@@ -60,36 +60,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
-        (session.user as any).role = token.role;
+        session.user.role = token.role as "STUDENT" | "INSTRUCTOR" | "ADMIN" | "SUPER_ADMIN";
       }
       return session;
-    },
-
-    async authorized({ auth: session, request: { nextUrl } }) {
-      const isLoggedIn = !!session?.user;
-      const isHub = nextUrl.pathname.startsWith("/hub");
-      const isAdmin = nextUrl.pathname.startsWith("/admin");
-      const isAuth = nextUrl.pathname.startsWith("/login") || nextUrl.pathname.startsWith("/register");
-
-      // Hub pages require login
-      if (isHub && !isLoggedIn) {
-        return Response.redirect(new URL("/login", nextUrl));
-      }
-
-      // Admin pages require admin role
-      if (isAdmin) {
-        if (!isLoggedIn) return Response.redirect(new URL("/login", nextUrl));
-        if ((session?.user as any)?.role !== "ADMIN" && (session?.user as any)?.role !== "SUPER_ADMIN") {
-          return Response.redirect(new URL("/", nextUrl));
-        }
-      }
-
-      // Redirect logged-in users away from auth pages
-      if (isAuth && isLoggedIn) {
-        return Response.redirect(new URL("/hub", nextUrl));
-      }
-
-      return true;
     },
   },
 });

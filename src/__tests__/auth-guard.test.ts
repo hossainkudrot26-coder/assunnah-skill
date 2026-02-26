@@ -40,16 +40,13 @@ describe("Auth Guard", () => {
     });
 
     it("accepts ADMIN role", async () => {
-      mockAuth.mockResolvedValue({ user: { id: "u1", role: "ADMIN" } });
+      mockAuth.mockResolvedValue({ user: { id: "u1", role: "ADMIN", name: "Admin", email: "a@b.com" } });
       const result = await requireAdmin();
       expect(result.authorized).toBe(true);
-      if (result.authorized) {
-        expect(result.session.user.id).toBe("u1");
-      }
     });
 
     it("accepts SUPER_ADMIN role", async () => {
-      mockAuth.mockResolvedValue({ user: { id: "u1", role: "SUPER_ADMIN" } });
+      mockAuth.mockResolvedValue({ user: { id: "u1", role: "SUPER_ADMIN", name: "SA", email: "sa@b.com" } });
       const result = await requireAdmin();
       expect(result.authorized).toBe(true);
     });

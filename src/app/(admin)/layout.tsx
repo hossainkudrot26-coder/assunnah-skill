@@ -133,7 +133,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     );
   }
 
-  const role = (session?.user as any)?.role;
+  const role = session?.user?.role;
   if (!session || (role !== "ADMIN" && role !== "SUPER_ADMIN")) {
     router.push("/login");
     return null;

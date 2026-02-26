@@ -69,9 +69,11 @@ export async function createBlogPost(data: BlogPostInput) {
     revalidatePath("/admin/blog");
 
     return { success: true, message: "পোস্ট তৈরি হয়েছে!" };
-  } catch (error: any) {
-    if (error?.issues) return { success: false, error: error.issues[0].message };
-    return { success: false, error: "পোস্ট তৈরি করতে সমস্যা হয়েছে" };
+  } catch (error: unknown) {
+    if (error && typeof error === "object" && "code" in error && (error as { code: string }).code === "P2002") {
+      return { success: false, error: "এই slug ইতিমধ্যে ব্যবহৃত হয়েছে" };
+    }
+    return { success: false, error: "ব্লগ পোস্ট তৈরি করতে সমস্যা হয়েছে" };
   }
 }
 
@@ -80,11 +82,16 @@ export async function updateBlogPost(id: string, data: Partial<BlogPostInput>) {
   if (!guard.authorized) return { success: false, error: guard.error };
 
   try {
+    // Only set publishedAt on first publish — preserve existing date
+    const existing = await prisma.blogPost.findUnique({ where: { id }, select: { publishedAt: true } });
+    const shouldSetPublishedAt =
+      data.status === "PUBLISHED" && !existing?.publishedAt;
+
     await prisma.blogPost.update({
       where: { id },
       data: {
         ...data,
-        publishedAt: data.status === "PUBLISHED" ? new Date() : undefined,
+        publishedAt: shouldSetPublishedAt ? new Date() : undefined,
       },
     });
 

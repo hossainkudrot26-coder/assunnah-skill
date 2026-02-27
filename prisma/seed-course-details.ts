@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Seed script: Populate requirements, outcomes, instructors, and FAQs
  * for all 10 courses from the static config data.

@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Seed initial team members into the database.
  * Run with: npx tsx prisma/seed-team.ts

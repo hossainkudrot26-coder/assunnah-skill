@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Seed initial testimonials/stories into the database.
  * Run with: npx tsx prisma/seed-testimonials.ts

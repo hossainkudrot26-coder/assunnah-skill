@@ -391,3 +391,5 @@
 [data-theme="dark"] .successCard { background: #14493A; border-color: #1E6B50; }
 [data-theme="dark"] .successCard h2 { color: var(--color-secondary-400); }
 [data-theme="dark"] .successCard p { color: #A0B8AC; }
+
+[data-theme="dark"] .successBtnOutline { background: #14493A; border-color: #1E6B50; color: #F0F5F2; }

@@ -43,22 +43,22 @@ const filterCategories = ["সকল", "ক্লাসরুম", "ইভেন
 export default function GalleryPage() {
   const [activeFilter, setActiveFilter] = useState("সকল");
   const [lightbox, setLightbox] = useState<number | null>(null);
-  const [dbItems, setDbItems] = useState<any[]>([]);
+  const [dbItems, setDbItems] = useState<GalleryItem[]>([]);
 
   // Fetch from database
   useEffect(() => {
     getGalleryItems().then((data) => {
       if (data && data.length > 0) {
-        setDbItems(data.map((item: any, i: number) => ({
+        setDbItems(data.map((item, i: number) => ({
           id: i + 100,
           src: item.image,
           title: item.titleBn || item.title,
           desc: item.desc || "",
           category: item.category,
-          span: item.span as any,
+          span: (item.span as GalleryItem["span"]),
         })));
       }
-    }).catch(() => {});
+    }).catch(() => { });
   }, []);
 
   // Use DB data if available, fallback to static

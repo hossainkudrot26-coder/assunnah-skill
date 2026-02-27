@@ -53,6 +53,7 @@ model User {
   blogPosts     BlogPost[]      @relation("author")
   testimonials  Testimonial[]
   notifications Notification[]
+  auditLogs    AuditLog[]
 
   @@map("users")
 }
@@ -387,16 +388,21 @@ model GalleryItem {
 // ──────────── TESTIMONIALS ────────────
 
 model Testimonial {
-  id          String  @id @default(cuid())
-  userId      String?
-  name        String
-  initials    String?
-  batch       String
-  story       String  @db.Text
-  achievement String
-  color       String  @default("#1B8A50")
-  isVisible   Boolean @default(true)
-  sortOrder   Int     @default(0)
+  id            String  @id @default(cuid())
+  userId        String?
+  name          String
+  initials      String?
+  batch         String
+  story         String  @db.Text
+  achievement   String
+  color         String  @default("#1B8A50")
+  isVisible     Boolean @default(true)
+  sortOrder     Int     @default(0)
+  // Stories page fields (career outcome details)
+  course        String?          // কোর্সের নাম
+  currentRole   String?          // বর্তমান পদবী
+  monthlyIncome String?          // মাসিক আয় (display string)
+  rating        Int      @default(5)  // 1-5 star rating
 
   createdAt DateTime @default(now())
 
@@ -493,6 +499,27 @@ model Download {
   @@map("downloads")
 }
 
+// ──────────── TEAM MEMBERS ────────────
+
+model TeamMember {
+  id          String  @id @default(cuid())
+  name        String
+  nameBn      String?
+  role        String           // "প্রতিষ্ঠাতা", "লিড ডেভেলপার", etc.
+  bio         String?  @db.Text
+  image       String?
+  initials    String?
+  email       String?
+  phone       String?
+  sortOrder   Int     @default(0)
+  isVisible   Boolean @default(true)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("team_members")
+}
+
 // ──────────── SETTINGS ────────────
 
 model SiteSetting {
@@ -524,4 +551,25 @@ model Notification {
   @@index([userId, isRead])
   @@index([userId, createdAt])
   @@map("notifications")
+}
+
+// ──────────── AUDIT LOG ────────────
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  userName  String?
+  action    String   // CREATE, UPDATE, DELETE, STATUS_CHANGE
+  entity    String   // course, testimonial, team, batch, etc.
+  entityId  String?  // ID of the affected record
+  details   Json?    // Additional context (e.g., field changes)
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([entity, createdAt])
+  @@index([createdAt])
+  @@map("audit_logs")
 }

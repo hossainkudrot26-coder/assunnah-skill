@@ -3,8 +3,18 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import type { Application, Enrollment } from "@prisma/client";
 import { getUserApplications, getUserEnrollments } from "@/lib/actions/application";
 import styles from "./my-applications.module.css";
+
+interface AppWithCourse extends Application {
+  course?: { title: string; duration?: string | null; type?: string | null };
+}
+
+interface EnrWithDetails extends Enrollment {
+  course?: { title: string; duration?: string | null; type?: string | null };
+  batch?: { batchNumber: number } | null;
+}
 
 const statusLabels: Record<string, string> = {
   PENDING: "পেন্ডিং",
@@ -38,8 +48,8 @@ const enrollmentColors: Record<string, string> = {
 
 export default function MyApplicationsPage() {
   const { data: session } = useSession();
-  const [applications, setApplications] = useState<any[]>([]);
-  const [enrollments, setEnrollments] = useState<any[]>([]);
+  const [applications, setApplications] = useState<AppWithCourse[]>([]);
+  const [enrollments, setEnrollments] = useState<EnrWithDetails[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -55,7 +65,7 @@ export default function MyApplicationsPage() {
     });
   }, [session?.user?.id]);
 
-  const formatDate = (date: string) => {
+  const formatDate = (date: string | Date) => {
     return new Date(date).toLocaleDateString("bn-BD", {
       year: "numeric",
       month: "long",

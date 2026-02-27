@@ -10,6 +10,7 @@ import {
 } from "@/shared/components/Icons";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { AnimatedSection, AnimatedItem } from "@/shared/components/AnimatedSection";
+import { getPublicTeamMembers } from "@/lib/actions/team";
 import styles from "./about.module.css";
 
 export const metadata: Metadata = {
@@ -41,16 +42,12 @@ const facilities = [
     { number: "১০+", label: "চলমান কোর্স", icon: <BookIcon size={28} color="var(--color-accent-500)" /> },
 ];
 
-const teamMembers = [
-    { name: "শায়খ আহমাদুল্লাহ", role: "প্রতিষ্ঠাতা ও চেয়ারম্যান", initials: "শআ", color: "#1B8A50", desc: "আস-সুন্নাহ ফাউন্ডেশনের প্রতিষ্ঠাতা, দূরদর্শী নেতৃত্ব" },
-    { name: "মুহাম্মদ রাশেদুল ইসলাম", role: "পরিচালক — প্রশিক্ষণ বিভাগ", initials: "মরই", color: "#1565C0", desc: "১০+ বছরের শিক্ষা ও প্রশিক্ষণ অভিজ্ঞতা" },
-    { name: "শেফ আব্দুর রহমান", role: "প্রধান প্রশিক্ষক — রন্ধনশিল্প", initials: "আর", color: "#E65100", desc: "৫-তারকা হোটেলে ১৫+ বছরের অভিজ্ঞতা" },
-    { name: "তানভীর আহমেদ", role: "প্রধান প্রশিক্ষক — সেলস ও মার্কেটিং", initials: "তআ", color: "#7B1FA2", desc: "কর্পোরেট সেলস ম্যানেজার, ১২+ বছরের অভিজ্ঞতা" },
-    { name: "আহমদ ফয়সাল", role: "প্রশিক্ষক — অ্যাকাউন্টিং", initials: "আফ", color: "#2E7D32", desc: "চার্টার্ড অ্যাকাউন্ট্যান্ট, কর্পোরেট ট্রেইনার" },
-    { name: "নাদিম হাসান", role: "প্রশিক্ষক — ভিডিও ও AI", initials: "নহ", color: "#C62828", desc: "ইউটিউব কনটেন্ট ক্রিয়েটর, AI বিশেষজ্ঞ" },
-];
+// Color rotation for team member avatars
+const teamColors = ["#1B8A50", "#1565C0", "#E65100", "#7B1FA2", "#2E7D32", "#C62828", "#AD1457", "#00838F"];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+    // Fetch team members from database (dynamic)
+    const teamMembers = await getPublicTeamMembers();
     return (
         <>
             <PageHeader
@@ -96,7 +93,7 @@ export default function AboutPage() {
                         <div className={styles.founderVisual}>
                             <div className={styles.founderCard}>
                                 <div className={styles.founderAvatar}>
-                                    <span className={styles.founderAvatarInitials}>শআ</span>
+                                    <Image src="/images/shaikh-ahmadullah.png" alt="শায়খ আহমাদুল্লাহ" width={120} height={120} style={{ borderRadius: "50%", objectFit: "cover" }} />
                                 </div>
                                 <h3>শায়খ আহমাদুল্লাহ</h3>
                                 <p>প্রতিষ্ঠাতা, আস-সুন্নাহ ফাউন্ডেশন</p>
@@ -247,16 +244,21 @@ export default function AboutPage() {
                         </p>
                     </div>
                     <AnimatedSection className={styles.teamGrid}>
-                        {teamMembers.map((member, i) => (
-                            <AnimatedItem key={i} className={styles.teamCard}>
-                                <div className={styles.teamAvatar} style={{ borderColor: `${member.color}40` }}>
-                                    <span style={{ color: member.color, fontWeight: 800, fontSize: "1rem" }}>{member.initials}</span>
-                                </div>
-                                <h3 className={styles.teamName}>{member.name}</h3>
-                                <p className={styles.teamRole}>{member.role}</p>
-                                <p className={styles.teamDesc}>{member.desc}</p>
-                            </AnimatedItem>
-                        ))}
+                        {teamMembers.map((member, i) => {
+                            const color = teamColors[i % teamColors.length];
+                            return (
+                                <AnimatedItem key={member.id} className={styles.teamCard}>
+                                    <div className={styles.teamAvatar} style={{ borderColor: `${color}40` }}>
+                                        <span style={{ color, fontWeight: 800, fontSize: "1rem" }}>
+                                            {member.initials || member.name.slice(0, 2)}
+                                        </span>
+                                    </div>
+                                    <h3 className={styles.teamName}>{member.nameBn || member.name}</h3>
+                                    <p className={styles.teamRole}>{member.role}</p>
+                                    {member.bio && <p className={styles.teamDesc}>{member.bio}</p>}
+                                </AnimatedItem>
+                            );
+                        })}
                     </AnimatedSection>
                     <p className={styles.teamNote}>
                         <UserIcon size={14} color="var(--color-neutral-400)" />

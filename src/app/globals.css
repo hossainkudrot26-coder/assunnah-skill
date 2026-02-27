@@ -54,6 +54,15 @@
   --color-warning: #ff9800;
   --color-info: #42a5f5;
 
+  /* Semantic Backgrounds (Light mode defaults) */
+  --color-success-bg: #F0FDF4;
+  --color-success-border: #BBF7D0;
+  --color-success-text: #16A34A;
+
+  --color-error-bg: #FEF2F2;
+  --color-error-border: #FECACA;
+  --color-error-text: #DC2626;
+
   /* Typography */
   --font-display: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
   --font-body: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
@@ -179,12 +188,15 @@ button {
   font-size: inherit;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   font-family: inherit;
   font-size: inherit;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
@@ -210,12 +222,25 @@ ul, ol {
   color: #ffffff;
 }
 
-.text-primary { color: var(--color-primary-500); }
-.text-secondary { color: var(--color-secondary-500); }
-.text-accent { color: var(--color-accent-500); }
-.text-muted { color: var(--color-neutral-500); }
+.text-primary {
+  color: var(--color-primary-500);
+}
 
-.text-center { text-align: center; }
+.text-secondary {
+  color: var(--color-secondary-500);
+}
+
+.text-accent {
+  color: var(--color-accent-500);
+}
+
+.text-muted {
+  color: var(--color-neutral-500);
+}
+
+.text-center {
+  text-align: center;
+}
 
 .heading-xl {
   font-size: clamp(var(--text-4xl), 5vw, var(--text-7xl));
@@ -287,7 +312,7 @@ ul, ol {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
   opacity: 0;
   transition: opacity var(--transition-fast);
 }
@@ -408,6 +433,7 @@ ul, ol {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -419,6 +445,7 @@ ul, ol {
     opacity: 0;
     transform: translateX(-30px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -430,6 +457,7 @@ ul, ol {
     opacity: 0;
     transform: translateX(30px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -441,6 +469,7 @@ ul, ol {
     opacity: 0;
     transform: scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -448,29 +477,61 @@ ul, ol {
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 @keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @keyframes rotateGlow {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .animate-fade-up {
@@ -494,19 +555,36 @@ ul, ol {
 }
 
 /* Stagger delays */
-.delay-1 { animation-delay: 100ms; }
-.delay-2 { animation-delay: 200ms; }
-.delay-3 { animation-delay: 300ms; }
-.delay-4 { animation-delay: 400ms; }
-.delay-5 { animation-delay: 500ms; }
-.delay-6 { animation-delay: 600ms; }
+.delay-1 {
+  animation-delay: 100ms;
+}
+
+.delay-2 {
+  animation-delay: 200ms;
+}
+
+.delay-3 {
+  animation-delay: 300ms;
+}
+
+.delay-4 {
+  animation-delay: 400ms;
+}
+
+.delay-5 {
+  animation-delay: 500ms;
+}
+
+.delay-6 {
+  animation-delay: 600ms;
+}
 
 /* ——— RESPONSIVE ——— */
 @media (max-width: 768px) {
   .section {
     padding: var(--space-16) 0;
   }
-  
+
   .container {
     padding: 0 var(--space-4);
   }
@@ -545,6 +623,16 @@ ul, ol {
 [data-theme="dark"] .formWrapper {
   background: #14493A;
   border-color: #1E6B50;
+}
+
+[data-theme="dark"] {
+  --color-success-bg: rgba(22, 163, 74, 0.15);
+  --color-success-border: rgba(22, 163, 74, 0.3);
+  --color-success-text: #4ADE80;
+
+  --color-error-bg: rgba(220, 38, 38, 0.15);
+  --color-error-border: rgba(220, 38, 38, 0.3);
+  --color-error-text: #F87171;
 }
 
 /* Section backgrounds */
@@ -663,6 +751,7 @@ ul, ol {
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {

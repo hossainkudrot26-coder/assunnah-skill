@@ -1,19 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import type { ContactMessage } from "@prisma/client";
 import { getContactMessages, markMessageAsRead } from "@/lib/actions/contact";
+import { Pagination } from "@/shared/components/Pagination";
 import styles from "./messages.module.css";
 
+const ITEMS_PER_PAGE = 20;
+
 export default function AdminMessages() {
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<ContactMessage[]>([]);
+  const [total, setTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    getContactMessages(1, 50).then((data) => {
-      setMessages(data.messages);
-      setLoading(false);
-    });
-  }, []);
+  const loadMessages = useCallback(async (page = currentPage) => {
+    const data = await getContactMessages(page, ITEMS_PER_PAGE);
+    setMessages(data.messages);
+    setTotal(data.total);
+    setTotalPages(data.pages);
+    setLoading(false);
+  }, [currentPage]);
+
+  useEffect(() => { loadMessages(); }, [loadMessages]);
 
   async function handleMarkRead(id: string) {
     await markMessageAsRead(id);
@@ -28,7 +38,7 @@ export default function AdminMessages() {
     <div className={styles.messagesPage}>
       <div className={styles.header}>
         <h2>যোগাযোগ মেসেজ</h2>
-        <span className={styles.count}>{messages.length} টি মেসেজ</span>
+        <span className={styles.count}>মোট {total} টি মেসেজ</span>
       </div>
 
       {messages.length === 0 ? (
@@ -65,6 +75,18 @@ export default function AdminMessages() {
           ))}
         </div>
       )}
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalItems={total}
+        itemsPerPage={ITEMS_PER_PAGE}
+        onPageChange={(page) => {
+          setCurrentPage(page);
+          setLoading(true);
+          loadMessages(page);
+        }}
+      />
     </div>
   );
 }

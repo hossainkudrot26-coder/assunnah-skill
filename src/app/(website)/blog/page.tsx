@@ -11,11 +11,22 @@ import { images } from "@/config/images";
 import { getBlurPlaceholder } from "@/lib/image-utils";
 import styles from "./blog.module.css";
 
+interface BlogDisplayPost {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt?: string | null;
+  category?: string | null;
+  readTime?: string | null;
+  image?: string | null;
+  publishedAt?: string | Date | null;
+}
+
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function BlogPage() {
-  const [posts, setPosts] = useState<any[]>([]);
-  const [featured, setFeatured] = useState<any>(null);
+  const [posts, setPosts] = useState<BlogDisplayPost[]>([]);
+  const [featured, setFeatured] = useState<BlogDisplayPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("সব");
@@ -25,7 +36,7 @@ export default function BlogPage() {
       getPublishedPosts(1, 20),
       getFeaturedPost(),
     ]).then(([postsData, featuredPost]) => {
-      setPosts(postsData.posts.filter((p: any) => p.id !== featuredPost?.id));
+      setPosts(postsData.posts.filter((p: BlogDisplayPost) => p.id !== featuredPost?.id));
       setFeatured(featuredPost || postsData.posts[0] || null);
       setLoading(false);
     });
@@ -47,7 +58,7 @@ export default function BlogPage() {
   // Categories
   const allPosts = posts.length > 0 ? posts : staticPosts;
   const categories = useMemo(() => {
-    const cats = [...new Set(allPosts.map((p: any) => p.category || "সংবাদ"))];
+    const cats = [...new Set(allPosts.map((p: BlogDisplayPost) => p.category || "সংবাদ"))];
     return ["সব", ...cats];
   }, [allPosts]);
 
@@ -55,18 +66,19 @@ export default function BlogPage() {
   const filteredPosts = useMemo(() => {
     let result = displayPosts;
     if (activeCategory !== "সব") {
-      result = result.filter((p: any) => (p.category || "সংবাদ") === activeCategory);
+      result = result.filter((p: BlogDisplayPost) => (p.category || "সংবাদ") === activeCategory);
     }
     if (search.trim()) {
       const q = search.toLowerCase();
-      result = result.filter((p: any) =>
+      result = result.filter((p: BlogDisplayPost) =>
         p.title.toLowerCase().includes(q) || (p.excerpt || "").toLowerCase().includes(q)
       );
     }
     return result;
   }, [displayPosts, activeCategory, search]);
 
-  function formatDate(date: string | Date) {
+  function formatDate(date: string | Date | null | undefined) {
+    if (!date) return "—";
     try {
       return new Date(date).toLocaleDateString("bn-BD", { year: "numeric", month: "long", day: "numeric" });
     } catch { return "—"; }
@@ -153,37 +165,37 @@ export default function BlogPage() {
               {/* Grid */}
               <div className={styles.postsGrid}>
                 <AnimatePresence mode="popLayout">
-                {filteredPosts.map((post) => (
-                  <motion.div key={post.id} layout initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.3 }}>
-                  <Link href={`/blog/${post.slug}`} className={styles.postCard}>
-                    <div className={styles.postImageWrap}>
-                      <Image
-                        src={post.image || images.blog.admission}
-                        alt={post.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className={styles.postImg}
-                        placeholder="blur"
-                        blurDataURL={getBlurPlaceholder()}
-                      />
-                    </div>
-                    <div className={styles.postContent}>
-                      <span className={styles.postCategory}>{post.category || "সংবাদ"}</span>
-                      <h3>{post.title}</h3>
-                      <div className={styles.postMeta}>
-                        <span>
-                          <CalendarIcon size={13} color="var(--color-neutral-400)" />
-                          {formatDate(post.publishedAt)}
-                        </span>
-                        <span>
-                          <ClockIcon size={13} color="var(--color-neutral-400)" />
-                          {post.readTime || "৩ মিনিট"}
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
-                  </motion.div>
-                ))}
+                  {filteredPosts.map((post) => (
+                    <motion.div key={post.id} layout initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.3 }}>
+                      <Link href={`/blog/${post.slug}`} className={styles.postCard}>
+                        <div className={styles.postImageWrap}>
+                          <Image
+                            src={post.image || images.blog.admission}
+                            alt={post.title}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                            className={styles.postImg}
+                            placeholder="blur"
+                            blurDataURL={getBlurPlaceholder()}
+                          />
+                        </div>
+                        <div className={styles.postContent}>
+                          <span className={styles.postCategory}>{post.category || "সংবাদ"}</span>
+                          <h3>{post.title}</h3>
+                          <div className={styles.postMeta}>
+                            <span>
+                              <CalendarIcon size={13} color="var(--color-neutral-400)" />
+                              {formatDate(post.publishedAt)}
+                            </span>
+                            <span>
+                              <ClockIcon size={13} color="var(--color-neutral-400)" />
+                              {post.readTime || "৩ মিনিট"}
+                            </span>
+                          </div>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
                 </AnimatePresence>
                 {filteredPosts.length === 0 && (
                   <p style={{ gridColumn: "1/-1", textAlign: "center", color: "var(--color-neutral-400)", padding: "40px" }}>

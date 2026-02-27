@@ -3,8 +3,14 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import type { Enrollment } from "@prisma/client";
 import { getUserEnrollments } from "@/lib/actions/application";
 import styles from "./my-courses.module.css";
+
+interface EnrollmentWithDetails extends Enrollment {
+  course?: { slug: string; title: string; duration?: string | null; type?: string | null };
+  batch?: { batchNumber: number } | null;
+}
 
 const enrollmentLabels: Record<string, string> = {
   ENROLLED: "ভর্তি হয়েছে",
@@ -22,7 +28,7 @@ const enrollmentColors: Record<string, string> = {
 
 export default function MyCoursesPage() {
   const { data: session } = useSession();
-  const [enrollments, setEnrollments] = useState<any[]>([]);
+  const [enrollments, setEnrollments] = useState<EnrollmentWithDetails[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -33,7 +39,7 @@ export default function MyCoursesPage() {
     });
   }, [session?.user?.id]);
 
-  const formatDate = (date: string) =>
+  const formatDate = (date: string | Date) =>
     new Date(date).toLocaleDateString("bn-BD", { year: "numeric", month: "long", day: "numeric" });
 
   if (loading) return <p style={{ color: "var(--color-neutral-500)", padding: 20 }}>লোড হচ্ছে...</p>;
@@ -60,7 +66,7 @@ export default function MyCoursesPage() {
     <div className={styles.page}>
       <h2 className={styles.sectionTitle}>🎓 আমার কোর্সসমূহ ({enrollments.length})</h2>
       <div className={styles.list}>
-        {enrollments.map((enr: any) => (
+        {enrollments.map((enr) => (
           <div key={enr.id} className={styles.card}>
             <div className={styles.cardTop}>
               <div>

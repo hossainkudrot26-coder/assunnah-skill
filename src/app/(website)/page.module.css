@@ -4,6 +4,41 @@
    ════════════════════════════════════════════ */
 
 /* ——————————————————————————
+   SCROLL PROGRESS BAR
+   —————————————————————————— */
+.scrollProgress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary-500), var(--color-secondary-400), var(--color-accent-400));
+  transform-origin: 0%;
+  z-index: 9999;
+  will-change: transform;
+}
+
+/* ——————————————————————————
+   HERO WORD ROTATOR
+   —————————————————————————— */
+.heroWordRotator {
+  display: inline-block;
+  position: relative;
+  min-width: 3ch;
+  vertical-align: baseline;
+}
+
+.heroWordItem {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--color-secondary-300) 0%, var(--color-accent-400) 50%, var(--color-secondary-300) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 5s ease infinite;
+}
+
+/* ——————————————————————————
    SECTION BADGE (shared)
    —————————————————————————— */
 .sectionBadge {
@@ -55,12 +90,10 @@
 .heroVideoOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(11, 50, 36, 0.85) 0%,
-    rgba(11, 50, 36, 0.7) 50%,
-    rgba(11, 50, 36, 0.85) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(11, 50, 36, 0.85) 0%,
+      rgba(11, 50, 36, 0.7) 50%,
+      rgba(11, 50, 36, 0.85) 100%);
 }
 
 /* Aurora Background */
@@ -128,19 +161,43 @@
 }
 
 @keyframes auroraFloat1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -20px) scale(1.05); }
-  66% { transform: translate(-20px, 15px) scale(0.95); }
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -20px) scale(1.05);
+  }
+
+  66% {
+    transform: translate(-20px, 15px) scale(0.95);
+  }
 }
 
 @keyframes auroraFloat2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-40px, -30px) scale(1.08); }
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-40px, -30px) scale(1.08);
+  }
 }
 
 @keyframes auroraFloat3 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(25px, 20px); }
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(25px, 20px);
+  }
 }
 
 /* Grid Pattern */
@@ -309,8 +366,14 @@
 }
 
 @keyframes btnShine {
-  0% { left: -100%; }
-  40%, 100% { left: 100%; }
+  0% {
+    left: -100%;
+  }
+
+  40%,
+  100% {
+    left: 100%;
+  }
 }
 
 .heroBtnOutline {
@@ -402,8 +465,15 @@
 }
 
 @keyframes cardFloat {
-  0%, 100% { transform: rotate(0deg) translateY(0); }
-  50% { transform: rotate(-1deg) translateY(-12px); }
+
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(-1deg) translateY(-12px);
+  }
 }
 
 .heroCardInner {
@@ -507,8 +577,15 @@
 }
 
 @keyframes progressPulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
 }
 
 .heroCardProgress span {
@@ -543,7 +620,182 @@
   animation: float 4s ease-in-out infinite 1.5s;
 }
 
-/* Hero Wave */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Floating Particle Orbs */
+.heroParticles {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.heroParticle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.4;
+  animation: particleFloat 8s ease-in-out infinite;
+}
+
+.heroParticle1 {
+  width: 8px;
+  height: 8px;
+  top: 15%;
+  left: 10%;
+  background: var(--color-secondary-400);
+  animation-duration: 7s;
+  animation-delay: 0s;
+}
+
+.heroParticle2 {
+  width: 5px;
+  height: 5px;
+  top: 25%;
+  right: 12%;
+  background: var(--color-accent-400);
+  animation-duration: 9s;
+  animation-delay: 1s;
+}
+
+.heroParticle3 {
+  width: 6px;
+  height: 6px;
+  bottom: 30%;
+  left: 25%;
+  background: rgba(123, 199, 77, 0.8);
+  animation-duration: 6s;
+  animation-delay: 2s;
+}
+
+.heroParticle4 {
+  width: 4px;
+  height: 4px;
+  top: 60%;
+  right: 30%;
+  background: rgba(212, 168, 67, 0.7);
+  animation-duration: 10s;
+  animation-delay: 0.5s;
+}
+
+.heroParticle5 {
+  width: 7px;
+  height: 7px;
+  top: 40%;
+  left: 45%;
+  background: rgba(13, 146, 85, 0.6);
+  animation-duration: 8s;
+  animation-delay: 3s;
+}
+
+.heroParticle6 {
+  width: 3px;
+  height: 3px;
+  bottom: 20%;
+  right: 20%;
+  background: rgba(255, 255, 255, 0.4);
+  animation-duration: 11s;
+  animation-delay: 1.5s;
+}
+
+@keyframes particleFloat {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+
+  25% {
+    transform: translate(15px, -25px) scale(1.3);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translate(-10px, -40px) scale(1);
+    opacity: 0.4;
+  }
+
+  75% {
+    transform: translate(20px, -15px) scale(1.2);
+    opacity: 0.5;
+  }
+}
+
+/* Card Animated Glow Border */
+.heroCardGlow {
+  position: absolute;
+  inset: -2px;
+  border-radius: calc(var(--radius-2xl) + 2px);
+  background: conic-gradient(from var(--glow-angle, 0deg),
+      rgba(13, 146, 85, 0.5),
+      rgba(123, 199, 77, 0.3),
+      rgba(212, 168, 67, 0.4),
+      rgba(13, 146, 85, 0.2),
+      rgba(123, 199, 77, 0.5));
+  z-index: -1;
+  animation: glowSpin 4s linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes glowSpin {
+  0% {
+    --glow-angle: 0deg;
+  }
+
+  100% {
+    --glow-angle: 360deg;
+  }
+}
+
+@property --glow-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Card Dots Navigation */
+.heroCardDots {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 5;
+}
+
+.heroCardDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.heroCardDotActive {
+  background: var(--color-secondary-400);
+  box-shadow: 0 0 10px var(--color-secondary-400);
+  transform: scale(1.3);
+}
+
+.heroCardDot:hover:not(.heroCardDotActive) {
+  background: rgba(255, 255, 255, 0.4);
+}
+
 .heroWave {
   position: absolute;
   bottom: -2px;
@@ -587,8 +839,13 @@
 }
 
 @keyframes marqueeScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .marqueeItem {
@@ -624,7 +881,33 @@
    ══════════════════════════════════════════ */
 .whySection {
   padding: var(--space-20) 0;
-  background: white;
+  background: linear-gradient(180deg, #F0F7F2 0%, #E4F0E8 30%, #DBE9DF 50%, #E4F0E8 70%, #F0F7F2 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dot pattern for glass contrast */
+.whySection::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(27, 138, 80, 0.12) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+
+/* Decorative blurred blob for glassmorphism */
+.whySection::after {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  top: -100px;
+  right: -50px;
+  background: radial-gradient(circle, rgba(123, 199, 77, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(60px);
 }
 
 .whyGrid {
@@ -632,19 +915,26 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   margin-top: var(--space-10);
+  position: relative;
+  z-index: 1;
 }
 
 .whyCard {
   position: relative;
   padding: 28px 24px;
-  background: white;
-  border: 1px solid var(--color-neutral-100);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(27, 138, 80, 0.12);
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-  overflow: hidden;
+  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 4px 24px rgba(27, 138, 80, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .whyCard::before {
@@ -654,18 +944,40 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--color-primary-500), var(--color-secondary-500));
+  border-radius: 20px 20px 0 0;
+  background: linear-gradient(90deg, var(--color-primary-500), var(--color-secondary-500), var(--color-accent-400));
   opacity: 0;
   transition: opacity 0.3s;
 }
 
+/* Animated gradient border glow on hover */
+.whyCard::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(27, 138, 80, 0.35), rgba(123, 199, 77, 0.2), rgba(212, 168, 67, 0.25), rgba(27, 138, 80, 0.35));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  filter: blur(1px);
+}
+
 .whyCard:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 60px rgba(27, 138, 80, 0.1);
-  border-color: var(--color-primary-100);
+  transform: translateY(-10px) scale(1.02);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 25px 60px rgba(27, 138, 80, 0.15),
+    0 10px 30px rgba(27, 138, 80, 0.08);
+  border-color: transparent;
 }
 
 .whyCard:hover::before {
+  opacity: 1;
+}
+
+.whyCard:hover::after {
   opacity: 1;
 }
 
@@ -811,7 +1123,9 @@
   box-shadow: 0 8px 40px rgba(27, 138, 80, 0.08);
 }
 
-.batchLeft { flex: 1; }
+.batchLeft {
+  flex: 1;
+}
 
 .batchLive {
   display: inline-flex;
@@ -835,8 +1149,17 @@
 }
 
 @keyframes livePulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
-  50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+  }
+
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 0 6px rgba(245, 158, 11, 0);
+  }
 }
 
 .batchTitle {
@@ -1063,7 +1386,8 @@
   border-color: var(--color-primary-200);
 }
 
-.transformBefore, .transformAfter {
+.transformBefore,
+.transformAfter {
   padding: 14px;
   border-radius: 12px;
 }
@@ -1076,7 +1400,8 @@
   background: #F0FDF4;
 }
 
-.transformBefore span, .transformAfter span {
+.transformBefore span,
+.transformAfter span {
   display: block;
   font-size: 0.68rem;
   font-weight: 800;
@@ -1085,10 +1410,16 @@
   margin-bottom: 4px;
 }
 
-.transformBefore span { color: #DC2626; }
-.transformAfter span { color: #16A34A; }
+.transformBefore span {
+  color: #DC2626;
+}
 
-.transformBefore p, .transformAfter p {
+.transformAfter span {
+  color: #16A34A;
+}
+
+.transformBefore p,
+.transformAfter p {
   font-size: 0.88rem;
   font-weight: 600;
   color: var(--color-neutral-700);
@@ -1984,6 +2315,7 @@
    REDUCED MOTION
    ══════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
+
   .auroraBlob1,
   .auroraBlob2,
   .auroraBlob3,
@@ -2115,20 +2447,57 @@
   color: #A0B8AC;
 }
 
+/* ─── Light theme explicit glassmorphism (prevents theme toggle override) ─── */
+[data-theme="light"] .whySection {
+  background: linear-gradient(180deg, #F0F7F2 0%, #E4F0E8 30%, #DBE9DF 50%, #E4F0E8 70%, #F0F7F2 100%);
+}
+
+[data-theme="light"] .whySection::before {
+  background-image: radial-gradient(rgba(27, 138, 80, 0.12) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
+}
+
+[data-theme="light"] .whyCard {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-color: rgba(27, 138, 80, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 4px 24px rgba(27, 138, 80, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .whyCard:hover {
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 25px 60px rgba(27, 138, 80, 0.15),
+    0 10px 30px rgba(27, 138, 80, 0.08);
+  border-color: transparent;
+}
+
 /* ─── New sections dark mode ─── */
 [data-theme="dark"] .whySection {
-  background: #0B3224;
+  background: linear-gradient(180deg, #0B3224, #0F2A1F, #0B3224);
+}
+
+[data-theme="dark"] .whySection::before {
+  background-image: radial-gradient(rgba(123, 199, 77, 0.06) 1px, transparent 1px);
 }
 
 [data-theme="dark"] .whyCard {
-  background: #14493A;
-  border-color: #1E6B50;
+  background: rgba(20, 73, 58, 0.6);
+  backdrop-filter: blur(16px);
+  border-color: rgba(30, 107, 80, 0.4);
 }
 
 [data-theme="dark"] .whyCard:hover {
-  background: #1A5C47;
-  border-color: var(--color-primary-400);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  background: rgba(26, 92, 71, 0.8);
+  border-color: transparent;
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(13, 146, 85, 0.1);
 }
 
 [data-theme="dark"] .whyCardContent h3 {
@@ -2241,14 +2610,40 @@
 }
 
 /* Transform dark mode */
-[data-theme="dark"] .transformSection { background: #0B3224; }
-[data-theme="dark"] .transformCard { background: #14493A; border-color: #1E6B50; }
-[data-theme="dark"] .transformCard:hover { border-color: var(--color-primary-400); box-shadow: 0 16px 48px rgba(0,0,0,0.3); }
-[data-theme="dark"] .transformBefore { background: #3B1212; }
-[data-theme="dark"] .transformAfter { background: #052E16; }
-[data-theme="dark"] .transformBefore p, [data-theme="dark"] .transformAfter p { color: #C0D4C8; }
-[data-theme="dark"] .transformFooter { border-top-color: #1E6B50; }
-[data-theme="dark"] .transformFooter strong { color: #F0F5F2; }
+[data-theme="dark"] .transformSection {
+  background: #0B3224;
+}
+
+[data-theme="dark"] .transformCard {
+  background: #14493A;
+  border-color: #1E6B50;
+}
+
+[data-theme="dark"] .transformCard:hover {
+  border-color: var(--color-primary-400);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .transformBefore {
+  background: #3B1212;
+}
+
+[data-theme="dark"] .transformAfter {
+  background: #052E16;
+}
+
+[data-theme="dark"] .transformBefore p,
+[data-theme="dark"] .transformAfter p {
+  color: #C0D4C8;
+}
+
+[data-theme="dark"] .transformFooter {
+  border-top-color: #1E6B50;
+}
+
+[data-theme="dark"] .transformFooter strong {
+  color: #F0F5F2;
+}
 
 /* ─── New sections responsive ─── */
 @media (max-width: 768px) {
@@ -2424,4 +2819,234 @@
 
 [data-theme="dark"] .quizCtaDesc {
   color: #7E9A8C;
+}
+
+/* ══════════════════════════════════════════
+   FAQ SECTION
+   ══════════════════════════════════════════ */
+.faqSection {
+  padding: var(--space-20) 0;
+  background: linear-gradient(180deg, #F8FBF9, #F0F7F3);
+}
+
+.faqList {
+  max-width: 780px;
+  margin: var(--space-10) auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faqItem {
+  background: white;
+  border: 1px solid var(--color-neutral-100);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.faqItem:hover {
+  border-color: rgba(27, 138, 80, 0.2);
+  box-shadow: 0 4px 20px rgba(27, 138, 80, 0.06);
+}
+
+.faqItemOpen {
+  border-color: rgba(27, 138, 80, 0.3);
+  box-shadow: 0 8px 32px rgba(27, 138, 80, 0.08);
+}
+
+.faqQuestion {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-neutral-800);
+  text-align: left;
+  line-height: 1.5;
+  transition: color 0.2s;
+}
+
+.faqQuestion:hover {
+  color: var(--color-primary-600);
+}
+
+.faqChevron {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-primary-50);
+  color: var(--color-primary-600);
+  transition: all 0.3s ease;
+}
+
+.faqItemOpen .faqChevron {
+  transform: rotate(180deg);
+  background: var(--color-primary-500);
+  color: white;
+}
+
+.faqAnswer {
+  overflow: hidden;
+}
+
+.faqAnswer p {
+  padding: 0 24px 20px;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--color-neutral-600);
+}
+
+/* Dark mode FAQ */
+[data-theme="dark"] .faqSection {
+  background: linear-gradient(180deg, #0F2A1F, #0B3224);
+}
+
+[data-theme="dark"] .faqItem {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .faqItem:hover {
+  border-color: rgba(123, 199, 77, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .faqItemOpen {
+  border-color: rgba(123, 199, 77, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .faqQuestion {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="dark"] .faqQuestion:hover {
+  color: var(--color-secondary-400);
+}
+
+[data-theme="dark"] .faqChevron {
+  background: rgba(13, 146, 85, 0.15);
+  color: var(--color-secondary-400);
+}
+
+[data-theme="dark"] .faqItemOpen .faqChevron {
+  background: var(--color-primary-500);
+  color: white;
+}
+
+[data-theme="dark"] .faqAnswer p {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ══════════════════════════════════════════
+   SOCIAL PROOF TOAST
+   ══════════════════════════════════════════ */
+.proofToast {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: rgba(11, 50, 36, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(123, 199, 77, 0.2);
+  border-radius: 16px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(123, 199, 77, 0.1);
+  max-width: 360px;
+  color: white;
+}
+
+.proofToastIcon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(13, 146, 85, 0.2);
+  border-radius: 50%;
+}
+
+.proofToastContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.proofToastContent strong {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: white;
+}
+
+.proofToastContent span {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.65);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.proofToastContent small {
+  font-size: 0.7rem;
+  color: var(--color-secondary-400);
+  font-weight: 500;
+}
+
+.proofToastClose {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.proofToastClose:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+@media (max-width: 640px) {
+  .proofToast {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    max-width: none;
+  }
+
+  .faqQuestion {
+    padding: 16px 18px;
+    font-size: 0.92rem;
+  }
+
+  .faqAnswer p {
+    padding: 0 18px 16px;
+  }
 }

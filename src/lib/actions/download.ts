@@ -3,6 +3,8 @@
 import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth-guard";
+import { downloadSchema, formatZodError, type DownloadInput } from "@/lib/validations";
+import { ZodError } from "zod";
 
 // ──────────── PUBLIC ────────────
 
@@ -24,41 +26,33 @@ export async function getAdminDownloads() {
   });
 }
 
-interface DownloadInput {
-  title: string;
-  description: string;
-  fileUrl?: string;
-  fileType?: string;
-  fileSize?: string;
-  category: "GENERAL" | "ADMISSION" | "SYLLABUS";
-  iconColor?: string;
-  sortOrder?: number;
-  isPublished?: boolean;
-}
 
-export async function createDownload(data: DownloadInput) {
+
+export async function createDownload(data: unknown) {
   const guard = await requireAdmin();
   if (!guard.authorized) return { success: false, error: guard.error };
 
   try {
+    const validated = downloadSchema.parse(data);
     await prisma.download.create({
       data: {
-        title: data.title,
-        description: data.description,
-        fileUrl: data.fileUrl || null,
-        fileType: data.fileType || "PDF",
-        fileSize: data.fileSize || null,
-        category: data.category,
-        iconColor: data.iconColor || "#1B8A50",
-        sortOrder: data.sortOrder ?? 0,
-        isPublished: data.isPublished ?? true,
+        title: validated.title,
+        description: validated.description,
+        fileUrl: validated.fileUrl || null,
+        fileType: validated.fileType || "PDF",
+        fileSize: validated.fileSize || null,
+        category: validated.category,
+        iconColor: validated.iconColor || "#1B8A50",
+        sortOrder: validated.sortOrder ?? 0,
+        isPublished: validated.isPublished ?? true,
       },
     });
 
     revalidatePath("/downloads");
     revalidatePath("/admin/downloads");
     return { success: true };
-  } catch {
+  } catch (error) {
+    if (error instanceof ZodError) return { success: false, error: formatZodError(error) };
     return { success: false, error: "তৈরি করতে সমস্যা হয়েছে" };
   }
 }

@@ -1,18 +1,22 @@
-"use client";
+import type { Metadata } from "next";
+import { getSetting } from "@/lib/actions/data";
+import FaqClient from "./FaqClient";
 
-import { useState } from "react";
-import { PageHeader } from "@/shared/components/PageHeader";
-import { Accordion, AccordionItem } from "@/shared/components/Accordion";
-import {
-  ChatIcon, BookIcon, AwardIcon, ClipboardIcon, UsersIcon,
-} from "@/shared/components/Icons";
-import styles from "./faq.module.css";
+export const metadata: Metadata = {
+  title: "সাধারণ জিজ্ঞাসা",
+  description:
+    "আস-সুন্নাহ স্কিল ডেভেলপমেন্ট ইনস্টিটিউট সম্পর্কে প্রায়শই জিজ্ঞাসিত প্রশ্ন ও উত্তর",
+};
 
-const faqCategories = [
+/* ═══════════════════════════════════════════
+   DEFAULT FAQ DATA (fallback when DB is empty)
+   ═══════════════════════════════════════════ */
+
+const defaultFaqs = [
   {
     key: "admission",
     label: "ভর্তি সংক্রান্ত",
-    icon: <ClipboardIcon size={16} color="var(--color-primary-500)" />,
+    iconKey: "clipboard",
     questions: [
       {
         q: "ভর্তির জন্য কী কী যোগ্যতা লাগে?",
@@ -35,7 +39,7 @@ const faqCategories = [
   {
     key: "courses",
     label: "কোর্স সংক্রান্ত",
-    icon: <BookIcon size={16} color="var(--color-primary-500)" />,
+    iconKey: "book",
     questions: [
       {
         q: "কোর্সের সময়কাল কত?",
@@ -58,7 +62,7 @@ const faqCategories = [
   {
     key: "scholarship",
     label: "স্কলারশিপ",
-    icon: <AwardIcon size={16} color="var(--color-primary-500)" />,
+    iconKey: "award",
     questions: [
       {
         q: "স্কলারশিপ কিভাবে পাওয়া যায়?",
@@ -77,7 +81,7 @@ const faqCategories = [
   {
     key: "general",
     label: "সাধারণ",
-    icon: <UsersIcon size={16} color="var(--color-primary-500)" />,
+    iconKey: "users",
     questions: [
       {
         q: "প্রতিষ্ঠানটি কি সরকার স্বীকৃত?",
@@ -95,79 +99,37 @@ const faqCategories = [
   },
 ];
 
-export default function FaqPage() {
-  const [activeCategory, setActiveCategory] = useState("admission");
-  const [searchQuery, setSearchQuery] = useState("");
+/* ═══════════════════════════════════════════
+   FAQ CATEGORY TYPE (serializable)
+   ═══════════════════════════════════════════ */
 
-  const currentCategory = faqCategories.find((c) => c.key === activeCategory);
-  const filteredQuestions = searchQuery
-    ? faqCategories.flatMap((c) =>
-        c.questions.filter(
-          (q) =>
-            q.q.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            q.a.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      )
-    : currentCategory?.questions || [];
+export interface FaqCategory {
+  key: string;
+  label: string;
+  iconKey: string;
+  questions: { q: string; a: string }[];
+}
 
-  return (
-    <>
-      <PageHeader
-        badge="সাধারণ জিজ্ঞাসা"
-        badgeIcon={<ChatIcon size={14} color="var(--color-secondary-400)" />}
-        title="সাধারণ"
-        titleHighlight="জিজ্ঞাসা"
-        subtitle="আমাদের সম্পর্কে প্রায়শই জিজ্ঞাসিত প্রশ্ন ও উত্তর"
-        breadcrumbs={[{ label: "সাধারণ জিজ্ঞাসা" }]}
-      />
+/* ═══════════════════════════════════════════
+   SERVER COMPONENT
+   ═══════════════════════════════════════════ */
 
-      <section className={`section ${styles.faqSection}`}>
-        <div className="container">
-          {/* Search */}
-          <div className={styles.searchWrapper}>
-            <input
-              type="text"
-              placeholder="প্রশ্ন খুঁজুন..."
-              className={styles.searchInput}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
+export default async function FaqPage() {
+  // Try to load FAQ data from settings (admin-editable)
+  let faqCategories: FaqCategory[] = defaultFaqs;
 
-          {/* Category Tabs */}
-          {!searchQuery && (
-            <div className={styles.categoryTabs}>
-              {faqCategories.map((cat) => (
-                <button
-                  key={cat.key}
-                  className={`${styles.categoryTab} ${activeCategory === cat.key ? styles.categoryTabActive : ""}`}
-                  onClick={() => setActiveCategory(cat.key)}
-                >
-                  {cat.icon}
-                  {cat.label}
-                </button>
-              ))}
-            </div>
-          )}
+  try {
+    const settingValue = await getSetting("general_faqs");
+    if (settingValue) {
+      // getSetting auto-parses JSON type settings, so value may be object or string
+      const parsed = typeof settingValue === "string" ? JSON.parse(settingValue) : settingValue;
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        faqCategories = parsed;
+      }
+    }
+  } catch {
+    // Fallback to default — DB setting doesn't exist yet
+  }
 
-          {/* FAQ List */}
-          <div className={styles.faqList}>
-            <Accordion>
-              {filteredQuestions.map((q, i) => (
-                <AccordionItem key={i} title={q.q} defaultOpen={i === 0}>
-                  <p>{q.a}</p>
-                </AccordionItem>
-              ))}
-            </Accordion>
-
-            {filteredQuestions.length === 0 && (
-              <div className={styles.noResults}>
-                <p>কোনো ফলাফল পাওয়া যায়নি। অন্য কীওয়ার্ড দিয়ে চেষ্টা করুন।</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-    </>
-  );
+  return <FaqClient categories={faqCategories} />;
 }

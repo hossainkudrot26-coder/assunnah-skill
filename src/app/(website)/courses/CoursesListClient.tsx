@@ -7,6 +7,7 @@ import {
     BriefcaseIcon, ChartIcon, ScissorsIcon, ChefHatIcon, CarIcon,
     ShoeIcon, ClockIcon, BookIcon, ArrowRightIcon, AwardIcon,
     CheckCircleIcon, CodeIcon, WrenchIcon, LanguageIcon, VideoIcon,
+    SearchIcon,
 } from "@/shared/components/Icons";
 import styles from "./courses.module.css";
 
@@ -76,13 +77,38 @@ function matchesFilter(course: CourseListItem, filter: string): boolean {
 
 export default function CoursesListClient({ courses }: { courses: CourseListItem[] }) {
     const [filter, setFilter] = useState("সকল");
+    const [search, setSearch] = useState("");
     const [expandedId, setExpandedId] = useState<string | null>(null);
 
-    const filtered = courses.filter((c) => matchesFilter(c, filter));
+    const filtered = courses.filter((c) => {
+        if (!matchesFilter(c, filter)) return false;
+        if (!search.trim()) return true;
+        const q = search.toLowerCase();
+        return (
+            c.title.toLowerCase().includes(q) ||
+            (c.titleEn && c.titleEn.toLowerCase().includes(q)) ||
+            c.shortDesc.toLowerCase().includes(q)
+        );
+    });
 
     return (
         <section className={styles.coursesSection}>
             <div className="container">
+                {/* Search */}
+                <div className={styles.searchBar}>
+                    <SearchIcon size={18} color="var(--color-neutral-400)" />
+                    <input
+                        type="text"
+                        className={styles.searchInput}
+                        placeholder="কোর্স খুঁজুন..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                    {search && (
+                        <button className={styles.searchClear} onClick={() => setSearch("")}>✕</button>
+                    )}
+                </div>
+
                 {/* Filter */}
                 <motion.div
                     className={styles.filterBar}

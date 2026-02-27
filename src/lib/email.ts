@@ -50,7 +50,7 @@ export async function sendContactNotification(data: {
   message: string;
 }) {
   if (!isEmailConfigured()) {
-    console.log("[Email] SMTP not configured — skipping email notification");
+    // SMTP not configured — silently skip
     return { sent: false, reason: "SMTP not configured" };
   }
 
@@ -121,7 +121,7 @@ export async function sendStudentCredentials(data: {
   courseTitle: string;
 }) {
   if (!isEmailConfigured()) {
-    console.log("[Email] SMTP not configured — credentials not emailed (check server logs)");
+    // SMTP not configured — credentials will be shown in admin UI only
     return { sent: false, reason: "SMTP not configured" };
   }
 
@@ -221,5 +221,55 @@ export async function sendApplicationNotification(data: {
     return { sent: true };
   } catch {
     return { sent: false };
+  }
+}
+
+// ──────────── SEND PASSWORD RESET EMAIL ────────────
+
+export async function sendPasswordResetEmail(data: {
+  email: string;
+  resetUrl: string;
+  userName: string;
+}) {
+  if (!isEmailConfigured()) return { sent: false, reason: "SMTP not configured" };
+
+  const userName = esc(data.userName || data.email);
+
+  try {
+    const transporter = getTransporter();
+
+    await transporter.sendMail({
+      from: `"আস-সুন্নাহ স্কিল" <${FROM_EMAIL}>`,
+      to: data.email,
+      subject: `🔑 পাসওয়ার্ড রিসেট — আস-সুন্নাহ স্কিল`,
+      html: `
+        <div style="font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;">
+          <div style="background: linear-gradient(135deg, #1B8A50, #0D5C35); padding: 24px 28px; color: white;">
+            <h2 style="margin: 0; font-size: 18px;">🔑 পাসওয়ার্ড রিসেট</h2>
+            <p style="margin: 8px 0 0; opacity: 0.85; font-size: 13px;">আস-সুন্নাহ স্কিল ডেভেলপমেন্ট ইনস্টিটিউট</p>
+          </div>
+          <div style="padding: 24px 28px;">
+            <p style="font-size: 14px; color: #1f2937; margin-bottom: 16px;">
+              আসসালামু আলাইকুম <strong>${userName}</strong>,
+            </p>
+            <p style="font-size: 14px; color: #1f2937; margin-bottom: 16px;">
+              আপনার পাসওয়ার্ড রিসেটের অনুরোধ পেয়েছি। নিচের বাটনে ক্লিক করে নতুন পাসওয়ার্ড সেট করুন:
+            </p>
+            <a href="${data.resetUrl}" style="display: inline-block; margin: 12px 0; padding: 12px 28px; background: #1B8A50; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">পাসওয়ার্ড রিসেট করুন</a>
+            <p style="font-size: 13px; color: #6b7280; margin-top: 16px;">
+              এই লিংক ১ ঘণ্টা পর্যন্ত কার্যকর থাকবে। আপনি রিসেটের অনুরোধ না করলে এই ইমেইল উপেক্ষা করুন।
+            </p>
+          </div>
+          <div style="padding: 16px 28px; background: #f3f4f6; text-align: center; font-size: 12px; color: #9ca3af;">
+            আস-সুন্নাহ স্কিল ডেভেলপমেন্ট ইনস্টিটিউট
+          </div>
+        </div>
+      `,
+    });
+
+    return { sent: true };
+  } catch (error) {
+    console.error("[Email] Failed to send password reset:", error);
+    return { sent: false, reason: "Send failed" };
   }
 }

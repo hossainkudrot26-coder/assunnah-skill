@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { Event } from "@prisma/client";
 import {
   getAdminEvents, createEvent, updateEvent, deleteEvent,
 } from "@/lib/actions/event";
@@ -26,7 +27,7 @@ const emptyForm = {
 };
 
 export default function AdminEvents() {
-  const [events, setEvents] = useState<any[]>([]);
+  const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -51,7 +52,7 @@ export default function AdminEvents() {
     setError("");
   }
 
-  function startEdit(event: any) {
+  function startEdit(event: Event) {
     setForm({
       title: event.title,
       description: event.description,
@@ -138,14 +139,14 @@ export default function AdminEvents() {
       </div>
 
       {success && (
-        <div style={{ padding: "12px 16px", background: "#ECFDF5", borderRadius: 8, color: "#065F46", marginBottom: 16, fontSize: 14 }}>{success}</div>
+        <div style={{ padding: "12px 16px", background: "var(--color-success-bg, #ECFDF5)", borderRadius: 8, color: "var(--color-success-text, #065F46)", border: "1px solid var(--color-success-border, transparent)", marginBottom: 16, fontSize: 14 }}>{success}</div>
       )}
 
       {/* Form */}
       {showForm && (
         <div style={{ background: "var(--color-bg-card, white)", border: "1px solid var(--color-border, #e5e7eb)", borderRadius: 12, padding: 24, marginBottom: 24 }}>
           <h2 style={{ fontSize: 18, fontWeight: 700, marginBottom: 16 }}>{editingId ? "ইভেন্ট সম্পাদনা" : "নতুন ইভেন্ট"}</h2>
-          {error && <div style={{ padding: "10px 14px", background: "#FEF2F2", borderRadius: 8, color: "#991B1B", marginBottom: 12, fontSize: 13 }}>{error}</div>}
+          {error && <div style={{ padding: "10px 14px", background: "var(--color-error-bg, #FEF2F2)", borderRadius: 8, color: "var(--color-error-text, #991B1B)", border: "1px solid var(--color-error-border, transparent)", marginBottom: 12, fontSize: 13 }}>{error}</div>}
 
           <form onSubmit={handleSubmit}>
             <div style={{ display: "grid", gap: 16, marginBottom: 16 }}>
@@ -246,7 +247,7 @@ export default function AdminEvents() {
                   <button onClick={() => startEdit(event)} style={{ padding: "6px 12px", borderRadius: 6, fontSize: 13, border: "1px solid var(--color-border, #d1d5db)", background: "transparent", cursor: "pointer", marginRight: 8, color: "var(--color-neutral-700)" }}>
                     সম্পাদনা
                   </button>
-                  <button onClick={() => handleDelete(event.id)} style={{ padding: "6px 12px", borderRadius: 6, fontSize: 13, border: "1px solid #FCA5A5", background: "#FEF2F2", color: "#991B1B", cursor: "pointer" }}>
+                  <button onClick={() => handleDelete(event.id)} style={{ padding: "6px 12px", borderRadius: 6, fontSize: 13, border: "1px solid var(--color-error-border, #FCA5A5)", background: "var(--color-error-bg, #FEF2F2)", color: "var(--color-error-text, #991B1B)", cursor: "pointer" }}>
                     মুছুন
                   </button>
                 </td>

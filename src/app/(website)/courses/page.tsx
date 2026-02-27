@@ -1,5 +1,12 @@
 import { getPublishedCourses } from "@/lib/actions/data";
 import { BookIcon } from "@/shared/components/Icons";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "কোর্সসমূহ — আস-সুন্নাহ স্কিল",
+  description: "আস-সুন্নাহ স্কিল ডেভেলপমেন্ট ইনস্টিটিউটের সকল কম্পিউটার ও কারিগরি প্রশিক্ষণ কোর্সের তালিকা।",
+  openGraph: { title: "কোর্সসমূহ — আস-সুন্নাহ স্কিল", description: "NSDA স্বীকৃত কারিগরি প্রশিক্ষণ কোর্সসমূহ" },
+};
 import { PageHeader } from "@/shared/components/PageHeader";
 import CoursesListClient from "./CoursesListClient";
 

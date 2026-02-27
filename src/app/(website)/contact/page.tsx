@@ -112,10 +112,10 @@ export default function ContactPage() {
                   {error && (
                     <div style={{
                       padding: "12px 16px",
-                      background: "#FEF2F2",
-                      border: "1px solid #FECACA",
+                      background: "var(--color-error-bg, #FEF2F2)",
+                      border: "1px solid var(--color-error-border, #FECACA)",
                       borderRadius: "10px",
-                      color: "#DC2626",
+                      color: "var(--color-error-text, #DC2626)",
                       fontSize: "0.85rem",
                       marginBottom: "16px",
                     }}>

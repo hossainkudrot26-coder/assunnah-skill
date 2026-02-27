@@ -3,6 +3,8 @@
 import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth-guard";
+import { eventSchema, formatZodError, type EventInput } from "@/lib/validations";
+import { ZodError } from "zod";
 
 // ──────────── PUBLIC ────────────
 
@@ -24,41 +26,33 @@ export async function getAdminEvents() {
   });
 }
 
-interface EventInput {
-  title: string;
-  description: string;
-  date: string; // ISO string
-  time: string;
-  location: string;
-  status: "UPCOMING" | "ONGOING" | "COMPLETED" | "CANCELLED";
-  type: "ADMISSION" | "SEMINAR" | "WORKSHOP" | "CEREMONY" | "EXAM";
-  attendees?: number;
-  isPublished?: boolean;
-}
 
-export async function createEvent(data: EventInput) {
+
+export async function createEvent(data: unknown) {
   const guard = await requireAdmin();
   if (!guard.authorized) return { success: false, error: guard.error };
 
   try {
+    const validated = eventSchema.parse(data);
     await prisma.event.create({
       data: {
-        title: data.title,
-        description: data.description,
-        date: new Date(data.date),
-        time: data.time,
-        location: data.location,
-        status: data.status,
-        type: data.type,
-        attendees: data.attendees || null,
-        isPublished: data.isPublished ?? true,
+        title: validated.title,
+        description: validated.description,
+        date: new Date(validated.date),
+        time: validated.time,
+        location: validated.location,
+        status: validated.status,
+        type: validated.type,
+        attendees: validated.attendees || null,
+        isPublished: validated.isPublished ?? true,
       },
     });
 
     revalidatePath("/events");
     revalidatePath("/admin/events");
     return { success: true };
-  } catch {
+  } catch (error) {
+    if (error instanceof ZodError) return { success: false, error: formatZodError(error) };
     return { success: false, error: "ইভেন্ট তৈরি করতে সমস্যা হয়েছে" };
   }
 }

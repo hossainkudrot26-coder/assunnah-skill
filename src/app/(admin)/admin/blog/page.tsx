@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { BlogPost } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { getAllPosts, createBlogPost, updateBlogPost, deleteBlogPost } from "@/lib/actions/blog";
 import styles from "./blog-admin.module.css";
 
 export default function AdminBlog() {
   const router = useRouter();
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [editingPost, setEditingPost] = useState<any>(null);
+  const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -49,7 +50,7 @@ export default function AdminBlog() {
     setShowForm(true);
   }
 
-  function openEdit(post: any) {
+  function openEdit(post: BlogPost) {
     setForm({
       title: post.title,
       slug: post.slug,
@@ -58,7 +59,7 @@ export default function AdminBlog() {
       image: post.image || "",
       category: post.category || "",
       tags: (post.tags || []).join(", "),
-      status: post.status,
+      status: post.status as "DRAFT" | "PUBLISHED",
       isFeatured: post.isFeatured,
     });
     setEditingPost(post);
@@ -71,11 +72,11 @@ export default function AdminBlog() {
     return title.toLowerCase().replace(/\s+/g, "-").replace(/[^\w\u0980-\u09FF-]/g, "").slice(0, 60);
   }
 
-  function update(field: string, value: any) {
+  function update(field: keyof typeof form, value: string | boolean) {
     setForm((prev) => {
       const updated = { ...prev, [field]: value };
       if (field === "title" && !editingPost) {
-        updated.slug = generateSlug(value);
+        updated.slug = generateSlug(value as string);
       }
       return updated;
     });
@@ -95,7 +96,7 @@ export default function AdminBlog() {
       image: form.image || undefined,
       category: form.category || undefined,
       tags: form.tags ? form.tags.split(",").map((t) => t.trim()).filter(Boolean) : [],
-      status: form.status as any,
+      status: form.status as "DRAFT" | "PUBLISHED",
       isFeatured: form.isFeatured,
     };
 
@@ -153,7 +154,7 @@ export default function AdminBlog() {
             <div className={styles.empty}><p>কোনো পোস্ট নেই</p></div>
           ) : (
             <div className={styles.postsList}>
-              {posts.map((p: any) => (
+              {posts.map((p) => (
                 <div key={p.id} className={styles.postCard}>
                   <div className={styles.postTop}>
                     <div>

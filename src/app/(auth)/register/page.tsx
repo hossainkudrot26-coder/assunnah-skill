@@ -89,7 +89,7 @@ export default function RegisterPage() {
         )}
 
         {success && (
-          <div className={styles.errorMsg} style={{ background: "#F0FDF4", borderColor: "#BBF7D0", color: "#16A34A" }}>
+          <div className={styles.errorMsg} style={{ background: "var(--color-success-bg, #F0FDF4)", borderColor: "var(--color-success-border, #BBF7D0)", color: "var(--color-success-text, #16A34A)" }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
               <polyline points="22 4 12 14.01 9 11.01" />
@@ -152,7 +152,7 @@ export default function RegisterPage() {
                 borderRadius: "10px",
                 fontSize: "0.9rem",
                 fontFamily: "inherit",
-                background: "white",
+                background: "var(--color-card-bg, white)",
               }}
             >
               <option value="">নির্বাচন করুন</option>

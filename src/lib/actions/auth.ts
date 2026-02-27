@@ -6,6 +6,7 @@ import { signIn } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { loginSchema, registerSchema } from "@/lib/validations";
 import type { LoginInput, RegisterInput } from "@/lib/validations";
+import { sendPasswordResetEmail } from "@/lib/email";
 import { requireOwner } from "@/lib/auth-guard";
 import { checkRateLimit, LOGIN_LIMIT, REGISTER_LIMIT, RESET_LIMIT } from "@/lib/rate-limit";
 
@@ -137,10 +138,9 @@ export async function requestPasswordReset(email: string) {
     },
   });
 
-  // In production, send email with reset link containing the raw token.
-  // For now, log it. Replace with sendPasswordResetEmail() when SMTP is configured.
+  // Send reset email (non-blocking)
   const resetUrl = `${process.env.NEXTAUTH_URL || "http://localhost:3000"}/reset-password?token=${token}&email=${encodeURIComponent(email)}`;
-  console.log(`[Password Reset] URL: ${resetUrl}`);
+  sendPasswordResetEmail({ email, resetUrl, userName: user.name || "" }).catch(() => { });
 
   return { success: true, message: "পাসওয়ার্ড রিসেট লিংক আপনার ইমেইলে পাঠানো হয়েছে।" };
 }

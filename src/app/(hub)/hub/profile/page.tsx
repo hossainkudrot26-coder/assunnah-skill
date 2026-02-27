@@ -5,9 +5,18 @@ import { useEffect, useState } from "react";
 import { getProfileData, updateProfile, changePassword } from "@/lib/actions/auth";
 import styles from "./profile.module.css";
 
+interface UserProfile {
+  name: string | null;
+  email: string | null;
+  phone: string | null;
+  role: string;
+  gender?: string | null;
+  address?: string | null;
+}
+
 export default function ProfilePage() {
   const { data: session, update: updateSession } = useSession();
-  const [profile, setProfile] = useState<any>(null);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
   const [changingPw, setChangingPw] = useState(false);
@@ -42,7 +51,7 @@ export default function ProfilePage() {
     if (result.success) {
       showMsg("success", result.message!);
       setEditing(false);
-      setProfile((prev: any) => ({ ...prev, name: formName, phone: formPhone }));
+      setProfile((prev) => prev ? ({ ...prev, name: formName, phone: formPhone }) : prev);
       updateSession({ name: formName });
     } else {
       showMsg("error", result.error!);
@@ -89,7 +98,7 @@ export default function ProfilePage() {
         <div>
           <h2>{profile?.name}</h2>
           <p>{profile?.email}</p>
-          <span className={styles.roleBadge}>{roleLabel(profile?.role)}</span>
+          <span className={styles.roleBadge}>{roleLabel(profile?.role || "")}</span>
         </div>
       </div>
 
@@ -117,7 +126,7 @@ export default function ProfilePage() {
               <input value={profile?.email || ""} disabled style={{ opacity: 0.6 }} />
             </div>
             <div className={styles.formActions}>
-              <button className={styles.cancelBtn} onClick={() => { setEditing(false); setFormName(profile?.name); setFormPhone(profile?.phone || ""); }}>
+              <button className={styles.cancelBtn} onClick={() => { setEditing(false); setFormName(profile?.name || ""); setFormPhone(profile?.phone || ""); }}>
                 বাতিল
               </button>
               <button className={styles.saveBtn} onClick={handleSaveProfile} disabled={saving}>
@@ -141,7 +150,7 @@ export default function ProfilePage() {
             </div>
             <div className={styles.infoItem}>
               <label>ভূমিকা</label>
-              <span>{roleLabel(profile?.role)}</span>
+              <span>{roleLabel(profile?.role || "")}</span>
             </div>
             {profile?.gender && (
               <div className={styles.infoItem}>

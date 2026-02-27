@@ -1,8 +1,23 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import type { Enrollment, User, Course, Batch } from "@prisma/client";
 import { getEnrollments, updateEnrollmentStatus } from "@/lib/actions/application";
 import styles from "./students.module.css";
+
+interface EnrollmentWithRelations extends Enrollment {
+  user?: Pick<User, "name" | "email" | "phone">;
+  course?: Pick<Course, "title">;
+  batch?: { batchNumber: number } | null;
+}
+
+interface StudentRecord {
+  id: string;
+  name: string | null;
+  email: string | null;
+  phone: string | null;
+  createdAt: string;
+}
 
 const enrollmentLabels: Record<string, string> = {
   ENROLLED: "ভর্তি",
@@ -21,8 +36,8 @@ const enrollmentColors: Record<string, string> = {
 type ViewType = "students" | "enrollments";
 
 export default function AdminStudents() {
-  const [students, setStudents] = useState<any[]>([]);
-  const [enrollments, setEnrollments] = useState<any[]>([]);
+  const [students, setStudents] = useState<StudentRecord[]>([]);
+  const [enrollments, setEnrollments] = useState<EnrollmentWithRelations[]>([]);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState<ViewType>("enrollments");
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
@@ -54,7 +69,7 @@ export default function AdminStudents() {
     setTimeout(() => setMessage(null), 3000);
   };
 
-  const formatDate = (date: string) => {
+  const formatDate = (date: string | Date) => {
     return new Date(date).toLocaleDateString("bn-BD", {
       year: "numeric",
       month: "short",
@@ -106,7 +121,7 @@ export default function AdminStudents() {
             </div>
           ) : (
             <div className={styles.list}>
-              {enrollments.map((enr: any) => (
+              {enrollments.map((enr) => (
                 <div key={enr.id} className={styles.card}>
                   <div className={styles.cardTop}>
                     <div className={styles.cardInfo}>
@@ -186,7 +201,7 @@ export default function AdminStudents() {
             </div>
           ) : (
             <div className={styles.list}>
-              {students.map((s: any) => (
+              {students.map((s) => (
                 <div key={s.id} className={styles.card}>
                   <div className={styles.cardTop}>
                     <div className={styles.cardInfo}>

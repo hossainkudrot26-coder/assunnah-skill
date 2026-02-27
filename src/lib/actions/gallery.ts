@@ -3,6 +3,8 @@
 import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth-guard";
+import { gallerySchema, formatZodError, type GalleryInput } from "@/lib/validations";
+import { ZodError } from "zod";
 
 // ──────────── GET ALL GALLERY ITEMS (ADMIN) ────────────
 
@@ -17,32 +19,24 @@ export async function getAdminGalleryItems() {
 
 // ──────────── CREATE GALLERY ITEM ────────────
 
-interface GalleryInput {
-  title: string;
-  titleBn?: string;
-  desc?: string;
-  image: string;
-  category: string;
-  span?: string;
-  sortOrder?: number;
-  isVisible?: boolean;
-}
 
-export async function createGalleryItem(input: GalleryInput) {
+
+export async function createGalleryItem(input: unknown) {
   const guard = await requireAdmin();
   if (!guard.authorized) return { success: false, error: guard.error };
 
   try {
+    const validated = gallerySchema.parse(input);
     await prisma.galleryItem.create({
       data: {
-        title: input.title,
-        titleBn: input.titleBn || null,
-        desc: input.desc || null,
-        image: input.image,
-        category: input.category,
-        span: input.span || null,
-        sortOrder: input.sortOrder ?? 0,
-        isVisible: input.isVisible ?? true,
+        title: validated.title,
+        titleBn: validated.titleBn || null,
+        desc: validated.desc || null,
+        image: validated.image,
+        category: validated.category,
+        span: validated.span || null,
+        sortOrder: validated.sortOrder ?? 0,
+        isVisible: validated.isVisible ?? true,
       },
     });
 
@@ -50,7 +44,8 @@ export async function createGalleryItem(input: GalleryInput) {
     revalidatePath("/admin/gallery");
 
     return { success: true };
-  } catch {
+  } catch (error) {
+    if (error instanceof ZodError) return { success: false, error: formatZodError(error) };
     return { success: false, error: "গ্যালারি আইটেম তৈরি করতে সমস্যা হয়েছে" };
   }
 }

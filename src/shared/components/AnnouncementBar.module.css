@@ -144,3 +144,5 @@
   .dots { display: none; }
   .pulseIcon { display: none; }
 }
+
+[data-theme="dark"] .dotActive { background: #8DC63F; }

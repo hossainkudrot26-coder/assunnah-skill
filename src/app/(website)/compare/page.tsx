@@ -1,5 +1,12 @@
 import { getPublishedCourses } from "@/lib/actions/data";
 import { LayersIcon } from "@/shared/components/Icons";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "কোর্স তুলনা — আস-সুন্নাহ স্কিল",
+  description: "আস-সুন্নাহ স্কিলের কোর্সগুলো পাশাপাশি তুলনা করুন — ফি, সময়কাল, সিলেবাস ও সুবিধা।",
+  openGraph: { title: "কোর্স তুলনা", description: "কোর্সগুলো পাশাপাশি তুলনা করুন" },
+};
 import { PageHeader } from "@/shared/components/PageHeader";
 import CompareClient from "./CompareClient";
 

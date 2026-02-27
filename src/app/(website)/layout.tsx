@@ -1,7 +1,7 @@
-import { Header } from "@/modules/website/components/Header";
-import { Footer } from "@/modules/website/components/Footer";
-import { AnnouncementBar } from "@/modules/website/components/AnnouncementBar";
-import { FloatingWhatsApp } from "@/modules/website/components/FloatingWhatsApp";
+import { Header } from "@/shared/components/Header";
+import { Footer } from "@/shared/components/Footer";
+import { AnnouncementBar } from "@/shared/components/AnnouncementBar";
+import { FloatingWhatsApp } from "@/shared/components/FloatingWhatsApp";
 import { ScrollToTop } from "@/shared/components/ScrollToTop";
 
 export default function WebsiteLayout({

@@ -109,3 +109,6 @@ export const APPLICATION_LIMIT: RateLimitConfig = { maxAttempts: 2, windowSecond
 
 /** Password reset: 3 requests per 15 minutes per email */
 export const RESET_LIMIT: RateLimitConfig = { maxAttempts: 3, windowSeconds: 900 };
+
+/** Admin write operations: 15 per 1 minute per user */
+export const ADMIN_WRITE_LIMIT: RateLimitConfig = { maxAttempts: 15, windowSeconds: 60 };

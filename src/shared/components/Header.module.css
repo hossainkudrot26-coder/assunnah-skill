@@ -592,3 +592,8 @@
   color: #C0D4C8;
   border-bottom-color: #1E6B50;
 }
+
+[data-theme="dark"] .dropdown { background: #14493A; border-color: #1E6B50; box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+[data-theme="dark"] .dropdownItem:hover { background: rgba(30, 107, 80, 0.3); }
+[data-theme="dark"] .dropdownItemLabel { color: #F0F5F2; }
+[data-theme="dark"] .dropdownItemDesc { color: #7E9A8C; }

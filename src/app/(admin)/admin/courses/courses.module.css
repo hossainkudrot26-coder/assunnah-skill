@@ -550,10 +550,260 @@
 [data-theme="dark"] .badgeArchived { background: #1E3A34; color: #94A3B8; }
 [data-theme="dark"] .badgeFeatured { background: #3D2E00; color: #FBBF24; }
 
+/* ─── Instructor Badges (Course Card) ─── */
+.instructorBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.instructorBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: var(--color-primary-50);
+  color: var(--color-primary-700);
+  border: 1px solid var(--color-primary-200);
+}
+
+.instructorInitials {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border-radius: 50%;
+  background: var(--color-primary-600);
+  color: white;
+}
+
+/* ─── Instructor Form ─── */
+.instructorItem {
+  padding: 16px;
+  background: var(--color-neutral-50);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.instructorItemHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.instructorItemLabel {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-neutral-700);
+}
+
+.removeInstructorBtn {
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  font-family: inherit;
+  color: #DC2626;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.removeInstructorBtn:hover { background: #FEE2E2; }
+
+.instructorGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 80px;
+  gap: 12px;
+}
+
+.instructorGrid .formFull { grid-column: 1 / -1; }
+
+.addInstructorBtn {
+  padding: 8px 16px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--color-primary-600);
+  background: var(--color-primary-50);
+  border: 1px dashed var(--color-primary-300);
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.addInstructorBtn:hover { background: var(--color-primary-100); }
+
+/* ─── Batch Section (expandable inside course card) ─── */
+.batchSection {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-neutral-200);
+}
+
+.batchSectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.batchSectionHeader h4 {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-neutral-800);
+}
+
+.addBatchBtn {
+  padding: 6px 14px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--color-primary-600);
+  background: var(--color-primary-50);
+  border: 1px solid var(--color-primary-200);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.addBatchBtn:hover { background: var(--color-primary-100); }
+
+.batchEmpty {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.82rem;
+  color: var(--color-neutral-500);
+  background: var(--color-neutral-50);
+  border: 1px dashed var(--color-neutral-300);
+  border-radius: 10px;
+}
+
+.batchList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.batchItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--color-neutral-50);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 10px;
+  gap: 12px;
+}
+
+.batchItemTop {
+  flex: 1;
+}
+
+.batchInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.batchNumber {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-neutral-900);
+}
+
+.batchStatus {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.batchStatusUpcoming { background: #EEF2FF; color: #6366F1; }
+.batchStatusOngoing { background: #F0FDF4; color: #16A34A; }
+.batchStatusCompleted { background: #F1F5F9; color: #64748B; }
+
+.batchMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.75rem;
+  color: var(--color-neutral-500);
+}
+
+.batchActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.batchStatusSelect {
+  padding: 5px 8px;
+  font-size: 0.72rem;
+  font-family: inherit;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 6px;
+  background: white;
+  color: var(--color-neutral-700);
+  cursor: pointer;
+}
+
+.batchBtn {
+  color: #6366F1;
+  border-color: #C7D2FE;
+  background: #EEF2FF;
+}
+
+.batchBtn:hover { background: #E0E7FF; }
+
+.batchModal { max-width: 500px; }
+
+/* ─── Dark Mode: Instructor Badges ─── */
+[data-theme="dark"] .instructorBadge { background: #1E6B50; color: #A0F5C8; border-color: #2A8B6A; }
+[data-theme="dark"] .instructorInitials { background: #2A8B6A; color: white; }
+
+/* ─── Dark Mode: Instructor Form ─── */
+[data-theme="dark"] .instructorItem { background: #14493A; border-color: #1E6B50; }
+[data-theme="dark"] .instructorItemLabel { color: #F0F5F2; }
+[data-theme="dark"] .removeInstructorBtn { background: #3D1F1F; border-color: #6B2B2B; color: #F87171; }
+[data-theme="dark"] .addInstructorBtn { background: #14493A; border-color: #2A8B6A; color: #4ADE80; }
+[data-theme="dark"] .addInstructorBtn:hover { background: #1E6B50; }
+
+/* ─── Dark Mode: Batch Section ─── */
+[data-theme="dark"] .batchSection { border-color: #1E6B50; }
+[data-theme="dark"] .batchSectionHeader h4 { color: #F0F5F2; }
+[data-theme="dark"] .addBatchBtn { background: #14493A; border-color: #2A8B6A; color: #4ADE80; }
+[data-theme="dark"] .addBatchBtn:hover { background: #1E6B50; }
+[data-theme="dark"] .batchEmpty { background: #14493A; border-color: #1E6B50; color: #7A9E8C; }
+[data-theme="dark"] .batchItem { background: #14493A; border-color: #1E6B50; }
+[data-theme="dark"] .batchNumber { color: #F0F5F2; }
+[data-theme="dark"] .batchMeta { color: #7A9E8C; }
+[data-theme="dark"] .batchStatusUpcoming { background: #1E2A4A; color: #A5B4FC; }
+[data-theme="dark"] .batchStatusOngoing { background: #14493A; color: #4ADE80; }
+[data-theme="dark"] .batchStatusCompleted { background: #1E3A34; color: #94A3B8; }
+[data-theme="dark"] .batchStatusSelect { background: #0D3B2E; border-color: #1E6B50; color: #F0F5F2; }
+[data-theme="dark"] .batchBtn { background: #1E2A4A; border-color: #4A5697; color: #A5B4FC; }
+[data-theme="dark"] .batchBtn:hover { background: #2A3660; }
+
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
   .header { flex-direction: column; gap: 12px; align-items: stretch; }
   .coursesGrid { grid-template-columns: 1fr; }
   .modal { width: 95%; max-height: 90vh; padding: 20px; }
   .formRow { grid-template-columns: 1fr; }
+  .instructorGrid { grid-template-columns: 1fr; }
+  .batchItem { flex-direction: column; align-items: stretch; }
+  .batchActions { justify-content: flex-end; }
+  .courseActions { flex-wrap: wrap; }
 }

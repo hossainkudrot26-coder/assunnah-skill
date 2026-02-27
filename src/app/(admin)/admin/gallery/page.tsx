@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
+import type { GalleryItem } from "@prisma/client";
 import Image from "next/image";
 import {
   getAdminGalleryItems,
@@ -37,7 +38,7 @@ const emptyForm: GalleryForm = {
 };
 
 export default function AdminGallery() {
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState<GalleryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState<GalleryForm>(emptyForm);
@@ -91,7 +92,7 @@ export default function AdminGallery() {
     setShowModal(true);
   };
 
-  const openEdit = (item: any) => {
+  const openEdit = (item: GalleryItem) => {
     setForm({
       id: item.id,
       title: item.title,
@@ -204,7 +205,7 @@ export default function AdminGallery() {
         </div>
       ) : (
         <div className={styles.grid}>
-          {filtered.map((item: any) => (
+          {filtered.map((item) => (
             <div key={item.id} className={`${styles.gridCard} ${!item.isVisible ? styles.gridCardHidden : ""}`}>
               <div className={styles.imageWrap}>
                 <Image

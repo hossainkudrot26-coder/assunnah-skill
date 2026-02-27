@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/shared/components/Logo";
 import { signOut } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import styles from "../(hub)/hub-layout.module.css";
 
 const adminNavItems = [
@@ -41,6 +41,26 @@ const adminNavItems = [
         <circle cx="9" cy="7" r="4" />
         <path d="M23 21v-2a4 4 0 00-3-3.87" />
         <path d="M16 3.13a4 4 0 010 7.75" />
+      </svg>
+    ),
+  },
+  {
+    href: "/admin/enrollments",
+    label: "এনরোলমেন্ট",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+        <path d="M6 12v5c3 3 9 3 12 0v-5" />
+      </svg>
+    ),
+  },
+  {
+    href: "/admin/users",
+    label: "ব্যবহারকারী",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <circle cx="12" cy="7" r="4" />
+        <path d="M5.5 21a6.5 6.5 0 0113 0" />
       </svg>
     ),
   },
@@ -85,6 +105,27 @@ const adminNavItems = [
     ),
   },
   {
+    href: "/admin/team",
+    label: "টিম",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M23 21v-2a4 4 0 00-3-3.87" />
+        <path d="M16 3.13a4 4 0 010 7.75" />
+      </svg>
+    ),
+  },
+  {
+    href: "/admin/testimonials",
+    label: "প্রশংসাপত্র",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+      </svg>
+    ),
+  },
+  {
     href: "/admin/notices",
     label: "নোটিশ",
     icon: (
@@ -117,6 +158,16 @@ const adminNavItems = [
       </svg>
     ),
   },
+  {
+    href: "/admin/settings",
+    label: "সেটিংস",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <circle cx="12" cy="12" r="3" />
+        <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+      </svg>
+    ),
+  },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -140,20 +191,40 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return null;
   }
 
+  // Escape key closes sidebar
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape" && sidebarOpen) setSidebarOpen(false);
+  }, [sidebarOpen]);
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown]);
+
   return (
     <div className={styles.hubLayout}>
+      {/* Skip to content — WCAG 2.4.1 */}
+      <a href="#main-content" className="skip-to-content">মূল কন্টেন্টে যান</a>
+
       {sidebarOpen && (
-        <div className={styles.overlay} onClick={() => setSidebarOpen(false)} />
+        <div
+          className={styles.overlay}
+          onClick={() => setSidebarOpen(false)}
+          aria-hidden="true"
+        />
       )}
 
-      <aside className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ""}`}>
+      <aside
+        className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ""}`}
+        aria-label="অ্যাডমিন সাইডবার"
+      >
         <div className={styles.sidebarHeader}>
           <span className={styles.sidebarLogo}>
             <Logo variant="compact" height={30} />
           </span>
         </div>
 
-        <nav className={styles.sidebarNav}>
+        <nav className={styles.sidebarNav} aria-label="অ্যাডমিন ন্যাভিগেশন">
           <span className={styles.navLabel}>অ্যাডমিন</span>
           {adminNavItems.map((item) => (
             <Link
@@ -205,8 +276,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
       </aside>
 
-      <main className={styles.mainContent}>
-        <header className={styles.topBar}>
+      <main className={styles.mainContent} id="main-content">
+        <header className={styles.topBar} role="banner">
           <button
             className={styles.menuToggle}
             onClick={() => setSidebarOpen(true)}
@@ -222,14 +293,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             {adminNavItems.find((n) => n.href === pathname)?.label || "অ্যাডমিন"}
           </h1>
           <Link href="/" className={styles.backToSite}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
               <polyline points="9,22 9,12 15,12 15,22" />
             </svg>
             ওয়েবসাইটে যান
           </Link>
         </header>
-        <div className={styles.contentArea}>
+        <div className={styles.contentArea} role="region" aria-label="পেজ কন্টেন্ট">
           {children}
         </div>
       </main>

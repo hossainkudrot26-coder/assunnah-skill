@@ -1,6 +1,19 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { getCourseBySlug, getPublishedCourses } from "@/lib/actions/data";
 import CourseDetailClient from "./CourseDetailClient";
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const course = await getCourseBySlug(slug);
+  if (!course) return { title: "কোর্স পাওয়া যায়নি" };
+  const desc = `${course.title} — আস-সুন্নাহ স্কিল ডেভেলপমেন্ট ইনস্টিটিউটের কোর্সের বিস্তারিত তথ্য, ফি, সিলেবাস ও ব্যাচ সময়সূচী।`;
+  return {
+    title: `${course.title} — আস-সুন্নাহ স্কিল`,
+    description: desc,
+    openGraph: { title: course.title, description: desc },
+  };
+}
 
 export const dynamic = "force-dynamic";
 

@@ -110,8 +110,54 @@ export async function getSetting(key: string) {
   }
 }
 
+/** Fetch multiple settings at once */
+export async function getSettings(keys: string[]) {
+  const settings = await prisma.siteSetting.findMany({
+    where: { key: { in: keys } },
+  });
+
+  const result: Record<string, any> = {};
+  for (const s of settings) {
+    switch (s.type) {
+      case "json":
+        try { result[s.key] = JSON.parse(s.value); } catch { result[s.key] = s.value; }
+        break;
+      case "boolean":
+        result[s.key] = s.value === "true";
+        break;
+      case "number":
+        result[s.key] = Number(s.value);
+        break;
+      default:
+        result[s.key] = s.value;
+    }
+  }
+  return result;
+}
+
+/** JSON-serializable setting value */
+type SettingValue = string | number | boolean | Record<string, unknown> | unknown[];
+
+/** Bulk save multiple settings — ADMIN ONLY */
+export async function setSettings(settings: { key: string; value: SettingValue; type: string }[]) {
+  const guard = await requireAdmin();
+  if (!guard.authorized) return { success: false, error: guard.error };
+
+  const ops = settings.map((s) => {
+    const stringValue = s.type === "json" ? JSON.stringify(s.value) : String(s.value);
+    return prisma.siteSetting.upsert({
+      where: { key: s.key },
+      update: { value: stringValue, type: s.type },
+      create: { key: s.key, value: stringValue, type: s.type },
+    });
+  });
+
+  await Promise.all(ops);
+  return { success: true };
+}
+
 // ADMIN ONLY — modifies site configuration
-export async function setSetting(key: string, value: any, type: string = "string") {
+export async function setSetting(key: string, value: SettingValue, type: string = "string") {
   const guard = await requireAdmin();
   if (!guard.authorized) return { success: false, error: guard.error };
 
@@ -132,22 +178,18 @@ export async function getDashboardStats() {
   const guard = await requireAdmin();
   if (!guard.authorized) {
     return {
-      totalStudents: 0,
-      totalApplications: 0,
-      pendingApplications: 0,
-      totalCourses: 0,
-      totalMessages: 0,
-      unreadMessages: 0,
+      totalStudents: 0, totalApplications: 0, pendingApplications: 0,
+      totalCourses: 0, totalMessages: 0, unreadMessages: 0,
+      totalEnrollments: 0, totalBlogPosts: 0,
+      recentApplications: [], recentMessages: [], activeBatches: [],
     };
   }
 
   const [
-    totalStudents,
-    totalApplications,
-    pendingApplications,
-    totalCourses,
-    totalMessages,
-    unreadMessages,
+    totalStudents, totalApplications, pendingApplications,
+    totalCourses, totalMessages, unreadMessages,
+    totalEnrollments, totalBlogPosts,
+    recentApplications, recentMessages, activeBatches,
   ] = await Promise.all([
     prisma.user.count({ where: { role: "STUDENT" } }),
     prisma.application.count(),
@@ -155,14 +197,42 @@ export async function getDashboardStats() {
     prisma.course.count({ where: { status: "PUBLISHED" } }),
     prisma.contactMessage.count(),
     prisma.contactMessage.count({ where: { status: "UNREAD" } }),
+    prisma.enrollment.count(),
+    prisma.blogPost.count({ where: { status: "PUBLISHED" } }),
+
+    // Recent 5 applications
+    prisma.application.findMany({
+      take: 5,
+      orderBy: { createdAt: "desc" },
+      select: {
+        id: true, applicantName: true, status: true, createdAt: true,
+        course: { select: { title: true } },
+      },
+    }),
+
+    // Recent 5 messages
+    prisma.contactMessage.findMany({
+      take: 5,
+      orderBy: { createdAt: "desc" },
+      select: { id: true, name: true, subject: true, status: true, createdAt: true },
+    }),
+
+    // Active batches with enrollment count
+    prisma.batch.findMany({
+      where: { status: { in: ["UPCOMING", "ONGOING"] } },
+      include: {
+        course: { select: { title: true } },
+        _count: { select: { enrollments: true } },
+      },
+      orderBy: { startDate: "asc" },
+      take: 8,
+    }),
   ]);
 
   return {
-    totalStudents,
-    totalApplications,
-    pendingApplications,
-    totalCourses,
-    totalMessages,
-    unreadMessages,
+    totalStudents, totalApplications, pendingApplications,
+    totalCourses, totalMessages, unreadMessages,
+    totalEnrollments, totalBlogPosts,
+    recentApplications, recentMessages, activeBatches,
   };
 }

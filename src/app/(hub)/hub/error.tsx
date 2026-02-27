@@ -14,16 +14,16 @@ export default function HubError({
       maxWidth: 500,
       margin: "40px auto",
       padding: 32,
-      background: "white",
+      background: "var(--color-card-bg, white)",
       borderRadius: 16,
-      border: "1px solid #e5e7eb",
+      border: "1px solid var(--color-border, #e5e7eb)",
       textAlign: "center",
     }}>
       <div style={{ fontSize: "2rem", marginBottom: 12 }}>⚠️</div>
-      <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: 8, color: "#1f2937" }}>
+      <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: 8, color: "var(--color-text-primary, #1f2937)" }}>
         সমস্যা হয়েছে
       </h2>
-      <p style={{ fontSize: "0.88rem", color: "#6b7280", marginBottom: 20 }}>
+      <p style={{ fontSize: "0.88rem", color: "var(--color-text-secondary, #6b7280)", marginBottom: 20 }}>
         এই পেজে একটি ত্রুটি ঘটেছে।
       </p>
       <div style={{ display: "flex", gap: 10, justifyContent: "center" }}>
@@ -34,7 +34,7 @@ export default function HubError({
             fontSize: "0.85rem",
             fontWeight: 600,
             color: "white",
-            background: "#1B8A50",
+            background: "var(--color-primary-500, #1B8A50)",
             border: "none",
             borderRadius: 10,
             cursor: "pointer",
@@ -48,9 +48,9 @@ export default function HubError({
             padding: "8px 20px",
             fontSize: "0.85rem",
             fontWeight: 600,
-            color: "#6b7280",
-            background: "white",
-            border: "1px solid #e5e7eb",
+            color: "var(--color-text-secondary, #6b7280)",
+            background: "var(--color-card-bg, white)",
+            border: "1px solid var(--color-border, #e5e7eb)",
             borderRadius: 10,
             textDecoration: "none",
           }}
@@ -61,3 +61,4 @@ export default function HubError({
     </div>
   );
 }
+

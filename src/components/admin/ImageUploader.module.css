@@ -1,0 +1,149 @@
+.uploadArea {
+    margin-bottom: 16px;
+}
+
+.previewWrap {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--color-border, #e5e7eb);
+}
+
+.preview {
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+}
+
+.removeBtn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.removeBtn:hover {
+    background: rgba(220, 38, 38, 0.85);
+}
+
+.uploadBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 32px 16px;
+    border: 2px dashed var(--color-border, #d1d5db);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--color-surface, #f9fafb);
+}
+
+.uploadBox:hover {
+    border-color: var(--color-primary, #1B8A50);
+    background: rgba(27, 138, 80, 0.04);
+}
+
+.uploadIcon {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.uploadLabel {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-text-primary, #1f2937);
+}
+
+.uploadHint {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary, #9ca3af);
+}
+
+/* Uploading state */
+.uploadBoxUploading {
+    border-color: var(--color-primary, #1B8A50);
+    background: rgba(27, 138, 80, 0.06);
+    cursor: wait;
+}
+
+.progressBar {
+    width: 80%;
+    height: 4px;
+    background: var(--color-border, #e5e7eb);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.progressFill {
+    height: 100%;
+    background: var(--color-primary, #1B8A50);
+    border-radius: 2px;
+    animation: indeterminate 1.2s ease-in-out infinite;
+}
+
+@keyframes indeterminate {
+    0% {
+        width: 0;
+        margin-left: 0;
+    }
+
+    50% {
+        width: 60%;
+        margin-left: 20%;
+    }
+
+    100% {
+        width: 0;
+        margin-left: 100%;
+    }
+}
+
+.uploadError {
+    font-size: 0.78rem;
+    color: #dc2626;
+    margin-top: 6px;
+    text-align: center;
+}
+
+/* URL fallback */
+.urlFallback {
+    margin-top: 10px;
+}
+
+.urlLabel {
+    font-size: 0.78rem;
+    color: var(--color-text-secondary, #9ca3af);
+    margin-bottom: 4px;
+    display: block;
+}
+
+.urlInput {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    border: 1px solid var(--color-border, #e5e7eb);
+    border-radius: 8px;
+    background: var(--color-card-bg, white);
+    color: var(--color-text-primary, #1f2937);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.urlInput:focus {
+    border-color: var(--color-primary, #1B8A50);
+}

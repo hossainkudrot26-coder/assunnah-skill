@@ -1,8 +1,14 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import type { Application, Course } from "@prisma/client";
 import { getApplications, updateApplicationStatus, enrollStudent, getApplicationDetail } from "@/lib/actions/application";
+import { Pagination } from "@/shared/components/Pagination";
 import styles from "./applications.module.css";
+
+interface ApplicationWithCourse extends Application {
+  course?: Pick<Course, "title">;
+}
 
 /* ═══════════════════════════════════════════
    STATUS CONFIG
@@ -30,22 +36,27 @@ type FilterType = "ALL" | "PENDING" | "UNDER_REVIEW" | "INTERVIEW_SCHEDULED" | "
    ADMIN APPLICATIONS PAGE
    ═══════════════════════════════════════════ */
 
+const ITEMS_PER_PAGE = 20;
+
 export default function AdminApplications() {
-  const [applications, setApplications] = useState<any[]>([]);
+  const [applications, setApplications] = useState<ApplicationWithCourse[]>([]);
   const [total, setTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<FilterType>("ALL");
-  const [detail, setDetail] = useState<any>(null);
+  const [detail, setDetail] = useState<ApplicationWithCourse | null>(null);
   const [enrolling, setEnrolling] = useState<string | null>(null);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
-  const loadApplications = useCallback(async () => {
+  const loadApplications = useCallback(async (page = currentPage) => {
     const filterStatus = filter === "ALL" ? undefined : filter;
-    const data = await getApplications(filterStatus, 1, 100);
+    const data = await getApplications(filterStatus, page, ITEMS_PER_PAGE);
     setApplications(data.applications);
     setTotal(data.total);
+    setTotalPages(data.pages);
     setLoading(false);
-  }, [filter]);
+  }, [filter, currentPage]);
 
   useEffect(() => { loadApplications(); }, [loadApplications]);
 
@@ -83,7 +94,7 @@ export default function AdminApplications() {
   };
 
   // Format date
-  const formatDate = (date: string) => {
+  const formatDate = (date: string | Date) => {
     return new Date(date).toLocaleDateString("bn-BD", {
       year: "numeric",
       month: "long",
@@ -224,6 +235,19 @@ export default function AdminApplications() {
           ))}
         </div>
       )}
+
+      {/* Pagination */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalItems={total}
+        itemsPerPage={ITEMS_PER_PAGE}
+        onPageChange={(page) => {
+          setCurrentPage(page);
+          setLoading(true);
+          loadApplications(page);
+        }}
+      />
 
       {/* Detail Modal */}
       {detail && (

@@ -107,27 +107,44 @@
 }
 
 /* ——— DARK MODE ——— */
-[data-theme="dark"] .accordionItem {
+[data-theme="dark"] .item {
   background: #14493A;
   border-color: #1E6B50;
 }
 
-[data-theme="dark"] .accordionItem:hover {
+[data-theme="dark"] .item:hover {
   border-color: var(--color-primary-400);
 }
 
-[data-theme="dark"] .trigger {
-  color: #F0F5F2;
+[data-theme="dark"] .itemOpen {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 4px 24px rgba(27, 138, 80, 0.15);
 }
 
 [data-theme="dark"] .trigger:hover {
-  color: var(--color-secondary-400);
+  background: rgba(30, 107, 80, 0.3);
 }
 
-[data-theme="dark"] .content {
-  color: #A0B8AC;
+[data-theme="dark"] .triggerIcon {
+  background: rgba(27, 138, 80, 0.25);
+}
+
+[data-theme="dark"] .triggerTitle {
+  color: #F0F5F2;
+}
+
+[data-theme="dark"] .chevron {
+  color: #7E9A8C;
+}
+
+[data-theme="dark"] .itemOpen .chevron {
+  color: var(--color-primary-400);
 }
 
 [data-theme="dark"] .contentInner {
-  background: #0B3224;
+  color: #A0B8AC;
+}
+
+[data-theme="dark"] .topicList li {
+  color: #A0B8AC;
 }

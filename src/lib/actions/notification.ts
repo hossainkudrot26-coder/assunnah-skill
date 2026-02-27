@@ -3,6 +3,8 @@
 import prisma from "@/lib/db";
 import { requireAdmin, requireOwner } from "@/lib/auth-guard";
 import { revalidatePath } from "next/cache";
+import { notificationSchema, formatZodError } from "@/lib/validations";
+import { ZodError } from "zod";
 
 // ──────────── GET USER NOTIFICATIONS (OWNER ONLY) ────────────
 
@@ -109,16 +111,12 @@ export async function createNotification(data: {
 
 // ──────────── SEND NOTIFICATION TO ALL STUDENTS (ADMIN ONLY) ────────────
 
-export async function sendBulkNotification(data: {
-    title: string;
-    message: string;
-    type?: "info" | "success" | "warning" | "error";
-    link?: string;
-}) {
+export async function sendBulkNotification(data: unknown) {
     const guard = await requireAdmin();
     if (!guard.authorized) return { success: false, error: guard.error };
 
     try {
+        const validated = notificationSchema.parse(data);
         const students = await prisma.user.findMany({
             where: { role: "STUDENT", isActive: true },
             select: { id: true },
@@ -131,16 +129,17 @@ export async function sendBulkNotification(data: {
         await prisma.notification.createMany({
             data: students.map((s) => ({
                 userId: s.id,
-                title: data.title,
-                message: data.message,
-                type: data.type || "info",
-                link: data.link || null,
+                title: validated.title,
+                message: validated.message,
+                type: validated.type || "info",
+                link: validated.link || null,
             })),
         });
 
         revalidatePath("/hub");
         return { success: true, count: students.length };
-    } catch {
+    } catch (error) {
+        if (error instanceof ZodError) return { success: false, error: formatZodError(error) };
         return { success: false, error: "নোটিফিকেশন পাঠাতে সমস্যা হয়েছে" };
     }
 }

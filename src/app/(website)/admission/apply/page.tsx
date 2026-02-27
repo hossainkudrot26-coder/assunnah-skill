@@ -12,6 +12,14 @@ import {
 } from "@/shared/components/Icons";
 import styles from "./apply.module.css";
 
+interface CourseOption {
+  id: string;
+  title: string;
+  duration?: string | null;
+  type?: string | null;
+  color?: string | null;
+}
+
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const steps = [
@@ -24,7 +32,7 @@ const steps = [
 export default function ApplyPage() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
-  const [courses, setCourses] = useState<any[]>([]);
+  const [courses, setCourses] = useState<CourseOption[]>([]);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -77,7 +85,7 @@ export default function ApplyPage() {
         fatherName: form.fatherName || undefined,
         motherName: form.motherName || undefined,
         dateOfBirth: form.dateOfBirth || undefined,
-        gender: (form.gender || undefined) as any,
+        gender: (form.gender || undefined) as "MALE" | "FEMALE" | undefined,
         nidNumber: form.nidNumber || undefined,
         address: form.address || undefined,
         education: form.education || undefined,
@@ -185,7 +193,7 @@ export default function ApplyPage() {
                           onClick={() => update("courseId", course.id)}
                           type="button"
                         >
-                          <div className={styles.courseDot} style={{ background: course.color }} />
+                          <div className={styles.courseDot} style={{ background: course.color || "#1B8A50" }} />
                           <div>
                             <strong>{course.title}</strong>
                             <span>{course.duration} | {course.type}</span>

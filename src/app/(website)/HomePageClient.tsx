@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import { siteConfig } from "@/config/site";
 import {
   GraduationIcon, BookIcon,
@@ -14,121 +14,18 @@ import {
   HandshakeIcon, BuildingIcon, AwardIcon, StarIcon,
   CalendarIcon, ZapIcon,
 } from "@/shared/components/Icons";
+import {
+  type HomePageClientProps,
+  heroStagger, heroChild, sectionStagger,
+  fadeUp, fadeScale, slideInRight, ease,
+  marqueeStats as defaultMarqueeStats,
+  features, whyChooseUs,
+  impactCounters as defaultImpactCounters,
+  partnerLogos as defaultPartnerLogos,
+  faqItems, socialProofEntries, heroCards,
+} from "./homeData";
 import styles from "./page.module.css";
 
-/* ═══════════════════════════════════════════
-   TYPES
-   ═══════════════════════════════════════════ */
-
-interface DisplayCourse {
-  id: string;
-  slug: string;
-  title: string;
-  desc: string;
-  duration: string;
-  type: string;
-  icon: React.ReactNode;
-  color: string;
-  featured: boolean;
-}
-
-interface DisplayTestimonial {
-  name: string;
-  batch: string;
-  text: string;
-  initials: string;
-}
-
-interface HomePageClientProps {
-  courses: DisplayCourse[];
-  testimonials: DisplayTestimonial[];
-}
-
-/* ═══════════════════════════════════════════
-   ANIMATION VARIANTS
-   ═══════════════════════════════════════════ */
-
-const ease = [0.22, 1, 0.36, 1] as const;
-
-const heroStagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.3 } },
-};
-
-const heroChild = {
-  hidden: { opacity: 0, y: 40, filter: "blur(10px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.8, ease },
-  },
-};
-
-const sectionStagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
-};
-
-const fadeScale = {
-  hidden: { opacity: 0, scale: 0.92 },
-  visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease } },
-};
-
-const slideInRight = {
-  hidden: { opacity: 0, x: 60 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease } },
-};
-
-/* ═══════════════════════════════════════════
-   STATIC DATA
-   ═══════════════════════════════════════════ */
-
-const marqueeStats = [
-  { value: "২,৫০০+", label: "প্রশিক্ষিত শিক্ষার্থী" },
-  { value: "২০+", label: "চালু কোর্স" },
-  { value: "৭টি", label: "কম্পিউটার ল্যাব" },
-  { value: "১০,৯৬২+", label: "অনলাইন শিক্ষার্থী" },
-  { value: "২৪,০০০", label: "স্কয়ার ফিট ক্যাম্পাস" },
-  { value: "১০০%", label: "স্কলারশিপ সুবিধা" },
-];
-
-const features = [
-  { icon: <ShieldCheckIcon size={24} color="var(--color-primary-500)" />, title: "NSDA নিবন্ধিত", desc: "জাতীয় দক্ষতা উন্নয়ন কর্তৃপক্ষ কর্তৃক স্বীকৃত" },
-  { icon: <GraduationIcon size={24} color="var(--color-primary-500)" />, title: "স্কলারশিপ সুবিধা", desc: "মেধাবী ও সুবিধাবঞ্চিতদের জন্য ১০০% পর্যন্ত স্কলারশিপ" },
-  { icon: <MosqueIcon size={24} color="var(--color-primary-500)" />, title: "পৃথক পরিবেশ", desc: "নারী ও পুরুষের জন্য সম্পূর্ণ পৃথক প্রশিক্ষণ ব্যবস্থা" },
-  { icon: <TrophyIcon size={24} color="var(--color-accent-500)" />, title: "জব প্লেসমেন্ট", desc: "প্রশিক্ষণ শেষে কর্মসংস্থানের সুযোগ ও সহায়তা" },
-];
-
-const whyChooseUs = [
-  { icon: <ShieldCheckIcon size={28} color="var(--color-primary-500)" />, title: "সরকারি স্বীকৃতি", desc: "NSDA নিবন্ধিত — আপনার সার্টিফিকেট সরকারিভাবে গ্রহণযোগ্য", highlight: "NSDA" },
-  { icon: <HeartIcon size={28} color="#E65100" />, title: "সম্পূর্ণ বিনামূল্যে", desc: "অনেক কোর্সে ১০০% ফ্রি প্রশিক্ষণ — থাকা-খাওয়া সহ", highlight: "ফ্রি" },
-  { icon: <BuildingIcon size={28} color="#1565C0" />, title: "আবাসিক ক্যাম্পাস", desc: "২৪,০০০ স্কয়ার ফিটের আধুনিক ক্যাম্পাসে রেসিডেন্সিয়াল প্রশিক্ষণ", highlight: "২৪,০০০ sqft" },
-  { icon: <HandshakeIcon size={28} color="#7B1FA2" />, title: "চাকরি সহায়তা", desc: "প্রশিক্ষণ শেষে কর্মসংস্থান ও উদ্যোক্তাদের জন্য আর্থিক সহায়তা", highlight: "চাকরি" },
-  { icon: <MosqueIcon size={28} color="#2E7D32" />, title: "ইসলামি পরিবেশ", desc: "ইসলামি মূল্যবোধের আলোকে — নারী-পুরুষ সম্পূর্ণ পৃথক ব্যবস্থা", highlight: "পৃথক" },
-  { icon: <AwardIcon size={28} color="#D4A843" />, title: "অভিজ্ঞ প্রশিক্ষক", desc: "ইন্ডাস্ট্রি এক্সপার্টদের তত্ত্বাবধানে হাতে-কলমে শিক্ষা ও ২৪/৭ মেন্টর সাপোর্ট", highlight: "২৪/৭" },
-];
-
-const impactCounters = [
-  { end: 2500, suffix: "+", label: "প্রশিক্ষিত শিক্ষার্থী", icon: <GraduationIcon size={32} color="var(--color-secondary-400)" /> },
-  { end: 15, suffix: "টি", label: "সম্পন্ন ব্যাচ", icon: <AwardIcon size={32} color="var(--color-accent-400)" /> },
-  { end: 95, suffix: "%", label: "কর্মসংস্থান হার", icon: <TrophyIcon size={32} color="#E65100" /> },
-  { end: 24000, suffix: "", label: "স্কয়ার ফিট ক্যাম্পাস", icon: <BuildingIcon size={32} color="#1565C0" /> },
-];
-
-const partnerLogos = [
-  { name: "জাতীয় দক্ষতা উন্নয়ন কর্তৃপক্ষ", abbr: "NSDA", color: "#1B6B3A", desc: "সরকারি নিবন্ধন" },
-  { name: "আস-সুন্নাহ ফাউন্ডেশন", abbr: "ASF", color: "#1B8A50", desc: "প্রতিষ্ঠাতা সংস্থা" },
-  { name: "বাংলাদেশ কারিগরি শিক্ষা বোর্ড", abbr: "BTEB", color: "#1565C0", desc: "কারিগরি সনদ" },
-  { name: "তথ্য ও যোগাযোগ প্রযুক্তি বিভাগ", abbr: "ICT", color: "#7B1FA2", desc: "ডিজিটাল প্রশিক্ষণ" },
-  { name: "যুব ও ক্রীড়া মন্ত্রণালয়", abbr: "MoYS", color: "#E65100", desc: "যুব উন্নয়ন" },
-  { name: "সমাজসেবা অধিদপ্তর", abbr: "DSS", color: "#2E7D32", desc: "সামাজিক কল্যাণ" },
-];
 
 /* ═══════════════════════════════════════════
    ANIMATED COUNTER HOOK
@@ -203,7 +100,17 @@ function Marquee({ children, reverse = false }: { children: React.ReactNode; rev
    HOMEPAGE CLIENT COMPONENT
    ═══════════════════════════════════════════ */
 
-export default function HomePageClient({ courses, testimonials }: HomePageClientProps) {
+export default function HomePageClient({ courses, testimonials, stats, impactNumbers, partners }: HomePageClientProps) {
+  // Use dynamic data or fall back to hardcoded
+  const activeMarqueeStats = stats && stats.length > 0 ? stats : defaultMarqueeStats;
+  const activeImpactCounters = impactNumbers && impactNumbers.length > 0
+    ? impactNumbers.map((c, i) => ({ ...c, icon: defaultImpactCounters[i]?.icon || defaultImpactCounters[0].icon }))
+    : defaultImpactCounters;
+  const activePartnerLogos = partners && partners.length > 0 ? partners : defaultPartnerLogos;
+
+  // Page-level scroll progress (Stripe-style bar)
+  const { scrollYProgress } = useScroll();
+
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress: heroScroll } = useScroll({
     target: heroRef,
@@ -211,6 +118,38 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
   });
   const heroY = useTransform(heroScroll, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(heroScroll, [0, 0.8], [1, 0]);
+
+  // Mouse-tracking parallax for hero background
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 50, damping: 30 });
+  const springY = useSpring(mouseY, { stiffness: 50, damping: 30 });
+  const bgX = useTransform(springX, [-1, 1], [15, -15]);
+  const bgY = useTransform(springY, [-1, 1], [10, -10]);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = heroRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  // Hero card auto-rotation
+  const [heroCardIdx, setHeroCardIdx] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setHeroCardIdx((p) => (p + 1) % heroCards.length), 5000);
+    return () => clearInterval(t);
+  }, []);
+
+  // Hero text rotation
+  const heroWords = ["সততা", "দক্ষতা", "সমৃদ্ধি"];
+  const [heroWordIdx, setHeroWordIdx] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setHeroWordIdx((p) => (p + 1) % heroWords.length), 3000);
+    return () => clearInterval(t);
+  }, [heroWords.length]);
 
   // Testimonial carousel
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -221,6 +160,30 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
     }, 6000);
     return () => clearInterval(interval);
   }, [testimonials.length]);
+
+  // FAQ accordion
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const toggleFaq = (i: number) => setOpenFaq(openFaq === i ? null : i);
+
+  // Social proof toast
+  const [showProof, setShowProof] = useState(false);
+  const [proofIdx, setProofIdx] = useState(0);
+  useEffect(() => {
+    // Initial delay 8s, then cycle every 15s
+    const initialTimer = setTimeout(() => setShowProof(true), 8000);
+    const cycleTimer = setInterval(() => {
+      setShowProof(false);
+      setTimeout(() => {
+        setProofIdx((p) => (p + 1) % socialProofEntries.length);
+        setShowProof(true);
+      }, 500);
+    }, 15000);
+    // Auto-hide after 5s of showing
+    const hideTimer = setInterval(() => {
+      setTimeout(() => setShowProof(false), 5000);
+    }, 15000);
+    return () => { clearTimeout(initialTimer); clearInterval(cycleTimer); clearInterval(hideTimer); };
+  }, []);
 
   // GSAP scroll-triggered parallax for mission section
   const missionRef = useRef<HTMLElement>(null);
@@ -276,11 +239,19 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
   return (
     <>
       {/* ════════════════════════════════════
+          SCROLL PROGRESS BAR
+          ════════════════════════════════════ */}
+      <motion.div
+        className={styles.scrollProgress}
+        style={{ scaleX: scrollYProgress }}
+      />
+
+      {/* ════════════════════════════════════
           HERO — Aurora + Deep Forest Green
           ════════════════════════════════════ */}
-      <section className={styles.hero} ref={heroRef}>
-        {/* Video Background (when available) */}
-        <div className={styles.heroVideoWrap}>
+      <section className={styles.hero} ref={heroRef} onMouseMove={handleMouseMove}>
+        {/* Video Background with mouse-tracking parallax */}
+        <motion.div className={styles.heroVideoWrap} style={{ x: bgX, y: bgY, scale: 1.08 }}>
           <video
             className={styles.heroVideo}
             autoPlay
@@ -289,13 +260,12 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
             playsInline
             poster="/images/hero-banner.png"
           >
-            {/* Sir: ক্যাম্পাসের video এখানে যোগ করুন */}
             {/* <source src="/videos/campus-loop.mp4" type="video/mp4" /> */}
           </video>
           <div className={styles.heroVideoOverlay} />
-        </div>
+        </motion.div>
 
-        {/* Aurora Background (fallback when no video) */}
+        {/* Aurora Background with parallax */}
         <motion.div className={styles.heroAurora} style={{ y: heroY }}>
           <div className={styles.auroraBlob1} />
           <div className={styles.auroraBlob2} />
@@ -308,6 +278,16 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
 
         {/* Noise Texture */}
         <div className={styles.heroNoise} />
+
+        {/* Floating Particle Orbs */}
+        <div className={styles.heroParticles} aria-hidden>
+          {[...Array(6)].map((_, i) => (
+            <div
+              key={i}
+              className={`${styles.heroParticle} ${styles[`heroParticle${i + 1}`]}`}
+            />
+          ))}
+        </div>
 
         {/* Content */}
         <motion.div
@@ -327,7 +307,20 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
             <motion.h1 className={styles.heroTitle} variants={heroChild}>
               <span className={styles.heroTitleSm}>দক্ষতায়</span>
               <span className={styles.heroTitleLg}>
-                সমৃদ্ধি
+                <span className={styles.heroWordRotator}>
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={heroWords[heroWordIdx]}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.5, ease }}
+                      className={styles.heroWordItem}
+                    >
+                      {heroWords[heroWordIdx]}
+                    </motion.span>
+                  </AnimatePresence>
+                </span>
                 <svg className={styles.heroTitleUnderline} viewBox="0 0 280 12" preserveAspectRatio="none">
                   <path d="M2 8C50 2 100 2 140 6C180 10 230 10 278 4" stroke="url(#ugrd)" strokeWidth="3" fill="none" strokeLinecap="round">
                     <animate attributeName="d" dur="4s" repeatCount="indefinite"
@@ -378,32 +371,56 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
             </motion.div>
           </div>
 
-          {/* Floating Card Stack */}
+          {/* Auto-Rotating Card Stack */}
           <motion.div className={styles.heroVisual} variants={heroChild}>
             <div className={styles.heroCardStack}>
               {/* Background cards for depth */}
               <div className={`${styles.heroStackCard} ${styles.heroStackCard3}`} />
               <div className={`${styles.heroStackCard} ${styles.heroStackCard2}`} />
-              {/* Main card */}
+              {/* Main card — animated */}
               <div className={`${styles.heroStackCard} ${styles.heroStackCard1}`}>
-                <div className={styles.heroCardInner}>
-                  <div className={styles.heroCardHeader}>
-                    <div className={styles.heroCardIcon}>
-                      <BriefcaseIcon size={22} color="#1B8A50" />
+                <div className={styles.heroCardGlow} />
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={heroCardIdx}
+                    className={styles.heroCardInner}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5, ease }}
+                  >
+                    <div className={styles.heroCardHeader}>
+                      <div className={styles.heroCardIcon}>
+                        <BriefcaseIcon size={22} color="#1B8A50" />
+                      </div>
+                      <span className={styles.heroCardBadge} style={{ background: `${heroCards[heroCardIdx].badgeColor}22`, borderColor: `${heroCards[heroCardIdx].badgeColor}44`, color: heroCards[heroCardIdx].badgeColor }}>
+                        {heroCards[heroCardIdx].badge}
+                      </span>
                     </div>
-                    <span className={styles.heroCardBadge}>জনপ্রিয়</span>
-                  </div>
-                  <h3 className={styles.heroCardTitle}>স্মল বিজনেস ম্যানেজমেন্ট</h3>
-                  <p className={styles.heroCardDesc}>MS Office, গ্রাফিক ডিজাইন, ক্রিয়েটিভ মার্কেটিং, জেনারেটিভ AI</p>
-                  <div className={styles.heroCardMeta}>
-                    <span><ClockIcon size={13} color="var(--color-neutral-400)" /> ৩ মাস</span>
-                    <span className={styles.heroCardMetaFree}>রেসিডেন্সিয়াল</span>
-                  </div>
-                  <div className={styles.heroCardProgress}>
-                    <div className={styles.heroCardProgressBar} />
-                    <span>ভর্তি চলছে</span>
-                  </div>
-                </div>
+                    <h3 className={styles.heroCardTitle}>{heroCards[heroCardIdx].title}</h3>
+                    <p className={styles.heroCardDesc}>{heroCards[heroCardIdx].desc}</p>
+                    <div className={styles.heroCardMeta}>
+                      <span><ClockIcon size={13} color="var(--color-neutral-400)" /> {heroCards[heroCardIdx].duration}</span>
+                      <span className={styles.heroCardMetaFree}>{heroCards[heroCardIdx].type}</span>
+                    </div>
+                    <div className={styles.heroCardProgress}>
+                      <div className={styles.heroCardProgressBar} />
+                      <span>ভর্তি চলছে</span>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Card dots indicator */}
+              <div className={styles.heroCardDots}>
+                {heroCards.map((_, i) => (
+                  <button
+                    key={i}
+                    className={`${styles.heroCardDot} ${i === heroCardIdx ? styles.heroCardDotActive : ""}`}
+                    onClick={() => setHeroCardIdx(i)}
+                    aria-label={`কোর্স ${i + 1}`}
+                  />
+                ))}
               </div>
             </div>
 
@@ -430,12 +447,12 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
           ════════════════════════════════════ */}
       <section className={styles.marqueeSection}>
         <Marquee>
-          {marqueeStats.map((stat, i) => (
+          {activeMarqueeStats.map((stat, i) => (
             <div key={i} className={styles.marqueeItem}>
               <span className={styles.marqueeValue}>{stat.value}</span>
               <span className={styles.marqueeLabel}>{stat.label}</span>
               <span className={styles.marqueeDot}>
-                <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><path d="M4 0L5 3L8 4L5 5L4 8L3 5L0 4L3 3Z"/></svg>
+                <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><path d="M4 0L5 3L8 4L5 5L4 8L3 5L0 4L3 3Z" /></svg>
               </span>
             </div>
           ))}
@@ -510,7 +527,7 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
             </motion.h2>
           </motion.div>
           <div className={styles.counterGrid}>
-            {impactCounters.map((c, i) => (
+            {activeImpactCounters.map((c, i) => (
               <CounterCard key={i} {...c} />
             ))}
           </div>
@@ -540,7 +557,7 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
             viewport={{ once: true }}
             variants={sectionStagger}
           >
-            {partnerLogos.map((p, i) => (
+            {activePartnerLogos.map((p, i) => (
               <motion.div
                 key={i}
                 className={styles.partnerCard}
@@ -1012,6 +1029,75 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
       </section>
 
       {/* ════════════════════════════════════
+          FAQ ACCORDION
+          ════════════════════════════════════ */}
+      <section className={styles.faqSection}>
+        <div className="container">
+          <motion.div
+            className="section-header"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={sectionStagger}
+          >
+            <motion.div className={styles.sectionBadge} variants={fadeUp}>
+              <BookIcon size={15} color="var(--color-primary-600)" />
+              <span>সাধারণ জিজ্ঞাসা</span>
+            </motion.div>
+            <motion.h2 className="heading-md" variants={fadeUp}>
+              প্রায়শই জিজ্ঞেস করা{" "}
+              <span className="gradient-text">প্রশ্নসমূহ</span>
+            </motion.h2>
+            <motion.p className="section-subtitle" variants={fadeUp}>
+              আমাদের শিক্ষার্থীরা যে প্রশ্নগুলো সবচেয়ে বেশি করেন
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            className={styles.faqList}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={sectionStagger}
+          >
+            {faqItems.map((item, i) => (
+              <motion.div
+                key={i}
+                className={`${styles.faqItem} ${openFaq === i ? styles.faqItemOpen : ""}`}
+                variants={fadeUp}
+              >
+                <button
+                  className={styles.faqQuestion}
+                  onClick={() => toggleFaq(i)}
+                  aria-expanded={openFaq === i}
+                >
+                  <span>{item.q}</span>
+                  <span className={styles.faqChevron}>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                </button>
+                <AnimatePresence>
+                  {openFaq === i && (
+                    <motion.div
+                      className={styles.faqAnswer}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease }}
+                    >
+                      <p>{item.a}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════
           CTA — Deep Forest Green Gradient
           ════════════════════════════════════ */}
       <section className={styles.ctaSection}>
@@ -1083,6 +1169,39 @@ export default function HomePageClient({ courses, testimonials }: HomePageClient
           <SparkleIcon size={16} color="rgba(212, 168, 67, 0.2)" />
         </div>
       </section>
+
+      {/* ════════════════════════════════════
+          SOCIAL PROOF TOAST
+          ════════════════════════════════════ */}
+      <AnimatePresence>
+        {showProof && (
+          <motion.div
+            className={styles.proofToast}
+            initial={{ opacity: 0, y: 60, x: 0 }}
+            animate={{ opacity: 1, y: 0, x: 0 }}
+            exit={{ opacity: 0, y: 60 }}
+            transition={{ duration: 0.4, ease }}
+          >
+            <div className={styles.proofToastIcon}>
+              <CheckCircleIcon size={20} color="var(--color-secondary-400)" />
+            </div>
+            <div className={styles.proofToastContent}>
+              <strong>{socialProofEntries[proofIdx].name}</strong>
+              <span>
+                {socialProofEntries[proofIdx].course} কোর্সে ভর্তি হয়েছেন
+              </span>
+              <small>{socialProofEntries[proofIdx].location} থেকে • এইমাত্র</small>
+            </div>
+            <button
+              className={styles.proofToastClose}
+              onClick={() => setShowProof(false)}
+              aria-label="বন্ধ করুন"
+            >
+              ×
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

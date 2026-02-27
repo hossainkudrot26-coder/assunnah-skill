@@ -203,11 +203,7 @@ export async function enrollStudent(applicationId: string) {
         });
         userId = newUser.id;
 
-        // Log credentials (always — for admin reference)
-        console.log(`[Enrollment] New student account created:`);
-        console.log(`  Name: ${application.applicantName}`);
-        console.log(`  Email: ${email}`);
-        console.log(`  Password: ${generatedPassword}`);
+        // Credentials sent via UI response + email — never log sensitive data
 
         // Send credentials via email (non-blocking, fails silently if SMTP not configured)
         sendStudentCredentials({
@@ -215,7 +211,7 @@ export async function enrollStudent(applicationId: string) {
           email,
           password: generatedPassword,
           courseTitle: application.course?.title || "কোর্স",
-        }).catch(() => {});
+        }).catch(() => { });
       }
 
       // Link application to user

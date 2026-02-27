@@ -1,0 +1,85 @@
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.loadingWrap {
+    padding: 32px 24px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.skeleton {
+    background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 10px;
+}
+
+.welcomeSkeleton {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.skAvatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.skTitle {
+    width: 200px;
+    height: 22px;
+    margin-bottom: 8px;
+}
+
+.skSubtitle {
+    width: 140px;
+    height: 14px;
+}
+
+.statsSkeleton {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.skStat {
+    height: 80px;
+    border-radius: 14px;
+}
+
+.cardsSkeleton {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.skCard {
+    height: 140px;
+    border-radius: 16px;
+}
+
+@media (max-width: 640px) {
+    .statsSkeleton {
+        grid-template-columns: 1fr;
+    }
+
+    .cardsSkeleton {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Dark mode */
+[data-theme="dark"] .skeleton {
+    background: linear-gradient(90deg, #14493A 25%, #1E6B50 50%, #14493A 75%);
+    background-size: 200% 100%;
+}
